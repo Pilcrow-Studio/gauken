@@ -2,6 +2,8 @@
 import { components } from '~/slices'
 import transitionConfig from '~/helpers/transitionConfig';
 
+import Footer from '~/components/footer.vue'
+
 const prismic = usePrismic()
 const { data: page } = await useAsyncData('index', () =>
   prismic.client.getByUID('page', 'home')
@@ -19,14 +21,17 @@ definePageMeta({
 
 <template>
   <div>
-    <section>
-      <div class="container">
-        <h1 class="text-4xl font-bold">Home</h1>
-      </div>
-    </section>
-    <SliceZone
-      :slices="page?.data.slices ?? []"
-      :components="components"
-    />
+    <div class="min-h-screen">
+      <section>
+        <div class="container">
+          <h1 class="text-4xl font-bold">Home</h1>
+        </div>
+      </section>
+      <SliceZone
+        :slices="page?.data.slices ?? []"
+        :components="components"
+      />
+    </div>
+    <Footer />
   </div>
 </template>

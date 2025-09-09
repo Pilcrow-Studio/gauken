@@ -1,13 +1,14 @@
 <script setup lang="ts">
 import Nav from '~/components/nav.vue'
-console.log("Preview")
 </script>
 
 <template>
   <div>
     <Nav />
     <main>
-        <NuxtPage />
+        <div class="min-h-screen">
+          <NuxtPage />
+        </div>
     </main>
   </div>
 </template>

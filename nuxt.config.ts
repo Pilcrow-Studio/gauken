@@ -32,6 +32,11 @@ export default defineNuxtConfig({
 
   css: ['~/assets/css/tailwind.css'],
 
+  image: {
+    quality: 80,      
+    format: ['avif']
+  },
+
   build: {
     transpile: ['gsap'],
   },

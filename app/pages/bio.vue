@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import transitionConfig from '~/helpers/transitionConfig';
+import Footer from '~/components/footer.vue'
 
 definePageMeta({
   pageTransition: transitionConfig as never,
@@ -9,10 +10,13 @@ definePageMeta({
 
 <template>
   <div>
-      <section>
-        <div class="container">
-            <h1 class="text-4xl font-bold">Bio</h1>
-        </div>
-      </section>
+      <div class="min-h-screen">
+        <section>
+          <div class="container">
+              <h1 class="text-4xl font-bold">Bio</h1>
+          </div>
+        </section>
+      </div>
+      <Footer />
   </div>
 </template>

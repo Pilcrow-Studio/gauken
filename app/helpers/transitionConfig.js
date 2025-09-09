@@ -6,6 +6,7 @@ const { toggleTransitionComplete } = useTransitionComposable();
 
 const pageTransition = {
   name: 'page-transition',
+  mode: 'out-in',
   onEnter: (el, done) => {
     gsap.set(el, {
       autoAlpha: 0,
@@ -24,7 +25,7 @@ const pageTransition = {
         done();
       }
     })
-    .to(el, { autoAlpha: 1, duration: 0.6, ease: "power1.out" })
+    .to(el, { autoAlpha: 1, duration: 0.3, ease: "power1.out" })
     .play();
   },
 
@@ -45,7 +46,7 @@ const pageTransition = {
 
     .to(el, {
       autoAlpha: 0,
-      duration: 0.6,
+      duration: 0.3,
       ease: 'power1.out',
       onUpdate: () => {
         // Ensure no snapping happens while scrolling and animating
