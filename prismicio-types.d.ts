@@ -297,7 +297,23 @@ export type ExhibitionsDocument<Lang extends string = string> =
     Lang
   >;
 
-interface FooterDocumentData {}
+type FooterDocumentDataSlicesSlice = FooterSlice;
+
+/**
+ * Content for Footer documents
+ */
+interface FooterDocumentData {
+  /**
+   * Slice Zone field in *Footer*
+   *
+   * - **Field Type**: Slice Zone
+   * - **Placeholder**: *None*
+   * - **API ID Path**: footer.slices[]
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/slices
+   */
+  slices: prismic.SliceZone<FooterDocumentDataSlicesSlice>;
+}
 
 /**
  * Footer document from Prismic
@@ -380,21 +396,37 @@ export type FrontPageDocument<Lang extends string = string> =
     Lang
   >;
 
-interface NavigationDocumentData {}
+type GlobalNavDocumentDataSlicesSlice = never;
 
 /**
- * Navigation document from Prismic
+ * Content for Global Nav documents
+ */
+interface GlobalNavDocumentData {
+  /**
+   * `slices` field in *Global Nav*
+   *
+   * - **Field Type**: Slice Zone
+   * - **Placeholder**: *None*
+   * - **API ID Path**: global_nav.slices[]
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/slices
+   */
+  slices: prismic.SliceZone<GlobalNavDocumentDataSlicesSlice>;
+}
+
+/**
+ * Global Nav document from Prismic
  *
- * - **API ID**: `navigation`
+ * - **API ID**: `global_nav`
  * - **Repeatable**: `false`
  * - **Documentation**: https://prismic.io/docs/content-modeling
  *
  * @typeParam Lang - Language API ID of the document.
  */
-export type NavigationDocument<Lang extends string = string> =
+export type GlobalNavDocument<Lang extends string = string> =
   prismic.PrismicDocumentWithoutUID<
-    Simplify<NavigationDocumentData>,
-    "navigation",
+    Simplify<GlobalNavDocumentData>,
+    "global_nav",
     Lang
   >;
 
@@ -445,8 +477,83 @@ export type AllDocumentTypes =
   | ExhibitionsDocument
   | FooterDocument
   | FrontPageDocument
-  | NavigationDocument
+  | GlobalNavDocument
   | PageDocument;
+
+/**
+ * Item in *Footer → Default → Primary → External Links*
+ */
+export interface FooterSliceDefaultPrimaryExternalLinksItem {
+  /**
+   * External Link field in *Footer → Default → Primary → External Links*
+   *
+   * - **Field Type**: Link
+   * - **Placeholder**: *None*
+   * - **API ID Path**: footer.default.primary.external_links[].external_link
+   * - **Documentation**: https://prismic.io/docs/fields/link
+   */
+  external_link: prismic.LinkField<
+    string,
+    string,
+    unknown,
+    prismic.FieldState,
+    never
+  >;
+}
+
+/**
+ * Primary content in *Footer → Default → Primary*
+ */
+export interface FooterSliceDefaultPrimary {
+  /**
+   * Background Image field in *Footer → Default → Primary*
+   *
+   * - **Field Type**: Image
+   * - **Placeholder**: *None*
+   * - **API ID Path**: footer.default.primary.background_image
+   * - **Documentation**: https://prismic.io/docs/fields/image
+   */
+  background_image: prismic.ImageField<never>;
+
+  /**
+   * External Links field in *Footer → Default → Primary*
+   *
+   * - **Field Type**: Group
+   * - **Placeholder**: *None*
+   * - **API ID Path**: footer.default.primary.external_links[]
+   * - **Documentation**: https://prismic.io/docs/fields/repeatable-group
+   */
+  external_links: prismic.GroupField<
+    Simplify<FooterSliceDefaultPrimaryExternalLinksItem>
+  >;
+}
+
+/**
+ * Default variation for Footer Slice
+ *
+ * - **API ID**: `default`
+ * - **Description**: Default
+ * - **Documentation**: https://prismic.io/docs/slices
+ */
+export type FooterSliceDefault = prismic.SharedSliceVariation<
+  "default",
+  Simplify<FooterSliceDefaultPrimary>,
+  never
+>;
+
+/**
+ * Slice variation for *Footer*
+ */
+type FooterSliceVariation = FooterSliceDefault;
+
+/**
+ * Footer Shared Slice
+ *
+ * - **API ID**: `footer`
+ * - **Description**: Footer
+ * - **Documentation**: https://prismic.io/docs/slices
+ */
+export type FooterSlice = prismic.SharedSlice<"footer", FooterSliceVariation>;
 
 /**
  * Primary content in *RichText → Default → Primary*
@@ -523,15 +630,22 @@ declare module "@prismicio/client" {
       ExhibitionsDocumentData,
       FooterDocument,
       FooterDocumentData,
+      FooterDocumentDataSlicesSlice,
       FrontPageDocument,
       FrontPageDocumentData,
       FrontPageDocumentDataSlicesSlice,
-      NavigationDocument,
-      NavigationDocumentData,
+      GlobalNavDocument,
+      GlobalNavDocumentData,
+      GlobalNavDocumentDataSlicesSlice,
       PageDocument,
       PageDocumentData,
       PageDocumentDataSlicesSlice,
       AllDocumentTypes,
+      FooterSlice,
+      FooterSliceDefaultPrimaryExternalLinksItem,
+      FooterSliceDefaultPrimary,
+      FooterSliceVariation,
+      FooterSliceDefault,
       RichTextSlice,
       RichTextSliceDefaultPrimary,
       RichTextSliceVariation,

@@ -1,0 +1,15 @@
+{
+  "format": "page",
+  "id": "global_nav",
+  "label": "Global Nav",
+  "repeatable": false,
+  "status": true,
+  "json": {
+    "Main": {
+      "slices": {
+        "type": "Slices",
+        "fieldset": "Slice Zone"
+      }
+    }
+  }
+}

@@ -1,4 +1,3 @@
-
 <script setup lang="ts">
 import Nav from '~/components/nav.vue'
 </script>
@@ -7,7 +6,9 @@ import Nav from '~/components/nav.vue'
   <div>
     <Nav />
     <main>
-        <NuxtPage />
+        <div class="min-h-screen">
+          <NuxtPage />
+        </div>
     </main>
   </div>
 </template>
