@@ -6,6 +6,14 @@
   "status": true,
   "json": {
     "Main": {
+      "cover_image": {
+        "type": "Image",
+        "config": {
+          "label": "Cover Image",
+          "constraint": {},
+          "thumbnails": []
+        }
+      },
       "uid": {
         "type": "UID",
         "config": {
@@ -36,9 +44,20 @@
         }
       },
       "location": {
+        "type": "Link",
+        "config": {
+          "label": "Location",
+          "placeholder": "",
+          "select": null,
+          "allowTargetBlank": true,
+          "allowText": true,
+          "repeat": false
+        }
+      },
+      "geopoint_location": {
         "type": "GeoPoint",
         "config": {
-          "label": "Location"
+          "label": "Geopoint Location"
         }
       }
     }

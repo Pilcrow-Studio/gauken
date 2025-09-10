@@ -1,16 +1,19 @@
-<template>
-  <nav>
-    <NuxtLink to="/">Home</NuxtLink>
-    <NuxtLink to="/bio">Bio</NuxtLink>
-  </nav>
-</template>
-
 <script setup lang="ts">
-
+const prismic = usePrismic()
+const { data: global_navigation } = await useLazyAsyncData('global_navigation', () =>
+  prismic.client.getSingle("global_navigation")
+)
 </script>
 
-<style scoped>
-nav {
-  @apply top-0 left-0 w-full h-16 bg-white z-50 gap-4 flex justify-center items-center fixed;
-}
-</style>
+<template>
+  <nav v-if="global_navigation?.data?.links" class="fixed z-[9999] flex gap-4 py-4 px-4 mix-blend-difference text-red-500 left-[50%] translate-x-[-50%] top-5">
+    <div v-if="global_navigation.data.logo">
+      <NuxtLink to="/">
+        <PrismicImage :field="global_navigation.data.logo" class="w-10 h-10"/>
+      </NuxtLink>
+    </div>
+    <template v-for="(item, index) in global_navigation.data.links" :key="index">
+      <PrismicLink :field="item.link" />
+    </template>
+  </nav>
+</template>

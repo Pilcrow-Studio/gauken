@@ -1,5 +1,5 @@
 {
-  "format": "page",
+  "format": "custom",
   "id": "collection",
   "label": "Collection",
   "repeatable": true,
@@ -12,14 +12,6 @@
           "label": "UID"
         }
       },
-      "cover_image": {
-        "type": "Image",
-        "config": {
-          "label": "Cover Image",
-          "constraint": {},
-          "thumbnails": []
-        }
-      },
       "title": {
         "type": "Text",
         "config": {
@@ -27,48 +19,63 @@
           "placeholder": ""
         }
       },
-      "description": {
+      "summary": {
         "type": "StructuredText",
         "config": {
-          "label": "Description",
+          "label": "Summary",
           "placeholder": "",
           "allowTargetBlank": true,
           "multi": "paragraph,preformatted,heading1,heading2,heading3,heading4,heading5,heading6,strong,em,hyperlink,image,embed,list-item,o-list-item,rtl"
         }
       },
-      "slices": {
-        "type": "Slices",
-        "fieldset": "Slice Zone",
+      "artworks": {
+        "type": "Group",
         "config": {
-          "choices": {}
+          "label": "Artworks",
+          "repeat": true,
+          "fields": {
+            "artwork": {
+              "type": "Link",
+              "config": {
+                "label": "Artwork",
+                "select": "document",
+                "repeat": false,
+                "customtypes": [
+                  {
+                    "id": "art_piece",
+                    "fields": [
+                      "artwork",
+                      "title",
+                      "description",
+                      "size",
+                      "price"
+                    ]
+                  }
+                ]
+              }
+            }
+          }
         }
-      }
-    },
-    "SEO & Metadata": {
-      "meta_title": {
-        "config": {
-          "label": "Meta Title",
-          "placeholder": "A title of the page used for social media and search engines"
-        },
-        "type": "Text"
       },
-      "meta_description": {
+      "exhibition": {
+        "type": "Link",
         "config": {
-          "label": "Meta Description",
-          "placeholder": "A brief summary of the page"
-        },
-        "type": "Text"
-      },
-      "meta_image": {
-        "config": {
-          "constraint": {
-            "height": 1260,
-            "width": 2400
-          },
-          "label": "Meta Image",
-          "thumbnails": []
-        },
-        "type": "Image"
+          "label": "Exhibition",
+          "select": "document",
+          "repeat": false,
+          "customtypes": [
+            {
+              "id": "exhibitions",
+              "fields": [
+                "cover_image",
+                "title",
+                "description",
+                "date_and_time",
+                "geopoint_location"
+              ]
+            }
+          ]
+        }
       }
     }
   }

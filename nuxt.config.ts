@@ -2,8 +2,11 @@ import { repositoryName, apiEndpoint } from './slicemachine.config.json';
 
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-  devtools: { enabled: true },
+  devtools: { enabled: false },
 
+  experimental: {
+    viewTransition: true,
+  },
   app: {
     head: {
       title: 'Prismic + Nuxt Minimal Starter',
@@ -28,13 +31,25 @@ export default defineNuxtConfig({
     '@nuxtjs/tailwindcss',
     '@nuxtjs/sitemap',
     'nuxt-vitalizer',
+    'motion-v/nuxt',
+    '@nuxt/scripts',
   ],
+  
+  components: true,
 
-  css: ['~/assets/css/tailwind.css'],
+  css: ['~/assets/css/tailwind.css', '~/assets/css/main.css'],
 
   image: {
-    quality: 80,      
-    format: ['avif']
+    provider: 'prismic',
+    prismic: {
+      endpoint: repositoryName,
+    },
+    imgix: {
+      defaultParams: {
+        fm: 'avif',
+        q: 60,
+      },
+    },
   },
 
   build: {
@@ -54,6 +69,14 @@ export default defineNuxtConfig({
           type: 'page',
           uid: 'home',
           path: '/',
+        },
+        {
+          type: 'exhibitions',
+          path: '/exhibitions/:uid',
+        },
+        {
+          type: 'art_piece',
+          path: '/work/:uid',
         },
       ]
     }

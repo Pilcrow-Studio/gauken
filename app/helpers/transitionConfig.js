@@ -4,6 +4,20 @@ import { useTransitionComposable } from '../composables/transition-composable';
 
 const { toggleTransitionComplete } = useTransitionComposable();
 
+// Helper function to get scroll position from OverlayScrollbars or fallback to window
+const getScrollPosition = () => {
+  // Try to find OverlayScrollbars container
+  const overlayScrollbarsHost = document.querySelector('[data-overlayscrollbars="host"]');
+  if (overlayScrollbarsHost) {
+    const viewport = overlayScrollbarsHost.querySelector('[data-overlayscrollbars-viewport]');
+    if (viewport) {
+      return viewport.scrollTop;
+    }
+  }
+  // Fallback to window scroll position
+  return window.scrollY;
+};
+
 const pageTransition = {
   name: 'page-transition',
   mode: 'out-in',
@@ -32,9 +46,8 @@ const pageTransition = {
   onLeave: (el, done) => {
     toggleTransitionComplete(false);
 
-    const scrollY = window.scrollY; // Capture the current scroll position
+    const scrollY = getScrollPosition();
 
-    // Keep the element in a fixed position during the transition
     gsap.set(el, { position: 'fixed', top: -scrollY, zIndex: 1, right: 0, left: 0}); 
 
     gsap.timeline({
@@ -49,7 +62,6 @@ const pageTransition = {
       duration: 0.3,
       ease: 'power1.out',
       onUpdate: () => {
-        // Ensure no snapping happens while scrolling and animating
         gsap.set(el, { top: -scrollY });
       }
     })

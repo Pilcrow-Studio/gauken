@@ -74,6 +74,17 @@ type ContentRelationshipFieldWithData<
  */
 interface ArtPieceDocumentData {
   /**
+   * Artwork field in *Art Piece*
+   *
+   * - **Field Type**: Image
+   * - **Placeholder**: *None*
+   * - **API ID Path**: art_piece.artwork
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/image
+   */
+  artwork: prismic.ImageField<never>;
+
+  /**
    * Collection field in *Art Piece*
    *
    * - **Field Type**: Content Relationship
@@ -107,6 +118,17 @@ interface ArtPieceDocumentData {
   description: prismic.RichTextField;
 
   /**
+   * Size field in *Art Piece*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: art_piece.size
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  size: prismic.KeyTextField;
+
+  /**
    * Price field in *Art Piece*
    *
    * - **Field Type**: Number
@@ -134,23 +156,32 @@ export type ArtPieceDocument<Lang extends string = string> =
     Lang
   >;
 
-type CollectionDocumentDataSlicesSlice = never;
+/**
+ * Item in *Collection → Artworks*
+ */
+export interface CollectionDocumentDataArtworksItem {
+  /**
+   * Artwork field in *Collection → Artworks*
+   *
+   * - **Field Type**: Content Relationship
+   * - **Placeholder**: *None*
+   * - **API ID Path**: collection.artworks[].artwork
+   * - **Documentation**: https://prismic.io/docs/fields/content-relationship
+   */
+  artwork: ContentRelationshipFieldWithData<
+    [
+      {
+        id: "art_piece";
+        fields: ["artwork", "title", "description", "size", "price"];
+      },
+    ]
+  >;
+}
 
 /**
  * Content for Collection documents
  */
 interface CollectionDocumentData {
-  /**
-   * Cover Image field in *Collection*
-   *
-   * - **Field Type**: Image
-   * - **Placeholder**: *None*
-   * - **API ID Path**: collection.cover_image
-   * - **Tab**: Main
-   * - **Documentation**: https://prismic.io/docs/fields/image
-   */
-  cover_image: prismic.ImageField<never>;
-
   /**
    * Title field in *Collection*
    *
@@ -163,57 +194,50 @@ interface CollectionDocumentData {
   title: prismic.KeyTextField;
 
   /**
-   * Description field in *Collection*
+   * Summary field in *Collection*
    *
    * - **Field Type**: Rich Text
    * - **Placeholder**: *None*
-   * - **API ID Path**: collection.description
+   * - **API ID Path**: collection.summary
    * - **Tab**: Main
    * - **Documentation**: https://prismic.io/docs/fields/rich-text
    */
-  description: prismic.RichTextField;
+  summary: prismic.RichTextField;
 
   /**
-   * Slice Zone field in *Collection*
+   * Artworks field in *Collection*
    *
-   * - **Field Type**: Slice Zone
+   * - **Field Type**: Group
    * - **Placeholder**: *None*
-   * - **API ID Path**: collection.slices[]
+   * - **API ID Path**: collection.artworks[]
    * - **Tab**: Main
-   * - **Documentation**: https://prismic.io/docs/slices
+   * - **Documentation**: https://prismic.io/docs/fields/repeatable-group
    */
-  slices: prismic.SliceZone<CollectionDocumentDataSlicesSlice> /**
-   * Meta Title field in *Collection*
-   *
-   * - **Field Type**: Text
-   * - **Placeholder**: A title of the page used for social media and search engines
-   * - **API ID Path**: collection.meta_title
-   * - **Tab**: SEO & Metadata
-   * - **Documentation**: https://prismic.io/docs/fields/text
-   */;
-  meta_title: prismic.KeyTextField;
+  artworks: prismic.GroupField<Simplify<CollectionDocumentDataArtworksItem>>;
 
   /**
-   * Meta Description field in *Collection*
+   * Exhibition field in *Collection*
    *
-   * - **Field Type**: Text
-   * - **Placeholder**: A brief summary of the page
-   * - **API ID Path**: collection.meta_description
-   * - **Tab**: SEO & Metadata
-   * - **Documentation**: https://prismic.io/docs/fields/text
-   */
-  meta_description: prismic.KeyTextField;
-
-  /**
-   * Meta Image field in *Collection*
-   *
-   * - **Field Type**: Image
+   * - **Field Type**: Content Relationship
    * - **Placeholder**: *None*
-   * - **API ID Path**: collection.meta_image
-   * - **Tab**: SEO & Metadata
-   * - **Documentation**: https://prismic.io/docs/fields/image
+   * - **API ID Path**: collection.exhibition
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/content-relationship
    */
-  meta_image: prismic.ImageField<never>;
+  exhibition: ContentRelationshipFieldWithData<
+    [
+      {
+        id: "exhibitions";
+        fields: [
+          "cover_image",
+          "title",
+          "description",
+          "date_and_time",
+          "geopoint_location",
+        ];
+      },
+    ]
+  >;
 }
 
 /**
@@ -236,6 +260,17 @@ export type CollectionDocument<Lang extends string = string> =
  * Content for Exhibitions documents
  */
 interface ExhibitionsDocumentData {
+  /**
+   * Cover Image field in *Exhibitions*
+   *
+   * - **Field Type**: Image
+   * - **Placeholder**: *None*
+   * - **API ID Path**: exhibitions.cover_image
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/image
+   */
+  cover_image: prismic.ImageField<never>;
+
   /**
    * Title field in *Exhibitions*
    *
@@ -272,13 +307,30 @@ interface ExhibitionsDocumentData {
   /**
    * Location field in *Exhibitions*
    *
-   * - **Field Type**: GeoPoint
+   * - **Field Type**: Link
    * - **Placeholder**: *None*
    * - **API ID Path**: exhibitions.location
    * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/link
+   */
+  location: prismic.LinkField<
+    string,
+    string,
+    unknown,
+    prismic.FieldState,
+    never
+  >;
+
+  /**
+   * Geopoint Location field in *Exhibitions*
+   *
+   * - **Field Type**: GeoPoint
+   * - **Placeholder**: *None*
+   * - **API ID Path**: exhibitions.geopoint_location
+   * - **Tab**: Main
    * - **Documentation**: https://prismic.io/docs/fields/geopoint
    */
-  location: prismic.GeoPointField;
+  geopoint_location: prismic.GeoPointField;
 }
 
 /**
@@ -396,37 +448,61 @@ export type FrontPageDocument<Lang extends string = string> =
     Lang
   >;
 
-type GlobalNavDocumentDataSlicesSlice = never;
-
 /**
- * Content for Global Nav documents
+ * Item in *Global Navigation → Links*
  */
-interface GlobalNavDocumentData {
+export interface GlobalNavigationDocumentDataLinksItem {
   /**
-   * `slices` field in *Global Nav*
+   * Link field in *Global Navigation → Links*
    *
-   * - **Field Type**: Slice Zone
+   * - **Field Type**: Link
    * - **Placeholder**: *None*
-   * - **API ID Path**: global_nav.slices[]
-   * - **Tab**: Main
-   * - **Documentation**: https://prismic.io/docs/slices
+   * - **API ID Path**: global_navigation.links[].link
+   * - **Documentation**: https://prismic.io/docs/fields/link
    */
-  slices: prismic.SliceZone<GlobalNavDocumentDataSlicesSlice>;
+  link: prismic.LinkField<string, string, unknown, prismic.FieldState, never>;
 }
 
 /**
- * Global Nav document from Prismic
+ * Content for Global Navigation documents
+ */
+interface GlobalNavigationDocumentData {
+  /**
+   * Logo field in *Global Navigation*
+   *
+   * - **Field Type**: Image
+   * - **Placeholder**: *None*
+   * - **API ID Path**: global_navigation.logo
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/image
+   */
+  logo: prismic.ImageField<never>;
+
+  /**
+   * Links field in *Global Navigation*
+   *
+   * - **Field Type**: Group
+   * - **Placeholder**: *None*
+   * - **API ID Path**: global_navigation.links[]
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/repeatable-group
+   */
+  links: prismic.GroupField<Simplify<GlobalNavigationDocumentDataLinksItem>>;
+}
+
+/**
+ * Global Navigation document from Prismic
  *
- * - **API ID**: `global_nav`
+ * - **API ID**: `global_navigation`
  * - **Repeatable**: `false`
  * - **Documentation**: https://prismic.io/docs/content-modeling
  *
  * @typeParam Lang - Language API ID of the document.
  */
-export type GlobalNavDocument<Lang extends string = string> =
+export type GlobalNavigationDocument<Lang extends string = string> =
   prismic.PrismicDocumentWithoutUID<
-    Simplify<GlobalNavDocumentData>,
-    "global_nav",
+    Simplify<GlobalNavigationDocumentData>,
+    "global_navigation",
     Lang
   >;
 
@@ -477,7 +553,7 @@ export type AllDocumentTypes =
   | ExhibitionsDocument
   | FooterDocument
   | FrontPageDocument
-  | GlobalNavDocument
+  | GlobalNavigationDocument
   | PageDocument;
 
 /**
@@ -625,7 +701,7 @@ declare module "@prismicio/client" {
       ArtPieceDocumentData,
       CollectionDocument,
       CollectionDocumentData,
-      CollectionDocumentDataSlicesSlice,
+      CollectionDocumentDataArtworksItem,
       ExhibitionsDocument,
       ExhibitionsDocumentData,
       FooterDocument,
@@ -634,9 +710,9 @@ declare module "@prismicio/client" {
       FrontPageDocument,
       FrontPageDocumentData,
       FrontPageDocumentDataSlicesSlice,
-      GlobalNavDocument,
-      GlobalNavDocumentData,
-      GlobalNavDocumentDataSlicesSlice,
+      GlobalNavigationDocument,
+      GlobalNavigationDocumentData,
+      GlobalNavigationDocumentDataLinksItem,
       PageDocument,
       PageDocumentData,
       PageDocumentDataSlicesSlice,
