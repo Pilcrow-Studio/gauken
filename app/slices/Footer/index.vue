@@ -50,6 +50,8 @@ const initScrollTrigger = () => {
   });
 };
 
+let handleResize: (() => void) | null = null
+
 onMounted(() => {
   initScrollTrigger();
   
@@ -62,20 +64,18 @@ onMounted(() => {
   })
 
   // Refresh ScrollTrigger on window resize
-  const handleResize = () => {
+  handleResize = () => {
     ScrollTrigger.refresh()
   }
   window.addEventListener('resize', handleResize)
-  
-  // Cleanup resize listener
-  onUnmounted(() => {
-    window.removeEventListener('resize', handleResize)
-  })
 });
 
 onUnmounted(() => {
   if (ctx) {
     ctx.cleanup();
+  }
+  if (handleResize) {
+    window.removeEventListener('resize', handleResize)
   }
 });
 </script>
