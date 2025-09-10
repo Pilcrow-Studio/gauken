@@ -6,6 +6,20 @@
   "status": true,
   "json": {
     "Main": {
+      "uid": {
+        "type": "UID",
+        "config": {
+          "label": "UID",
+          "placeholder": ""
+        }
+      },
+      "title": {
+        "type": "Text",
+        "config": {
+          "label": "Title",
+          "placeholder": ""
+        }
+      },
       "slices": {
         "type": "Slices",
         "fieldset": "Slice Zone",
@@ -31,11 +45,11 @@
       },
       "meta_image": {
         "config": {
+          "label": "Meta Image",
           "constraint": {
             "height": 1260,
             "width": 2400
           },
-          "label": "Meta Image",
           "thumbnails": []
         },
         "type": "Image"

@@ -2,14 +2,14 @@
 import { components } from '~/slices'
 
 import { motion } from 'motion-v'
-// import transitionConfig from '~/helpers/transitionConfig';
 
 console.log("is this staging?");
 
+const { formatCurrency } = useCurrency()
 
 const prismic = usePrismic()
 const { data: page } = await useAsyncData('index', () =>
-  prismic.client.getByUID('page', 'home')
+  prismic.client.getSingle('front_page')
 )
 
 const { data: art_pieces } = await useAsyncData('art_pieces', () =>
@@ -17,14 +17,46 @@ const { data: art_pieces } = await useAsyncData('art_pieces', () =>
 )
 
 useHead({
-  title: prismic.asText(page.value?.data.title)
+  title: page.value?.data.meta_title,
+  meta: [
+    {
+      name: 'description',
+      content: page.value?.data.meta_description
+    },
+    {
+      property: 'og:title',
+      content: page.value?.data.meta_title
+    },
+    {
+      property: 'og:description',
+      content: page.value?.data.meta_description
+    },
+    {
+      property: 'og:image',
+      content: page.value?.data.meta_image?.url
+    },
+    {
+      property: 'og:type',
+      content: 'website'
+    },
+    {
+      name: 'twitter:card',
+      content: 'summary_large_image'
+    },
+    {
+      name: 'twitter:title',
+      content: page.value?.data.meta_title
+    },
+    {
+      name: 'twitter:description',
+      content: page.value?.data.meta_description
+    },
+    {
+      name: 'twitter:image',
+      content: page.value?.data.meta_image?.url
+    }
+  ]
 })
-
-/*
-definePageMeta({
-  pageTransition: transitionConfig as never,
-});
-*/
 </script>
 
 
@@ -41,11 +73,7 @@ definePageMeta({
                 </div>
                 <p v-if="art_piece?.data.title" class="text-md">{{ art_piece!.data.title }}</p>
                 <p v-if="art_piece?.data.price" class="font-mono uppercase text-sm mt-2">
-                  {{ new Intl.NumberFormat('no-NO', {
-                    style: 'decimal',
-                    minimumFractionDigits: 0,
-                    maximumFractionDigits: 0
-                  }).format(art_piece!.data.price) }},- NOK
+                  {{ formatCurrency(art_piece.data.price) }}
                 </p>
                 <p v-if="art_piece?.data.size" class="text-sm mt-2">
                   {{ art_piece!.data.size }}

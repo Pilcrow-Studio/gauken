@@ -7,7 +7,45 @@ const { data: exhibition } = await useAsyncData(route.params.uid as string, () =
 )
 
 useHead({
-  title: exhibition.value?.data.title || 'Exhibition'
+  title: exhibition.value?.data.meta_title,
+  meta: [
+    {
+      name: 'description',
+      content: exhibition.value?.data.meta_description
+    },
+    {
+      property: 'og:title',
+      content: exhibition.value?.data.meta_title
+    },
+    {
+      property: 'og:description',
+      content: exhibition.value?.data.meta_description
+    },
+    {
+      property: 'og:image',
+      content: exhibition.value?.data.meta_image?.url
+    },
+    {
+      property: 'og:type',
+      content: 'website'
+    },
+    {
+      name: 'twitter:card',
+      content: 'summary_large_image'
+    },
+    {
+      name: 'twitter:title',
+      content: exhibition.value?.data.meta_title
+    },
+    {
+      name: 'twitter:description',
+      content: exhibition.value?.data.meta_description
+    },
+    {
+      name: 'twitter:image',
+      content: exhibition.value?.data.meta_image?.url
+    }
+  ]
 })
 
 const formatDateTime = (timestamp: string) => {
@@ -33,9 +71,6 @@ const formatDateTime = (timestamp: string) => {
         </div>
         <div v-if="exhibition?.data.date_and_time">
           <p>Date: {{ formatDateTime(exhibition.data.date_and_time) }}</p>
-        </div>
-        <div v-if="exhibition?.data.location">
-          <p>Location: {{ exhibition.data.location.latitude }}, {{ exhibition.data.location.longitude }}</p>
         </div>
     </div>
 </template>
