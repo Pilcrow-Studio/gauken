@@ -1,7 +1,10 @@
 <script setup lang="ts">
 import { components } from '~/slices'
-// import transitionConfig from '~/helpers/transitionConfig';
+
 import { motion } from 'motion-v'
+// import transitionConfig from '~/helpers/transitionConfig';
+
+console.log("is this staging?");
 
 
 const prismic = usePrismic()
