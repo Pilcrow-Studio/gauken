@@ -1,8 +1,6 @@
 <script setup lang="ts">
 import type { Content } from "@prismicio/client";
 import { gsap } from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-gsap.registerPlugin(ScrollTrigger);
 
 defineProps(
   getSliceComponentProps<Content.FooterSlice>([
@@ -16,66 +14,65 @@ defineProps(
 // Use a computed property to ensure consistent rendering
 const currentYear = computed(() => new Date().getFullYear())
 
-let ctx: gsap.Context | null = null;
+// Use the global ScrollTrigger composable
+const { createScrollTrigger } = useScrollTrigger()
+
+let scrollTriggerContext: ReturnType<typeof createScrollTrigger> | null = null
 
 const initScrollTrigger = () => {
-  // Clean up existing context
-  if (ctx) {
-    ctx.revert();
-  }
+  const footerElement = document.querySelector('.footer');
+  const bgImageElement = document.querySelector('#footer-bg-img');
   
-  // Wait for DOM to be ready
-  nextTick(() => {
-    const footerElement = document.querySelector('.footer');
-    const bgImageElement = document.querySelector('#footer-bg-img');
-    
-    if (footerElement && bgImageElement) {
-      ctx = gsap.context(() => {
-        const tl = gsap.timeline({
+  if (footerElement && bgImageElement) {
+    scrollTriggerContext = createScrollTrigger(
+      'footer-bg-animation',
+      {
+        trigger: footerElement,
+        start: "top bottom",
+        end: "top top",
+        scrub: true,
+      },
+      () => {
+        gsap.from(bgImageElement, {
+          autoAlpha: 0.25,
+          y: "-20%",
+          duration: 1,
+          ease: "power1.out",
           scrollTrigger: {
             trigger: footerElement,
             start: "top bottom",
             end: "top top",
             scrub: true,
-          },
+          }
         });
-        tl.from(bgImageElement, {
-          autoAlpha: 0.25,
-          y: "-20%",
-          duration: 1,
-          ease: "power1.out",
-        });
-      });
-    }
-  });
+      }
+    );
+  }
 };
-
-let handleResize: (() => void) | null = null
 
 onMounted(() => {
   initScrollTrigger();
   
-  // Refresh ScrollTrigger after route changes
+  // Re-initialize after route changes
   const router = useRouter()
   router.afterEach(() => {
+    // Clean up existing context first
+    if (scrollTriggerContext) {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      (scrollTriggerContext as any).cleanup();
+    }
+    
+    // Wait for DOM updates and global cleanup to complete
     setTimeout(() => {
       initScrollTrigger();
-    }, 100)
+    }, 200)
   })
-
-  // Refresh ScrollTrigger on window resize
-  handleResize = () => {
-    ScrollTrigger.refresh()
-  }
-  window.addEventListener('resize', handleResize)
 });
 
 onUnmounted(() => {
-  if (ctx) {
-    ctx.cleanup();
-  }
-  if (handleResize) {
-    window.removeEventListener('resize', handleResize)
+  if (scrollTriggerContext) {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    (scrollTriggerContext as any).cleanup();
   }
 });
 </script>
@@ -83,13 +80,13 @@ onUnmounted(() => {
 <template>
   <footer class="footer relative h-screen bg-black">
 	<div class="absolute inset-0 z-0 w-full h-full overflow-hidden">
-		<PrismicImage 
-			v-if="slice.primary.background_image"
-      id="footer-bg-img"
-			class="w-full h-[120%] object-cover" 
-			:field="slice.primary.background_image"
-        :imgix-params="{ fm: 'avif', q: 60 }"
-      />
+      <NuxtImg v-if="slice.primary.background_image?.url" id="footer-bg-img" format="avif" :src="slice.primary.background_image.url" height="120%"  class="w-full h-full object-cover">
+        <template #placeholder>
+          <div class="w-full h-full bg-black">
+            <h2>Loading...</h2>
+          </div>
+        </template>
+      </NuxtImg>
 	</div>
     <div class="relative h-full w-full flex flex-col justify-between px-12 pt-24">
       <div class="grid grid-cols-10 z-50 mx-auto w-full text-s text-white">

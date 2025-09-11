@@ -1,11 +1,12 @@
 import Lenis from 'lenis'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import { useScrollTrigger } from './useScrollTrigger'
 gsap.registerPlugin(ScrollTrigger)
 
 export const useLenis = () => {
   let lenis = null
-  
+  const { refresh: refreshScrollTrigger } = useScrollTrigger()
 
   const initLenis = (options = {}) => {
     if (import.meta.client && !lenis) {
@@ -37,8 +38,8 @@ export const useLenis = () => {
       router.afterEach(() => {
         if (lenis) {
           lenis.scrollTo(0, { immediate: true })
-          // Refresh ScrollTrigger after route change
-          ScrollTrigger.refresh()
+          // Use the global ScrollTrigger refresh method
+          refreshScrollTrigger()
         }
       })
     }

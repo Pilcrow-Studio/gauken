@@ -6,6 +6,7 @@ export default defineNuxtConfig({
 
   experimental: {
     viewTransition: true,
+    crossOriginPrefetch: true,
   },
   app: {
     head: {
@@ -44,10 +45,22 @@ export default defineNuxtConfig({
     prismic: {
       endpoint: repositoryName,
     },
+    screens: {
+      "mobile": 600,
+      "tablet": 800,
+      "desktop": 1200
+    },
+    quality: 70,
+    format: ['avif', 'webp'],
+    ipx: {
+      modifiers: {
+        format: 'avif'
+      }
+    },
     imgix: {
       defaultParams: {
         fm: 'avif',
-        q: 60,
+        q: 70,
       },
     },
   },

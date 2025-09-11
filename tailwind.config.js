@@ -4,5 +4,10 @@ export default {
     "./pages/**/*.{js,ts,jsx,tsx,vue}",
     "./components/**/*.{js,ts,jsx,tsx,vue}",
     "./slices/**/*.{js,ts,jsx,tsx,vue}",
-  ]
+  ],
+  theme: {
+    extend: {
+     
+    }
+  }
 }

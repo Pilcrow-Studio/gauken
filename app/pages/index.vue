@@ -69,7 +69,8 @@ useHead({
             <div v-for="art_piece in art_pieces" :key="art_piece.id" class="mb-8 max-w-[500px]">
               <NuxtLink :to="`/work/${art_piece.uid}`">
                 <div id="art-piece-image" class="art-image mb-4 shadow-md">
-                  <PrismicImage v-if="art_piece?.data.artwork" :field="art_piece!.data.artwork" :imgix-params="{ fm: 'avif', q: 60 }" />
+                  <!-- <PrismicImage v-if="art_piece?.data.artwork" :field="art_piece!.data.artwork" :imgix-params="{ fm: 'avif', q: 60, w: 500, h: 500 }" /> -->
+                  <NuxtImg v-if="art_piece?.data.artwork?.url" format="avif" :src="art_piece.data.artwork.url" height="500" sizes="mobile:380px tablet:512px desktop:50vw" class="w-full h-full object-cover"/>
                 </div>
                 <p v-if="art_piece?.data.title" class="text-md">{{ art_piece!.data.title }}</p>
                 <p v-if="art_piece?.data.price" class="font-mono uppercase text-sm mt-2">

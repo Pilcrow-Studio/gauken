@@ -58,7 +58,7 @@ useHead({
         <div class="relative grid grid-cols-8 gap-4">
           <div class="art-container bg-gray-100 p-4 col-span-6">
             <div id="art-piece-image" class="art-image mb-4 shadow-md">
-              <PrismicImage v-if="art_piece?.data.artwork" :field="art_piece!.data.artwork" :imgix-params="{ fm: 'avif', q: 60 }" />
+              <NuxtImg v-if="art_piece?.data.artwork?.url" format="avif" :src="art_piece.data.artwork.url" height="500" class="w-full h-full object-cover"/>
             </div>
           </div>
           <div class="sticky top-0 col-span-2 py-4 border-t border-b border-gray-200">
