@@ -3,5 +3,5 @@
 @tailwind utilities;
 
 section {
-    @apply mx-auto px-12 py-24;
+  @apply mx-auto px-12 py-24;
 }

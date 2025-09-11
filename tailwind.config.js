@@ -6,8 +6,6 @@ export default {
     "./slices/**/*.{js,ts,jsx,tsx,vue}",
   ],
   theme: {
-    extend: {
-     
-    }
-  }
-}
+    extend: {},
+  },
+};

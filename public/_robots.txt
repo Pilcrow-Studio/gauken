@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://gauken.art/sitemap.xml

@@ -1,55 +1,25 @@
 <script setup lang="ts">
-import { components } from '~/slices'
+import { components } from "~/slices";
 
-const prismic = usePrismic()
-const route = useRoute()
+const prismic = usePrismic();
+const route = useRoute();
 const { data: page } = await useAsyncData(route.params.uid as string, () =>
-  prismic.client.getByUID('page', route.params.uid as string)
-)
+  prismic.client.getByUID("page", route.params.uid as string)
+);
 
-useHead({
+useSeoMeta({
   title: page.value?.data.meta_title,
-  meta: [
-    {
-      name: 'description',
-      content: page.value?.data.meta_description
-    },
-    {
-      property: 'og:title',
-      content: page.value?.data.meta_title
-    },
-    {
-      property: 'og:description',
-      content: page.value?.data.meta_description
-    },
-    {
-      property: 'og:image',
-      content: page.value?.data.meta_image?.url
-    },
-    {
-      property: 'og:type',
-      content: 'website'
-    },
-    {
-      name: 'twitter:card',
-      content: 'summary_large_image'
-    },
-    {
-      name: 'twitter:title',
-      content: page.value?.data.meta_title
-    },
-    {
-      name: 'twitter:description',
-      content: page.value?.data.meta_description
-    },
-    {
-      name: 'twitter:image',
-      content: page.value?.data.meta_image?.url
-    }
-  ]
-})
+  description: page.value?.data.meta_description,
+  ogTitle: page.value?.data.meta_title,
+  ogDescription: page.value?.data.meta_description,
+  ogImage: page.value?.data.meta_image?.url,
+  ogType: "website",
+  twitterCard: "summary_large_image",
+  twitterTitle: page.value?.data.meta_title,
+  twitterDescription: page.value?.data.meta_description,
+  twitterImage: page.value?.data.meta_image?.url,
+});
 </script>
-
 
 <template>
   <SliceZone

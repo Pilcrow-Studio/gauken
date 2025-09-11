@@ -8,24 +8,24 @@ defineProps(
     "index",
     "slices",
     "context",
-  ]),
+  ])
 );
 
 // Use a computed property to ensure consistent rendering
-const currentYear = computed(() => new Date().getFullYear())
+const currentYear = computed(() => new Date().getFullYear());
 
 // Use the global ScrollTrigger composable
-const { createScrollTrigger } = useScrollTrigger()
+const { createScrollTrigger } = useScrollTrigger();
 
-let scrollTriggerContext: ReturnType<typeof createScrollTrigger> | null = null
+let scrollTriggerContext: ReturnType<typeof createScrollTrigger> | null = null;
 
 const initScrollTrigger = () => {
-  const footerElement = document.querySelector('.footer');
-  const bgImageElement = document.querySelector('#footer-bg-img');
-  
+  const footerElement = document.querySelector(".footer");
+  const bgImageElement = document.querySelector("#footer-bg-img");
+
   if (footerElement && bgImageElement) {
     scrollTriggerContext = createScrollTrigger(
-      'footer-bg-animation',
+      "footer-bg-animation",
       {
         trigger: footerElement,
         start: "top bottom",
@@ -35,7 +35,8 @@ const initScrollTrigger = () => {
       () => {
         gsap.from(bgImageElement, {
           autoAlpha: 0.25,
-          y: "-20%",
+          scale: 1.2,
+          y: "-10%",
           duration: 1,
           ease: "power1.out",
           scrollTrigger: {
@@ -43,7 +44,7 @@ const initScrollTrigger = () => {
             start: "top bottom",
             end: "top top",
             scrub: true,
-          }
+          },
         });
       }
     );
@@ -52,21 +53,21 @@ const initScrollTrigger = () => {
 
 onMounted(() => {
   initScrollTrigger();
-  
+
   // Re-initialize after route changes
-  const router = useRouter()
+  const router = useRouter();
   router.afterEach(() => {
     // Clean up existing context first
     if (scrollTriggerContext) {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       (scrollTriggerContext as any).cleanup();
     }
-    
+
     // Wait for DOM updates and global cleanup to complete
     setTimeout(() => {
       initScrollTrigger();
-    }, 200)
-  })
+    }, 200);
+  });
 });
 
 onUnmounted(() => {
@@ -79,19 +80,31 @@ onUnmounted(() => {
 
 <template>
   <footer class="footer relative h-screen bg-black">
-	<div class="absolute inset-0 z-0 w-full h-full overflow-hidden">
-      <NuxtImg v-if="slice.primary.background_image?.url" id="footer-bg-img" format="avif" :src="slice.primary.background_image.url" height="120%"  class="w-full h-full object-cover">
+    <div class="absolute inset-0 z-0 w-full h-full overflow-hidden">
+      <NuxtImg
+        v-if="slice.primary.background_image?.url"
+        id="footer-bg-img"
+        format="avif"
+        :src="slice.primary.background_image.url"
+        height="120%"
+        class="w-full h-full object-cover"
+      >
         <template #placeholder>
           <div class="w-full h-full bg-black">
             <h2>Loading...</h2>
           </div>
         </template>
       </NuxtImg>
-	</div>
-    <div class="relative h-full w-full flex flex-col justify-between px-12 pt-24">
+    </div>
+    <div
+      class="relative h-full w-full flex flex-col justify-between px-12 pt-24"
+    >
       <div class="grid grid-cols-10 z-50 mx-auto w-full text-s text-white">
         <div class="relative flex flex-col gap-4">
-          <template v-for="(item, index) in slice.primary.external_links" :key="index">
+          <template
+            v-for="(item, index) in slice.primary.external_links"
+            :key="index"
+          >
             <PrismicLink :field="item.external_link" />
           </template>
         </div>
