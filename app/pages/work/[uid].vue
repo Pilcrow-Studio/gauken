@@ -7,7 +7,6 @@ const { data: art_piece } = await useAsyncData(route.params.uid as string, () =>
   prismic.client.getByUID("art_piece", route.params.uid as string)
 );
 
-// SEO Meta tags using Nuxt SEO v3
 useSeoMeta({
   title: art_piece.value?.data.meta_title,
   description: art_piece.value?.data.meta_description,
@@ -19,6 +18,10 @@ useSeoMeta({
   twitterTitle: art_piece.value?.data.meta_title,
   twitterDescription: art_piece.value?.data.meta_description,
   twitterImage: art_piece.value?.data.meta_image?.url,
+});
+
+definePageMeta({
+  layout: "artwork",
 });
 </script>
 

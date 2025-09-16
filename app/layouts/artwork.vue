@@ -2,7 +2,6 @@
 import Nav from "~/components/nav.vue";
 import Footer from "~/components/footer.vue";
 import HeaderText from "~/components/HeaderText.vue";
-// import ScrollableContainer from '~/components/ScrollableContainer.vue'
 </script>
 
 <template>

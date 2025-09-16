@@ -5,7 +5,7 @@ export default defineNuxtConfig({
   devtools: { enabled: true },
 
   experimental: {
-    viewTransition: true,
+    viewTransition: false,
     crossOriginPrefetch: true,
   },
 
@@ -35,6 +35,7 @@ export default defineNuxtConfig({
     "motion-v/nuxt",
     "@nuxt/scripts",
     "@nuxtjs/seo",
+    "nuxt-swiper",
   ],
 
   site: {
@@ -105,6 +106,5 @@ export default defineNuxtConfig({
       ],
     },
   },
-
   compatibilityDate: "2025-07-16",
 });

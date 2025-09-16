@@ -20,12 +20,6 @@ importers:
       motion-v:
         specifier: ^1.7.1
         version: 1.7.1(@vueuse/core@13.9.0(vue@3.5.21(typescript@5.9.2)))(vue@3.5.21(typescript@5.9.2))
-      overlayscrollbars:
-        specifier: ^2.12.0
-        version: 2.12.0
-      overlayscrollbars-vue:
-        specifier: ^0.5.9
-        version: 0.5.9(overlayscrollbars@2.12.0)(vue@3.5.21(typescript@5.9.2))
     devDependencies:
       '@nuxt/eslint':
         specifier: ^1.9.0
@@ -57,6 +51,9 @@ importers:
       nuxt:
         specifier: ^4.1.1
         version: 4.1.1(@parcel/watcher@2.5.1)(@types/node@24.3.1)(@vue/compiler-sfc@3.5.21)(db0@0.3.2)(eslint@9.35.0(jiti@2.5.1))(ioredis@5.7.0)(magicast@0.3.5)(optionator@0.9.4)(rollup@4.50.1)(terser@5.44.0)(typescript@5.9.2)(vite@7.1.5(@types/node@24.3.1)(jiti@2.5.1)(terser@5.44.0)(yaml@2.8.1))(yaml@2.8.1)
+      nuxt-swiper:
+        specifier: 2.0.1
+        version: 2.0.1(magicast@0.3.5)
       nuxt-vitalizer:
         specifier: ^1.0.0
         version: 1.0.0(magicast@0.3.5)
@@ -3945,6 +3942,9 @@ packages:
     peerDependencies:
       h3: ^1
 
+  nuxt-swiper@2.0.1:
+    resolution: {integrity: sha512-mUAzuGqQHcsqJa1p5y/Hafvurn62o6njHq8DcwQErourkpJpv7z/SnnT0ezXMr7YvDPNg22ayEKGdHkGXXOxMQ==}
+
   nuxt-vitalizer@1.0.0:
     resolution: {integrity: sha512-+U+sLlJsbaLilRIQ/mKaIpWtwTLQlkIt8qbLVxaejWk+nX6Fzj8BzrZM/ONSTAsYZB2ieFSDkCaLpct4aqztIA==}
 
@@ -4017,15 +4017,6 @@ packages:
   optionator@0.9.4:
     resolution: {integrity: sha512-6IpQ7mKUxRcZNLIObR0hz7lxsapSSIYNZJwXPGeF0mTVqGKFIXj1DQcMoT22S3ROcLyY/rz0PWaWZ9ayWmad9g==}
     engines: {node: '>= 0.8.0'}
-
-  overlayscrollbars-vue@0.5.9:
-    resolution: {integrity: sha512-zZEcsb6llnKaRwXTP44E4RrmwuH+eAi70mgCdiiPwcPBE2H99Vs2V0q7sWnEanqU3462ch38e4SmIMnuH906DQ==}
-    peerDependencies:
-      overlayscrollbars: ^2.0.0
-      vue: ^3.2.25
-
-  overlayscrollbars@2.12.0:
-    resolution: {integrity: sha512-mWJ5MOkcZ/ljHwfLw8+bN0V9ziGCoNoqULcp994j5DTGNQvnkWKWkA7rnO29Kyew5AoHxUnJ4Ndqfcl0HSQjXg==}
 
   oxc-minify@0.86.0:
     resolution: {integrity: sha512-pjtM94KElw/RxF3R1ls1ADcBUyZcrCgn0qeL4nD8cOotfzeVFa0xXwQQeCkk+5GPiOqdRApNFuJvK//lQgpqJw==}
@@ -4969,6 +4960,10 @@ packages:
     resolution: {integrity: sha512-VvrHQ+9uniE+Mvx3+C9IEe/lWasXCU0nXMY2kZeLrHNICuRiC8uMPyM14UEaMOFA5mhyQqEkB02VoQ16n3DLaw==}
     engines: {node: '>=16'}
     hasBin: true
+
+  swiper@11.2.10:
+    resolution: {integrity: sha512-RMeVUUjTQH+6N3ckimK93oxz6Sn5la4aDlgPzB+rBrG/smPdCTicXyhxa+woIpopz+jewEloiEE3lKo1h9w2YQ==}
+    engines: {node: '>= 4.7.0'}
 
   system-architecture@0.1.0:
     resolution: {integrity: sha512-ulAk51I9UVUyJgxlv9M6lFot2WP3e7t8Kz9+IS6D4rVba1tR9kON+Ey69f+1R4Q8cd45Lod6a4IcJIxnzGc/zA==}
@@ -10042,6 +10037,13 @@ snapshots:
       - magicast
       - vue
 
+  nuxt-swiper@2.0.1(magicast@0.3.5):
+    dependencies:
+      '@nuxt/kit': 3.19.1(magicast@0.3.5)
+      swiper: 11.2.10
+    transitivePeerDependencies:
+      - magicast
+
   nuxt-vitalizer@1.0.0(magicast@0.3.5):
     dependencies:
       '@nuxt/kit': 4.1.1(magicast@0.3.5)
@@ -10237,13 +10239,6 @@ snapshots:
       prelude-ls: 1.2.1
       type-check: 0.4.0
       word-wrap: 1.2.5
-
-  overlayscrollbars-vue@0.5.9(overlayscrollbars@2.12.0)(vue@3.5.21(typescript@5.9.2)):
-    dependencies:
-      overlayscrollbars: 2.12.0
-      vue: 3.5.21(typescript@5.9.2)
-
-  overlayscrollbars@2.12.0: {}
 
   oxc-minify@0.86.0:
     optionalDependencies:
@@ -11323,6 +11318,8 @@ snapshots:
       csso: 5.0.5
       picocolors: 1.1.1
       sax: 1.4.1
+
+  swiper@11.2.10: {}
 
   system-architecture@0.1.0: {}
 

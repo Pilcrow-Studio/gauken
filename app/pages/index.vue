@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { components } from "~/slices";
-
 import { motion } from "motion-v";
 
 const { formatCurrency } = useCurrency();

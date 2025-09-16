@@ -36,9 +36,8 @@ const initScrollTrigger = () => {
         gsap.from(bgImageElement, {
           autoAlpha: 0.25,
           scale: 1.2,
-          y: "-10%",
           duration: 1,
-          ease: "power1.out",
+          ease: "steps(8)",
           scrollTrigger: {
             trigger: footerElement,
             start: "top bottom",
