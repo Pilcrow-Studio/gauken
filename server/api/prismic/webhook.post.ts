@@ -25,7 +25,7 @@ export default defineEventHandler(async (event) => {
     }
 
     // Determine the cache tag based on document type
-    let cacheTag = `document-${documentId}`;
+    const cacheTag = `document-${documentId}`;
 
     // You can also add specific tags based on document type if needed
     // if (body.type === "art_piece") {
