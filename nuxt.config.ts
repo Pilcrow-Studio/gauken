@@ -81,6 +81,10 @@ export default defineNuxtConfig({
     transpile: ["gsap"],
   },
 
+  runtimeConfig: {
+    prismicWebhookSecret: process.env.PRISMIC_WEBHOOK_SECRET,
+  },
+
   prismic: {
     endpoint: repositoryName || apiEndpoint,
     preview: "/api/preview",

@@ -7,6 +7,18 @@ const { data: art_piece } = await useAsyncData(route.params.uid as string, () =>
   prismic.client.getByUID("art_piece", route.params.uid as string)
 );
 
+// Set cache tags for on-demand revalidation
+if (art_piece.value?.id) {
+  const { ssrContext } = useNuxtApp();
+  if (ssrContext && ssrContext.res) {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    (ssrContext.res as any).setHeader(
+      "Netlify-Cache-Tag",
+      `art-piece-${art_piece.value.id}`
+    );
+  }
+}
+
 useSeoMeta({
   title: art_piece.value?.data.meta_title,
   description: art_piece.value?.data.meta_description,

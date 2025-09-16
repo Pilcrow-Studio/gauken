@@ -13,6 +13,34 @@ const { data: art_pieces } = await useAsyncData("art_pieces", () =>
   prismic.client.getAllByType("art_piece")
 );
 
+// Set cache tags for on-demand revalidation
+const { ssrContext } = useNuxtApp();
+if (ssrContext && ssrContext.res) {
+  // Tag with front page ID
+  if (page.value?.id) {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    (ssrContext.res as any).setHeader(
+      "Netlify-Cache-Tag",
+      `front-page-${page.value.id}`
+    );
+  }
+
+  // Tag with all art piece IDs (for when any art piece changes)
+  if (art_pieces.value?.length) {
+    const artPieceTags = art_pieces.value
+      .map((piece) => `art-piece-${piece.id}`)
+      .join(",");
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    (ssrContext.res as any).setHeader(
+      "Netlify-Cache-Tag",
+      `homepage,${artPieceTags}`
+    );
+  } else {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    (ssrContext.res as any).setHeader("Netlify-Cache-Tag", "homepage");
+  }
+}
+
 useHead({
   title: page.value?.data.meta_title,
   meta: [
@@ -54,32 +82,10 @@ useHead({
     },
   ],
 });
-
-const showPreloader = ref(false);
-
-onMounted(() => {
-  const preloaderKey = "preloaderShown";
-  if (!sessionStorage.getItem(preloaderKey)) {
-    sessionStorage.setItem(preloaderKey, "true");
-    showPreloader.value = true;
-    setTimeout(() => {
-      showPreloader.value = false;
-      sessionStorage.setItem(preloaderKey, "true");
-    }, 2000); // animation duration ms
-  }
-});
 </script>
 
 <template>
   <div>
-    <div
-      v-if="showPreloader"
-      class="fixed inset-0 bg-black flex items-center justify-center"
-    >
-      <div
-        class="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-white"
-      ></div>
-    </div>
     <div class="min-h-screen">
       <section>
         <div class="w-full flex flex-row gap-4">

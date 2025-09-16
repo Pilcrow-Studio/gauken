@@ -6,6 +6,18 @@ const { data: exhibition } = await useAsyncData(
   () => prismic.client.getByUID("exhibitions", route.params.uid as string)
 );
 
+// Set cache tags for on-demand revalidation
+if (exhibition.value?.id) {
+  const { ssrContext } = useNuxtApp();
+  if (ssrContext && ssrContext.res) {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    (ssrContext.res as any).setHeader(
+      "Netlify-Cache-Tag",
+      `exhibition-${exhibition.value.id}`
+    );
+  }
+}
+
 // SEO Meta tags using Nuxt SEO v3
 useSeoMeta({
   title: exhibition.value?.data.meta_title,
