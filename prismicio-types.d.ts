@@ -260,10 +260,10 @@ interface CollectionDocumentData {
       {
         id: "exhibitions";
         fields: [
-          "cover_image",
+          "banner_image",
           "title",
           "description",
-          "date_and_time",
+          "start_date",
           "geopoint_location",
         ];
       },
@@ -323,15 +323,26 @@ export type CollectionDocument<Lang extends string = string> =
  */
 interface ExhibitionsDocumentData {
   /**
-   * Cover Image field in *Exhibitions*
+   * Poster field in *Exhibitions*
    *
    * - **Field Type**: Image
    * - **Placeholder**: *None*
-   * - **API ID Path**: exhibitions.cover_image
+   * - **API ID Path**: exhibitions.poster
    * - **Tab**: Main
    * - **Documentation**: https://prismic.io/docs/fields/image
    */
-  cover_image: prismic.ImageField<never>;
+  poster: prismic.ImageField<never>;
+
+  /**
+   * Banner Image field in *Exhibitions*
+   *
+   * - **Field Type**: Image
+   * - **Placeholder**: *None*
+   * - **API ID Path**: exhibitions.banner_image
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/image
+   */
+  banner_image: prismic.ImageField<never>;
 
   /**
    * Title field in *Exhibitions*
@@ -356,15 +367,26 @@ interface ExhibitionsDocumentData {
   description: prismic.RichTextField;
 
   /**
-   * Date and Time field in *Exhibitions*
+   * Start Date field in *Exhibitions*
    *
    * - **Field Type**: Timestamp
    * - **Placeholder**: *None*
-   * - **API ID Path**: exhibitions.date_and_time
+   * - **API ID Path**: exhibitions.start_date
    * - **Tab**: Main
    * - **Documentation**: https://prismic.io/docs/fields/timestamp
    */
-  date_and_time: prismic.TimestampField;
+  start_date: prismic.TimestampField;
+
+  /**
+   * End Date field in *Exhibitions*
+   *
+   * - **Field Type**: Date
+   * - **Placeholder**: *None*
+   * - **API ID Path**: exhibitions.end_date
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/date
+   */
+  end_date: prismic.DateField;
 
   /**
    * Location field in *Exhibitions*

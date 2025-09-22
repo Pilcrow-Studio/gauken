@@ -12,23 +12,34 @@ const { data: page } = await useAsyncData("front_page", () =>
 );
 
 const { data: art_piece } = await useAsyncData(
-  () => `art_piece_${route.params.uid}`,
+  () => (route.params.uid ? `art_piece_${route.params.uid}` : "no_art_piece"),
   () => {
     if (route.params.uid && route.path.startsWith("/work/")) {
       return prismic.client.getByUID("art_piece", route.params.uid as string);
     }
     return Promise.resolve(null);
+  },
+  {
+    watch: [() => route.params.uid, () => route.path],
   }
 );
-
-console.log(art_piece);
 
 // Map routes to display text
 const getPageText = (path: string): string => {
   if (path === "/") return page.value?.data.title ?? "Gauken";
   if (path === "/bio")
     return "David Wilson is a painter and sculptor based in Oslo, Norway";
-  if (path.startsWith("/work/")) return art_piece.value?.data.title ?? "Work";
+  if (path.startsWith("/work/")) {
+    const title = art_piece.value?.data.title;
+    // Debug logging
+    if (typeof window !== "undefined") {
+      console.log("Path:", path);
+      console.log("Route params:", route.params);
+      console.log("Art piece value:", art_piece.value);
+      console.log("Art piece title:", title);
+    }
+    return title ?? "Work";
+  }
   if (path.startsWith("/exhibitions/")) return "Exhibitions";
   // For dynamic pages, extract the uid from the path
   if (path.startsWith("/") && path !== "/") {
@@ -49,19 +60,17 @@ const animateText = (newText: string) => {
   });
 };
 
+// Create a computed property for the current text
+const currentText = computed(() => getPageText(route.path));
+
 onMounted(() => {
-  const initialText = getPageText(route.path);
-  animateText(initialText);
+  animateText(currentText.value);
 });
 
-// Watch for route changes and animate text
-watch(
-  () => route.path,
-  (newPath) => {
-    const newText = getPageText(newPath);
-    animateText(newText);
-  }
-);
+// Watch for changes in the computed text and animate
+watch(currentText, (newText) => {
+  animateText(newText);
+});
 </script>
 
 <template>

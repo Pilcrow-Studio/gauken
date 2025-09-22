@@ -5,3 +5,27 @@
 section {
   @apply mx-auto px-12 py-24;
 }
+
+@font-face {
+  font-family: "Stix Two Text";
+  src: url("~/assets/fonts/STIXTwoText.ttf") format("truetype");
+  font-weight: 400 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Stix Two Text";
+  src: url("~/assets/fonts/STIXTwoText-Italic.ttf") format("truetype");
+  font-weight: 400 700;
+  font-style: italic;
+  font-display: swap;
+}
+
+@theme {
+  --font-serif: "Stix Two Text", serif;
+}
+
+body {
+  @apply font-serif;
+}

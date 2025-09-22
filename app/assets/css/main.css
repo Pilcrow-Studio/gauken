@@ -1,21 +1,11 @@
-/* Lenis smooth scrolling styles */
-html.lenis {
-  height: auto;
+.router-link-active {
+  text-decoration: underline;
 }
 
-.lenis.lenis-smooth {
-  scroll-behavior: auto;
+.logo-text {
+  text-decoration: none;
 }
 
-.lenis.lenis-smooth [data-lenis-prevent] {
-  overscroll-behavior: contain;
+a:hover {
+  text-decoration: underline;
 }
-
-.lenis.lenis-stopped {
-  overflow: hidden;
-}
-
-.lenis.lenis-scrolling iframe {
-  pointer-events: none;
-}
-

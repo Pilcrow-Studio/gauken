@@ -6,10 +6,18 @@
   "status": true,
   "json": {
     "Main": {
-      "cover_image": {
+      "poster": {
         "type": "Image",
         "config": {
-          "label": "Cover Image",
+          "label": "Poster",
+          "constraint": {},
+          "thumbnails": []
+        }
+      },
+      "banner_image": {
+        "type": "Image",
+        "config": {
+          "label": "Banner Image",
           "constraint": {},
           "thumbnails": []
         }
@@ -36,10 +44,17 @@
           "multi": "paragraph,preformatted,heading1,heading2,heading3,heading4,heading5,heading6,strong,em,hyperlink,image,embed,list-item,o-list-item,rtl"
         }
       },
-      "date_and_time": {
+      "start_date": {
         "type": "Timestamp",
         "config": {
-          "label": "Date and Time",
+          "label": "Start Date",
+          "placeholder": ""
+        }
+      },
+      "end_date": {
+        "type": "Date",
+        "config": {
+          "label": "End Date",
           "placeholder": ""
         }
       },

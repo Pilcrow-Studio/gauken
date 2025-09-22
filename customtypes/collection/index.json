@@ -67,10 +67,10 @@
             {
               "id": "exhibitions",
               "fields": [
-                "cover_image",
+                "banner_image",
                 "title",
                 "description",
-                "date_and_time",
+                "start_date",
                 "geopoint_location"
               ]
             }

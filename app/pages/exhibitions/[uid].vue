@@ -46,15 +46,17 @@ const formatDateTime = (timestamp: string) => {
 
 <template>
   <div>
-    <h1>{{ exhibition?.data.title }}</h1>
+    <div class="h-screen flex flex-col justify-center items-center">
+      <h1 class="text-4xl font-bold">{{ exhibition?.data.title }}</h1>
+    </div>
     <div v-if="exhibition?.data.description">
       <PrismicRichText :field="exhibition.data.description" />
     </div>
-    <div v-if="exhibition?.data.cover_image">
-      <PrismicImage :field="exhibition.data.cover_image" />
+    <div v-if="exhibition?.data.banner_image">
+      <PrismicImage :field="exhibition.data.banner_image" />
     </div>
-    <div v-if="exhibition?.data.date_and_time">
-      <p>Date: {{ formatDateTime(exhibition.data.date_and_time) }}</p>
+    <div v-if="exhibition?.data.start_date">
+      <p>Date: {{ formatDateTime(exhibition.data.start_date) }}</p>
     </div>
   </div>
 </template>

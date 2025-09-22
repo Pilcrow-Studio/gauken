@@ -1,13 +1,9 @@
-<script setup lang="ts">
-console.log("App");
-
-// Ensure Lenis is available globally
-const { $lenis } = useNuxtApp();
-console.log("Lenis instance:", $lenis);
-</script>
+<script setup lang="ts"></script>
 
 <template>
-  <div>
-    <NuxtLayout />
+  <div class="bg-white">
+    <NuxtLayout>
+      <NuxtPage />
+    </NuxtLayout>
   </div>
 </template>

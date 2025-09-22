@@ -6,6 +6,11 @@ export default {
     "./slices/**/*.{js,ts,jsx,tsx,vue}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        stix: ["Stix Two Text", "serif"],
+        serif: ["Stix Two Text", "serif"],
+      },
+    },
   },
 };

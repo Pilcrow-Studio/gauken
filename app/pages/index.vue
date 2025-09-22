@@ -10,7 +10,12 @@ const { data: page } = await useAsyncData("index", () =>
 );
 
 const { data: art_pieces } = await useAsyncData("art_pieces", () =>
-  prismic.client.getAllByType("art_piece")
+  prismic.client.getAllByType("art_piece", {
+    orderings: {
+      field: "document.first_publication_date",
+      direction: "desc",
+    },
+  })
 );
 
 // Set cache tags for on-demand revalidation
@@ -86,12 +91,26 @@ useHead({
 
 <template>
   <div>
+    <div>
+      <div class="grid grid-cols-12 gap-6 max-h-full pt-[250px]">
+        <div
+          class="col-start-4 col-end-10 h-full flex flex-col justify-center items-center bg-black p-4"
+        >
+          <NuxtImg
+            v-if="art_pieces?.[0]?.data.artwork.url"
+            :src="art_pieces?.[0]?.data.artwork.url"
+            class="max-w-full max-h-full object-contain"
+          />
+        </div>
+      </div>
+    </div>
+    <!---
     <div class="min-h-screen">
       <section>
         <div class="w-full flex flex-row gap-4">
           <div class="grid grid-cols-3 w-full gap-4">
             <div
-              v-for="art_piece in art_pieces"
+              v-for="art_piece in art_pieces ?? []"
               :key="art_piece.id"
               class="mb-8 max-w-[500px]"
             >
@@ -109,13 +128,10 @@ useHead({
                     class="w-full h-full object-cover rounded-sm"
                   />
                 </div>
-                <p v-if="art_piece?.data.title" class="text-md font-serif">
+                <p v-if="art_piece?.data.title" class="text-md">
                   {{ art_piece!.data.title }}
                 </p>
-                <p
-                  v-if="art_piece?.data.price"
-                  class="font-mono uppercase text-sm mt-2"
-                >
+                <p v-if="art_piece?.data.price" class="text-sm mt-2">
                   {{ formatCurrency(art_piece.data.price) }}
                 </p>
                 <p v-if="art_piece?.data.size" class="text-sm mt-2">
@@ -144,6 +160,8 @@ useHead({
         </div>
       </section>
       <SliceZone :slices="page?.data.slices ?? []" :components="components" />
+  
     </div>
+    -->
   </div>
 </template>
