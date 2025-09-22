@@ -92,7 +92,7 @@ const formatExhibitionDates = (startDate: string, endDate: string) => {
 .marquee-container {
   display: flex;
   width: fit-content;
-  animation: scroll 20s linear infinite;
+  animation: scroll 40s linear infinite;
 }
 
 .marquee-content {

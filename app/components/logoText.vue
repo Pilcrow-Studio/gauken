@@ -34,7 +34,8 @@ const random_art_piece = computed(() => {
             format="avif"
             :src="random_art_piece.data.artwork.url ?? ''"
             class="w-8 h-10 inline-block"
-            quality="1"
+            height="40"
+            quality="70"
         /></span>
         work
         <sup class="text-xs"> [{{ art_piece_count }}]</sup>

@@ -1,11 +1,10 @@
-<script setup lang="ts">
-import Footer from "~/components/footer.vue";
-</script>
+<script setup lang="ts"></script>
 
 <template>
   <div>
     <div>
       <LogoText />
+      <BottomNav />
       <div
         class="fixed top-0 left-0 right-0 z-50 grid grid-cols-12 gap-4 pr-4 pt-4"
       >

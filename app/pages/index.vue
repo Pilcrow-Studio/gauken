@@ -1,8 +1,7 @@
 <script setup lang="ts">
-import { components } from "~/slices";
-import { motion } from "motion-v";
+// import { components } from "~/slices";
 
-const { formatCurrency } = useCurrency();
+// const { formatCurrency } = useCurrency();
 
 const prismic = usePrismic();
 const { data: page } = await useAsyncData("index", () =>
@@ -93,12 +92,21 @@ useHead({
   <div>
     <div>
       <div class="grid grid-cols-12 gap-6 max-h-full pt-[250px]">
+        <div class="col-start-1 col-end-3 pl-4 pt-16">
+          <p>
+            David N. R. Wilson aka. Gauken is a Norwegian artist that uses...
+            and .... to create otherworldy ....
+          </p>
+        </div>
         <div
           class="col-start-4 col-end-10 h-full flex flex-col justify-center items-center bg-black p-4"
         >
           <NuxtImg
             v-if="art_pieces?.[0]?.data.artwork.url"
             :src="art_pieces?.[0]?.data.artwork.url"
+            format="avif"
+            quality="70"
+            height="auto"
             class="max-w-full max-h-full object-contain"
           />
         </div>
