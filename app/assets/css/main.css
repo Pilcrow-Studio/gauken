@@ -29,6 +29,10 @@ footer {
   position: relative;
 }
 
+.exhibition-link {
+  text-decoration: none !important;
+}
+
 .router-link-active {
   text-decoration: underline;
 }

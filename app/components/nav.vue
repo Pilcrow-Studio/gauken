@@ -9,7 +9,7 @@ const { data: global_navigation } = await useLazyAsyncData(
 <template>
   <nav
     v-if="global_navigation?.data?.links"
-    class="flex flex-row gap-4 px-3 pt-[0.6rem] pb-2 bg-white h-fit w-fit"
+    class="flex flex-row gap-4 px-3 pt-[0.6rem] pb-2 bg-white dark:bg-black h-fit w-fit"
   >
     <template
       v-for="(item, index) in global_navigation.data.links"

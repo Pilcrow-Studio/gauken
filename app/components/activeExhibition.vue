@@ -10,8 +10,17 @@ const { data: exhibition } = await useAsyncData("exhibition", () =>
   })
 );
 
+const route = useRoute();
+
+const isExhibitionActive = computed(() => {
+  return route.path.startsWith("/exhibitions/");
+});
+
 // Format dates function
-const formatExhibitionDates = (startDate: string, endDate: string) => {
+const formatExhibitionDates = (
+  startDate: string | undefined,
+  endDate: string | undefined
+) => {
   if (!startDate || !endDate) return "";
 
   const start = new Date(startDate);
@@ -34,8 +43,13 @@ const formatExhibitionDates = (startDate: string, endDate: string) => {
 </script>
 
 <template>
-  <div>
-    <div class="bg-black text-white py-1 overflow-hidden relative">
+  <NuxtLink
+    :to="`/exhibitions/${exhibition?.[0]?.uid}`"
+    class="exhibition-link hover:no-underline"
+  >
+    <div
+      class="bg-black dark:bg-white text-white dark:text-black py-1 overflow-hidden relative"
+    >
       <div class="marquee-container">
         <div class="marquee-content">
           <span class="marquee-text text-[10px]">upcoming exhibition</span>
@@ -55,7 +69,7 @@ const formatExhibitionDates = (startDate: string, endDate: string) => {
         </div>
       </div>
     </div>
-    <div class="bg-gray-100 p-2">
+    <div class="bg-gray-100 dark:bg-zinc-900 p-2">
       <NuxtImg
         v-if="exhibition?.[0]?.data?.poster?.url"
         :src="exhibition?.[0]?.data?.poster?.url"
@@ -64,28 +78,28 @@ const formatExhibitionDates = (startDate: string, endDate: string) => {
         quality="40"
         class="mb-2 w-full h-auto"
       />
-      <p class="text-sm font-medium">
-        {{ exhibition?.[0]?.data?.title }}
-      </p>
-      <p class="text-xs text-gray-600">
-        {{
-          exhibition?.[0]?.data?.location?.text ||
-          exhibition?.[0]?.data?.location?.url
-        }}
-      </p>
-      <p class="text-xs text-gray-800">
-        {{
-          formatExhibitionDates(
-            exhibition?.[0]?.data?.start_date,
-            exhibition?.[0]?.data?.end_date
-          )
-        }}
-      </p>
-      <NuxtLink :to="`/exhibitions/${exhibition?.[0]?.uid}`" class="text-xs">
-        More info →
-      </NuxtLink>
+      <div class="flex flex-col items-center text-center">
+        <p class="text-sm">
+          {{ exhibition?.[0]?.data?.title }}
+        </p>
+        <p class="text-xs">
+          {{
+            exhibition?.[0]?.data?.location?.text ||
+            (exhibition?.[0]?.data?.location as any)?.url
+          }}
+        </p>
+        <p class="text-xs">
+          {{
+            formatExhibitionDates(
+              exhibition?.[0]?.data?.start_date as string,
+              exhibition?.[0]?.data?.end_date as string
+            )
+          }}
+        </p>
+        <p v-if="!isExhibitionActive" class="text-xs">More info →</p>
+      </div>
     </div>
-  </div>
+  </NuxtLink>
 </template>
 
 <style scoped>

@@ -3,6 +3,14 @@
 
 // const { formatCurrency } = useCurrency();
 
+// Access header height from layout
+const headerHeight = inject("headerHeight", ref(0));
+
+// Debug the header height
+watchEffect(() => {
+  console.log("Header height:", headerHeight.value);
+});
+
 const prismic = usePrismic();
 const { data: page } = await useAsyncData("index", () =>
   prismic.client.getSingle("front_page")
@@ -46,7 +54,7 @@ if (ssrContext && ssrContext.res) {
 }
 
 useHead({
-  title: page.value?.data.meta_title,
+  title: "Home",
   meta: [
     {
       name: "description",
@@ -89,24 +97,25 @@ useHead({
 </script>
 
 <template>
-  <div>
-    <div>
-      <div class="grid grid-cols-12 gap-6 max-h-full pt-[250px]">
+  <div :style="{ paddingTop: `${headerHeight}px` }">
+    <div class="h-full">
+      <div class="max-h-full grid grid-cols-12 gap-6 h-full">
         <div class="col-start-1 col-end-3 pl-4 pt-16">
-          <p>
+          <p class="text-lg tracking-tight">
             David N. R. Wilson aka. Gauken is a Norwegian artist that uses...
             and .... to create otherworldy ....
           </p>
         </div>
         <div
-          class="col-start-4 col-end-10 h-full flex flex-col justify-center items-center bg-black p-4"
+          class="col-start-4 col-end-10 max-h-full flex flex-col justify-center items-center bg-black p-4"
         >
           <NuxtImg
             v-if="art_pieces?.[0]?.data.artwork.url"
             :src="art_pieces?.[0]?.data.artwork.url"
             format="avif"
             quality="70"
-            height="auto"
+            height="588"
+            loading="eager"
             class="max-w-full max-h-full object-contain"
           />
         </div>

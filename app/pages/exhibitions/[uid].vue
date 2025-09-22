@@ -18,18 +18,46 @@ if (exhibition.value?.id) {
   }
 }
 
-// SEO Meta tags using Nuxt SEO v3
-useSeoMeta({
+useHead({
   title: exhibition.value?.data.meta_title,
-  description: exhibition.value?.data.meta_description,
-  ogTitle: exhibition.value?.data.meta_title,
-  ogDescription: exhibition.value?.data.meta_description,
-  ogImage: exhibition.value?.data.meta_image?.url,
-  ogType: "website",
-  twitterCard: "summary_large_image",
-  twitterTitle: exhibition.value?.data.meta_title,
-  twitterDescription: exhibition.value?.data.meta_description,
-  twitterImage: exhibition.value?.data.meta_image?.url,
+  meta: [
+    {
+      name: "description",
+      content: exhibition.value?.data.meta_description,
+    },
+    {
+      property: "og:title",
+      content: exhibition.value?.data.meta_title,
+    },
+    {
+      property: "og:description",
+      content: exhibition.value?.data.meta_description,
+    },
+    {
+      property: "og:image",
+      content: exhibition.value?.data.meta_image?.url,
+    },
+    {
+      property: "og:type",
+      content: "website",
+    },
+    {
+      name: "twitter:card",
+      content: "summary_large_image",
+    },
+    {
+      name: "twitter:title",
+      content: exhibition.value?.data.meta_title,
+    },
+    {
+      name: "twitter:description",
+      content: exhibition.value?.data.meta_description,
+    },
+    {
+      name: "twitter:image",
+      content: exhibition.value?.data.meta_image?.url,
+    },
+  ],
 });
 
 const formatDateTime = (timestamp: string) => {
