@@ -75,24 +75,39 @@ const formatDateTime = (timestamp: string) => {
 <template>
   <div class="grid grid-cols-12 mt-12">
     <div class="col-start-4 col-span-6">
-      <NuxtImg
-        :src="exhibition?.data.poster?.url || ''"
-        format="avif"
-        quality="70"
-        height="300"
-        loading="eager"
-        fit="cover"
-        class="mb-4"
-      />
-      <h1 class="text-4xl font-bold">{{ exhibition?.data.title }}</h1>
+      <div class="w-full flex justify-center align-center bg-black p-8 mb-6">
+        <NuxtImg
+          :src="exhibition?.data.poster?.url || ''"
+          format="avif"
+          quality="70"
+          height="300"
+          loading="eager"
+          fit="contain"
+        />
+      </div>
+
+      <h1 class="mb-4">{{ exhibition?.data.title }}</h1>
+      <div class="mb-4">
+        <div v-if="exhibition?.data.location">
+          <NuxtLink
+            :to="exhibition.data.location.url"
+            target="_blank"
+            class="font-mono text-xs"
+          >
+            {{ exhibition.data.location.text }}
+          </NuxtLink>
+        </div>
+        <div v-if="exhibition?.data.start_date && exhibition?.data.end_date">
+          <p class="font-mono text-xs">
+            Date: {{ formatDateTime(exhibition.data.start_date) }}
+          </p>
+          <p class="font-mono text-xs">
+            to {{ formatDateTime(exhibition.data.end_date) }}
+          </p>
+        </div>
+      </div>
       <div v-if="exhibition?.data.description">
         <PrismicRichText :field="exhibition.data.description" />
-      </div>
-      <div v-if="exhibition?.data.banner_image">
-        <PrismicImage :field="exhibition.data.banner_image" />
-      </div>
-      <div v-if="exhibition?.data.start_date">
-        <p>Date: {{ formatDateTime(exhibition.data.start_date) }}</p>
       </div>
     </div>
   </div>

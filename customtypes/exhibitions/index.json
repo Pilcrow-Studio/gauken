@@ -69,10 +69,15 @@
           "repeat": false
         }
       },
-      "geopoint_location": {
-        "type": "GeoPoint",
+      "location_link": {
+        "type": "Link",
         "config": {
-          "label": "Geopoint Location"
+          "label": "Location Link",
+          "placeholder": "",
+          "select": null,
+          "allowTargetBlank": true,
+          "allowText": true,
+          "repeat": false
         }
       }
     },

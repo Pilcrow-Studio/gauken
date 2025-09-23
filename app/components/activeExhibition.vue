@@ -60,13 +60,13 @@ const formatExhibitionDates = (
           <span class="marquee-text text-[10px]">upcoming exhibition</span>
           <span class="marquee-text text-[10px]">come say hello</span>
         </div>
-        <div class="marquee-content">
+        <div class="marquee-content" aria-hidden="true">
           <span class="marquee-text text-[10px]">upcoming exhibition</span>
+          <span class="marquee-text text-[10px]">come say hello</span>
           <span class="marquee-text text-[10px]">upcoming exhibition</span>
+          <span class="marquee-text text-[10px]">come say hello</span>
           <span class="marquee-text text-[10px]">upcoming exhibition</span>
-          <span class="marquee-text text-[10px]">upcoming exhibition</span>
-          <span class="marquee-text text-[10px]">upcoming exhibition</span>
-          <span class="marquee-text text-[10px]">upcoming exhibition</span>
+          <span class="marquee-text text-[10px]">come say hello</span>
         </div>
       </div>
     </div>
@@ -76,7 +76,8 @@ const formatExhibitionDates = (
         :src="exhibition?.[0]?.data?.poster?.url"
         :alt="exhibition?.[0]?.data?.poster?.alt || 'Exhibition poster'"
         format="avif"
-        quality="40"
+        quality="70"
+        height="200"
         class="mb-2 w-full h-auto"
       />
       <div class="flex flex-col items-center text-center">
@@ -107,7 +108,7 @@ const formatExhibitionDates = (
 .marquee-container {
   display: flex;
   width: fit-content;
-  animation: scroll 40s linear infinite;
+  animation: scroll 25s linear infinite;
 }
 
 .marquee-content {
@@ -123,10 +124,10 @@ const formatExhibitionDates = (
 }
 
 @keyframes scroll {
-  from {
+  0% {
     transform: translateX(0);
   }
-  to {
+  100% {
     transform: translateX(-50%);
   }
 }

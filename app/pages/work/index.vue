@@ -18,14 +18,13 @@ const { data: art_pieces } = await useAsyncData("art_pieces", () =>
       <div v-for="art_piece in art_pieces" :key="art_piece.id">
         <NuxtImg
           :src="art_piece.data.artwork.url || ''"
+          :alt="art_piece.data.title || ''"
           format="avif"
           width="1000"
-          height="auto"
           quality="70"
           fit="contain"
           placeholder
           placeholder-class="w-full h-full bg-gray-200 object-cover"
-          class="object-fit"
         />
       </div>
     </div>

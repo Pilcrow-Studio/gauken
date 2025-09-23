@@ -467,15 +467,21 @@ interface ExhibitionsDocumentData {
   >;
 
   /**
-   * Geopoint Location field in *Exhibitions*
+   * Location Link field in *Exhibitions*
    *
-   * - **Field Type**: GeoPoint
+   * - **Field Type**: Link
    * - **Placeholder**: *None*
-   * - **API ID Path**: exhibitions.geopoint_location
+   * - **API ID Path**: exhibitions.location_link
    * - **Tab**: Main
-   * - **Documentation**: https://prismic.io/docs/fields/geopoint
+   * - **Documentation**: https://prismic.io/docs/fields/link
    */
-  geopoint_location: prismic.GeoPointField /**
+  location_link: prismic.LinkField<
+    string,
+    string,
+    unknown,
+    prismic.FieldState,
+    never
+  > /**
    * Meta Title field in *Exhibitions*
    *
    * - **Field Type**: Text

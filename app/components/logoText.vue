@@ -11,6 +11,8 @@ const { data: art_pieces } = await useLazyAsyncData("art_pieces_count", () =>
 );
 const art_piece_count = art_pieces.value?.length ?? 0;
 
+provide("art_piece_count", art_piece_count);
+
 const random_art_piece = computed(() => {
   return art_pieces.value?.[
     Math.floor(Math.random() * art_pieces.value.length)
@@ -19,8 +21,8 @@ const random_art_piece = computed(() => {
 </script>
 
 <template>
-  <div class="flex flex-col top-4 left-4 z-[9999] max-w-fit">
-    <NuxtLink to="/" class="mb-10 w-[40vw] max-w-[600px]">
+  <div class="flex flex-col z-[9999] max-w-fit">
+    <NuxtLink to="/" class="mb-10 w-[40vw] max-w-[600px]" aria-label="Gauken">
       <svg
         width="100%"
         viewBox="0 0 510 91"
@@ -52,20 +54,20 @@ const random_art_piece = computed(() => {
           fill="currentColor"
         />
       </svg>
+      <h1 class="hidden">Gauken</h1>
     </NuxtLink>
     <div v-if="isHome" class="grid grid-cols-12">
-      <NuxtLink to="/work" class="col-start-4 col-span-4"
+      <NuxtLink to="/work" class="col-start-3 col-span-4"
         >see all
         <ClientOnly>
           <span v-if="random_art_piece" class="p-1"
             ><NuxtImg
               format="avif"
               :src="random_art_piece.data.artwork.url ?? ''"
-              class="w-8 h-10 inline-block"
+              class="inline-block"
               height="40"
               quality="70"
               placeholder
-              placeholder-class="w-8 h-10 bg-gray-200 inline-block"
             />
           </span>
         </ClientOnly>

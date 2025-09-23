@@ -114,8 +114,7 @@ useHead({
             quality="70"
             height="1000"
             loading="eager"
-            fit="cover"
-            class="max-h-[60vh]"
+            fit="fit"
           />
           <p class="text-sm mt-2">{{ art_pieces?.[0]?.data.title }}</p>
         </div>
@@ -131,8 +130,7 @@ useHead({
             quality="70"
             height="1000"
             loading="eager"
-            fit="cover"
-            class="max-h-[60vh]"
+            fit="fit"
           />
           <p class="text-sm mt-2">{{ art_pieces?.[1]?.data.title }}</p>
         </div>
