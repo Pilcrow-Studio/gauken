@@ -3,7 +3,7 @@ const currentYear = new Date().getFullYear();
 </script>
 
 <template>
-  <div class="opacity-60">
+  <div class="transition-opacity duration-300 text-gray-400 dark:text-gray-600">
     <div class="fixed bottom-5 left-5 z-50">
       <p>Gauken aka David Wilson {{ currentYear }}</p>
     </div>

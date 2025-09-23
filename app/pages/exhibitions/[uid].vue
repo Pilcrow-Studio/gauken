@@ -73,18 +73,27 @@ const formatDateTime = (timestamp: string) => {
 </script>
 
 <template>
-  <div>
-    <div class="h-screen flex flex-col justify-center items-center">
+  <div class="grid grid-cols-12 mt-12">
+    <div class="col-start-4 col-span-6">
+      <NuxtImg
+        :src="exhibition?.data.poster?.url || ''"
+        format="avif"
+        quality="70"
+        height="300"
+        loading="eager"
+        fit="cover"
+        class="mb-4"
+      />
       <h1 class="text-4xl font-bold">{{ exhibition?.data.title }}</h1>
-    </div>
-    <div v-if="exhibition?.data.description">
-      <PrismicRichText :field="exhibition.data.description" />
-    </div>
-    <div v-if="exhibition?.data.banner_image">
-      <PrismicImage :field="exhibition.data.banner_image" />
-    </div>
-    <div v-if="exhibition?.data.start_date">
-      <p>Date: {{ formatDateTime(exhibition.data.start_date) }}</p>
+      <div v-if="exhibition?.data.description">
+        <PrismicRichText :field="exhibition.data.description" />
+      </div>
+      <div v-if="exhibition?.data.banner_image">
+        <PrismicImage :field="exhibition.data.banner_image" />
+      </div>
+      <div v-if="exhibition?.data.start_date">
+        <p>Date: {{ formatDateTime(exhibition.data.start_date) }}</p>
+      </div>
     </div>
   </div>
 </template>

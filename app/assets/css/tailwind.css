@@ -29,3 +29,7 @@ section {
 body {
   @apply font-serif;
 }
+
+html {
+  @apply bg-white dark:bg-black;
+}

@@ -69,6 +69,67 @@ type ContentRelationshipFieldWithData<
   >;
 }[Exclude<TCustomType[number], string>["id"]];
 
+type AboutDocumentDataSlicesSlice = RichTextSlice;
+
+/**
+ * Content for About documents
+ */
+interface AboutDocumentData {
+  /**
+   * Slice Zone field in *About*
+   *
+   * - **Field Type**: Slice Zone
+   * - **Placeholder**: *None*
+   * - **API ID Path**: about.slices[]
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/slices
+   */
+  slices: prismic.SliceZone<AboutDocumentDataSlicesSlice> /**
+   * Meta Title field in *About*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: A title of the page used for social media and search engines
+   * - **API ID Path**: about.meta_title
+   * - **Tab**: SEO & Metadata
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */;
+  meta_title: prismic.KeyTextField;
+
+  /**
+   * Meta Description field in *About*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: A brief summary of the page
+   * - **API ID Path**: about.meta_description
+   * - **Tab**: SEO & Metadata
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  meta_description: prismic.KeyTextField;
+
+  /**
+   * Meta Image field in *About*
+   *
+   * - **Field Type**: Image
+   * - **Placeholder**: *None*
+   * - **API ID Path**: about.meta_image
+   * - **Tab**: SEO & Metadata
+   * - **Documentation**: https://prismic.io/docs/fields/image
+   */
+  meta_image: prismic.ImageField<never>;
+}
+
+/**
+ * About document from Prismic
+ *
+ * - **API ID**: `about`
+ * - **Repeatable**: `false`
+ * - **Documentation**: https://prismic.io/docs/content-modeling
+ *
+ * @typeParam Lang - Language API ID of the document.
+ */
+export type AboutDocument<Lang extends string = string> =
+  prismic.PrismicDocumentWithoutUID<Simplify<AboutDocumentData>, "about", Lang>;
+
 /**
  * Content for Art Piece documents
  */
@@ -516,6 +577,17 @@ interface FrontPageDocumentData {
   title: prismic.KeyTextField;
 
   /**
+   * Introductory Text field in *Front Page*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: front_page.introductory_text
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/rich-text
+   */
+  introductory_text: prismic.RichTextField;
+
+  /**
    * Slice Zone field in *Front Page*
    *
    * - **Field Type**: Slice Zone
@@ -705,6 +777,7 @@ export type PageDocument<Lang extends string = string> =
   prismic.PrismicDocumentWithUID<Simplify<PageDocumentData>, "page", Lang>;
 
 export type AllDocumentTypes =
+  | AboutDocument
   | ArtPieceDocument
   | CollectionDocument
   | ExhibitionsDocument
@@ -854,6 +927,9 @@ declare module "@prismicio/client" {
 
   namespace Content {
     export type {
+      AboutDocument,
+      AboutDocumentData,
+      AboutDocumentDataSlicesSlice,
       ArtPieceDocument,
       ArtPieceDocumentData,
       CollectionDocument,

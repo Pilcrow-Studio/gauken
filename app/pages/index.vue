@@ -3,13 +3,7 @@
 
 // const { formatCurrency } = useCurrency();
 
-// Access header height from layout
-const headerHeight = inject("headerHeight", ref(0));
-
-// Debug the header height
-watchEffect(() => {
-  console.log("Header height:", headerHeight.value);
-});
+const isGlobalHovered = inject("isGlobalHovered", ref(false));
 
 const prismic = usePrismic();
 const { data: page } = await useAsyncData("index", () =>
@@ -97,27 +91,59 @@ useHead({
 </script>
 
 <template>
-  <div :style="{ paddingTop: `${headerHeight}px` }">
-    <div class="h-full">
-      <div class="max-h-full grid grid-cols-12 gap-6 h-full">
-        <div class="col-start-1 col-end-3 pl-4 pt-16">
-          <p class="text-lg tracking-tight">
-            David N. R. Wilson aka. Gauken is a Norwegian artist that uses...
-            and .... to create otherworldy ....
-          </p>
+  <div>
+    <div>
+      <div class="grid grid-cols-12 pb-24">
+        <div
+          class="col-start-1 col-span-2 pl-4 pt-16 transition-opacity duration-300"
+          :class="{ 'opacity-30': isGlobalHovered }"
+        >
+          <div class="text-lg tracking-tight max-w-prose">
+            <PrismicRichText :field="page?.data.introductory_text" />
+          </div>
         </div>
         <div
-          class="col-start-4 col-end-10 max-h-full flex flex-col justify-center items-center bg-black p-4"
+          class="bg-black col-start-4 col-span-6 flex flex-col justify-center items-center p-4 transition-all duration-300 cursor-pointer"
+          @mouseenter="isGlobalHovered = true"
+          @mouseleave="isGlobalHovered = false"
         >
           <NuxtImg
             v-if="art_pieces?.[0]?.data.artwork.url"
             :src="art_pieces?.[0]?.data.artwork.url"
             format="avif"
             quality="70"
-            height="588"
+            height="1000"
             loading="eager"
-            class="max-w-full max-h-full object-contain"
+            fit="cover"
+            class="max-h-[60vh]"
           />
+          <p class="text-sm mt-2">{{ art_pieces?.[0]?.data.title }}</p>
+        </div>
+        <div
+          class="col-start-4 col-span-6 flex flex-col justify-center items-center p-4 transition-all duration-300 cursor-pointer"
+          @mouseenter="isGlobalHovered = true"
+          @mouseleave="isGlobalHovered = false"
+        >
+          <NuxtImg
+            v-if="art_pieces?.[1]?.data.artwork.url"
+            :src="art_pieces?.[1]?.data.artwork.url"
+            format="avif"
+            quality="70"
+            height="1000"
+            loading="eager"
+            fit="cover"
+            class="max-h-[60vh]"
+          />
+          <p class="text-sm mt-2">{{ art_pieces?.[1]?.data.title }}</p>
+        </div>
+        <div
+          class="col-start-4 col-span-6 py-24 flex flex-col justify-center items-center p-4 transition-all duration-300 cursor-pointer"
+        >
+          <p class="text-3xl mt-2 text-center mb-4">
+            This is some text we can use to describe the art piece maybe we can
+            make it break across multiple lines
+          </p>
+          <NuxtLink to="/about"> About the artist → </NuxtLink>
         </div>
       </div>
     </div>

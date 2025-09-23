@@ -44,6 +44,7 @@ const formatExhibitionDates = (
 
 <template>
   <NuxtLink
+    v-if="exhibition?.[0]?.uid"
     :to="`/exhibitions/${exhibition?.[0]?.uid}`"
     class="exhibition-link hover:no-underline"
   >
