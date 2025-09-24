@@ -4,7 +4,7 @@ const currentYear = new Date().getFullYear();
 
 <template>
   <div
-    class="fixed lg:bottom-4 lg:left-4 lg:right-4 bottom-1 left-1 right-1 z-50 transition-opacity duration-300 text-gray-400 dark:text-gray-600"
+    class="lg:fixed lg:bottom-4 lg:left-4 lg:right-4 bottom-1 left-1 right-1 z-50 transition-opacity duration-300 text-gray-400 dark:text-gray-600"
   >
     <div
       class="max-w-[1920px] lg:px-4 px-1 w-full mx-auto flex justify-between"

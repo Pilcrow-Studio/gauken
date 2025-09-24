@@ -22,7 +22,7 @@ provide("isGlobalHovered", isGlobalHovered);
       </div>
     </div>
     <BottomNav
-      class="transition-opacity duration-300"
+      class="transition-opacity duration-300 hidden lg:block"
       :class="{ 'opacity-30': isGlobalHovered }"
     />
     <main class="z-[9999]">

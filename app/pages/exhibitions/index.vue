@@ -107,8 +107,8 @@ useHead({
 </script>
 
 <template>
-  <div class="grid grid-cols-12 mt-24 text-center px-4">
-    <div class="col-start-1 col-span-12 flex flex-col gap-4">
+  <div class="mt-24 text-center px-4">
+    <div class="flex flex-col gap-4">
       <div
         v-for="exhibition in exhibitions"
         :key="exhibition.id"
@@ -116,7 +116,7 @@ useHead({
       >
         <NuxtLink :to="`/exhibitions/${exhibition.uid}`">
           <div
-            class="w-full grid grid-cols-12 gap-4 items-start exhibition-link hover:no-underline"
+            class="w-full grid grid-cols-8 md:grid-cols-12 gap-4 items-start exhibition-link hover:no-underline"
           >
             <NuxtImg
               :src="exhibition.data.poster.url || ''"
@@ -124,9 +124,11 @@ useHead({
               quality="70"
               height="100"
               fit="contain"
-              class="col-start-1 col-span-1"
+              class="col-start-1 col-span-2 md:col-span-1 md:col-start-1 lg:col-span-1"
             />
-            <div class="text-left col-span-3">
+            <div
+              class="text-left col-start-3 col-span-5 md:col-start-2 md:col-span-5 lg:col-start-2 lg:col-span-5"
+            >
               <h2>{{ exhibition.data.title }}</h2>
               <p class="text-xs">
                 {{
