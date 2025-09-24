@@ -22,7 +22,7 @@ const random_art_piece = computed(() => {
 
 <template>
   <div class="flex flex-col z-[9999] max-w-fit">
-    <NuxtLink to="/" class="mb-10 w-[40vw] max-w-[600px]" aria-label="Gauken">
+    <NuxtLink to="/" class="mb-10 w-[50vw] max-w-[600px]" aria-label="Gauken">
       <svg
         width="100%"
         viewBox="0 0 510 91"
@@ -56,8 +56,10 @@ const random_art_piece = computed(() => {
       </svg>
       <h1 class="hidden">Gauken</h1>
     </NuxtLink>
-    <div v-if="isHome" class="grid grid-cols-12">
-      <NuxtLink to="/work" class="col-start-3 col-span-4"
+    <div v-if="isHome" class="grid lg:grid-cols-12 grid-cols-4">
+      <NuxtLink
+        to="/work"
+        class="col-start-1 col-span-12 lg:col-start-3 lg:col-span-4"
         >see all
         <ClientOnly>
           <span v-if="random_art_piece" class="p-1"

@@ -95,9 +95,9 @@ useHead({
 <template>
   <div>
     <div>
-      <div class="grid grid-cols-12 pb-24">
+      <div class="grid lg:grid-cols-12 grid-cols-1 pb-24">
         <div
-          class="col-start-1 col-span-2 pl-4 pt-16 transition-opacity duration-300"
+          class="col-start-1 col-span-12 lg:col-span-2 pl-4 pt-16 transition-opacity duration-300"
           :class="{ 'opacity-30': isGlobalHovered }"
         >
           <div class="text-lg tracking-tight max-w-prose">
@@ -107,7 +107,7 @@ useHead({
         <div
           v-for="(art_piece, index) in art_pieces"
           :key="art_piece.id"
-          class="col-start-4 col-span-6 flex flex-col justify-center items-center p-4 transition-all duration-300 cursor-pointer"
+          class="lg:col-start-4 col-start-1 lg:col-span-6 col-span-12 flex flex-col justify-center items-center p-4 transition-all duration-300 cursor-pointer"
           @mouseenter="isGlobalHovered = false"
           @mouseleave="isGlobalHovered = false"
         >
