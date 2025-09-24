@@ -13,7 +13,7 @@ provide("isGlobalHovered", isGlobalHovered);
       <div
         class="max-w-[1920px] w-full mx-auto grid lg:grid-cols-12 sm:grid-cols-2 gap-4"
       >
-        <Nav class="lg:col-start-10 pointer-events-auto" />
+        <Nav class="lg:col-start-9 lg:col-span-2 pointer-events-auto" />
         <ActiveExhibition
           class="lg:block md:hidden sm:hidden col-start-12 col-end-13 pointer-events-auto"
         />
@@ -32,5 +32,6 @@ provide("isGlobalHovered", isGlobalHovered);
         <NuxtPage class="grow" />
       </div>
     </main>
+    <Footer />
   </div>
 </template>

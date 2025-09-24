@@ -31,10 +31,6 @@ useSeoMeta({
   twitterDescription: art_piece.value?.data.meta_description,
   twitterImage: art_piece.value?.data.meta_image?.url,
 });
-
-definePageMeta({
-  layout: "artwork",
-});
 </script>
 
 <template>

@@ -1,5 +1,10 @@
 <script setup lang="ts">
 const prismic = usePrismic();
+
+const { data: work } = await useAsyncData("work", () =>
+  prismic.client.getSingle("work")
+);
+
 const { data: art_pieces } = await useAsyncData("art_pieces", () =>
   prismic.client.getAllByType("art_piece", {
     orderings: {
@@ -8,6 +13,48 @@ const { data: art_pieces } = await useAsyncData("art_pieces", () =>
     },
   })
 );
+
+useHead({
+  title: "Work",
+  meta: [
+    {
+      name: "description",
+      content: work.value?.data.meta_description,
+    },
+    {
+      property: "og:title",
+      content: work.value?.data.meta_title,
+    },
+    {
+      property: "og:description",
+      content: work.value?.data.meta_description,
+    },
+    {
+      property: "og:image",
+      content: work.value?.data.meta_image?.url,
+    },
+    {
+      property: "og:type",
+      content: "website",
+    },
+    {
+      name: "twitter:card",
+      content: "summary_large_image",
+    },
+    {
+      name: "twitter:title",
+      content: work.value?.data.meta_title,
+    },
+    {
+      name: "twitter:description",
+      content: work.value?.data.meta_description,
+    },
+    {
+      name: "twitter:image",
+      content: work.value?.data.meta_image?.url,
+    },
+  ],
+});
 </script>
 
 <template>

@@ -1,0 +1,67 @@
+{
+  "id": "gallery",
+  "type": "SharedSlice",
+  "name": "Gallery",
+  "description": "Gallery",
+  "variations": [
+    {
+      "id": "default",
+      "name": "Default",
+      "docURL": "...",
+      "version": "initial",
+      "description": "Default",
+      "imageUrl": "",
+      "primary": {
+        "art_piece": {
+          "type": "Group",
+          "config": {
+            "label": "Art Piece",
+            "repeat": true,
+            "fields": {
+              "art_piece": {
+                "type": "Link",
+                "config": {
+                  "label": "Art Piece",
+                  "select": "document",
+                  "repeat": false,
+                  "customtypes": [
+                    {
+                      "id": "art_piece",
+                      "fields": [
+                        "artwork",
+                        "title",
+                        "description",
+                        "size",
+                        "price",
+                        {
+                          "id": "collection",
+                          "customtypes": [
+                            {
+                              "id": "collection",
+                              "fields": [
+                                "title",
+                                "summary",
+                                "exhibition",
+                                {
+                                  "id": "artworks",
+                                  "fields": [
+                                    "artwork"
+                                  ]
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      },
+      "items": {}
+    }
+  ]
+}

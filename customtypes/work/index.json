@@ -1,7 +1,7 @@
 {
   "format": "page",
-  "id": "about",
-  "label": "About",
+  "id": "work",
+  "label": "Work",
   "repeatable": false,
   "status": true,
   "json": {
@@ -24,11 +24,7 @@
         "type": "Slices",
         "fieldset": "Slice Zone",
         "config": {
-          "choices": {
-            "rich_text": {
-              "type": "SharedSlice"
-            }
-          }
+          "choices": {}
         }
       }
     },

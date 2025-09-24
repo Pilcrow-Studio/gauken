@@ -6,7 +6,7 @@
 const isGlobalHovered = inject("isGlobalHovered", ref(false));
 
 const prismic = usePrismic();
-const { data: page } = await useAsyncData("index", () =>
+const { data: front_page } = await useAsyncData("index", () =>
   prismic.client.getSingle("front_page")
 );
 
@@ -23,11 +23,11 @@ const { data: art_pieces } = await useAsyncData("art_pieces", () =>
 const { ssrContext } = useNuxtApp();
 if (ssrContext && ssrContext.res) {
   // Tag with front page ID
-  if (page.value?.id) {
+  if (front_page.value?.id) {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     (ssrContext.res as any).setHeader(
       "Netlify-Cache-Tag",
-      `front-page-${page.value.id}`
+      `front-page-${front_page.value.id}`
     );
   }
 
@@ -52,19 +52,19 @@ useHead({
   meta: [
     {
       name: "description",
-      content: page.value?.data.meta_description,
+      content: front_page.value?.data.meta_description,
     },
     {
       property: "og:title",
-      content: page.value?.data.meta_title,
+      content: front_page.value?.data.meta_title,
     },
     {
       property: "og:description",
-      content: page.value?.data.meta_description,
+      content: front_page.value?.data.meta_description,
     },
     {
       property: "og:image",
-      content: page.value?.data.meta_image?.url,
+      content: front_page.value?.data.meta_image?.url,
     },
     {
       property: "og:type",
@@ -76,15 +76,15 @@ useHead({
     },
     {
       name: "twitter:title",
-      content: page.value?.data.meta_title,
+      content: front_page.value?.data.meta_title,
     },
     {
       name: "twitter:description",
-      content: page.value?.data.meta_description,
+      content: front_page.value?.data.meta_description,
     },
     {
       name: "twitter:image",
-      content: page.value?.data.meta_image?.url,
+      content: front_page.value?.data.meta_image?.url,
     },
   ],
 });
@@ -99,7 +99,7 @@ useHead({
           :class="{ 'opacity-30': isGlobalHovered }"
         >
           <div class="text-lg tracking-tight max-w-prose">
-            <PrismicRichText :field="page?.data.introductory_text" />
+            <PrismicRichText :field="front_page?.data.introductory_text" />
           </div>
         </div>
         <div
@@ -200,7 +200,7 @@ useHead({
           </motion.div>
         </div>
       </section>
-      <SliceZone :slices="page?.data.slices ?? []" :components="components" />
+      <SliceZone :slices="front_page?.data.slices ?? []" :components="components" />
   
     </div>
     -->

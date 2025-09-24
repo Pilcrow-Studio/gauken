@@ -1,6 +1,8 @@
 <script setup lang="ts">
 const prismic = usePrismic();
 const route = useRoute();
+const { formatDateTime } = useDateFormat();
+
 const { data: exhibition } = await useAsyncData(
   route.params.uid as string,
   () => prismic.client.getByUID("exhibitions", route.params.uid as string)
@@ -59,17 +61,6 @@ useHead({
     },
   ],
 });
-
-const formatDateTime = (timestamp: string) => {
-  const date = new Date(timestamp);
-  const day = date.getDate().toString().padStart(2, "0");
-  const month = (date.getMonth() + 1).toString().padStart(2, "0");
-  const year = date.getFullYear();
-  const hours = date.getHours().toString().padStart(2, "0");
-  const minutes = date.getMinutes().toString().padStart(2, "0");
-
-  return `${day}/${month}/${year} ${hours}:${minutes}`;
-};
 </script>
 
 <template>
@@ -88,7 +79,13 @@ const formatDateTime = (timestamp: string) => {
 
       <h1 class="mb-4">{{ exhibition?.data.title }}</h1>
       <div class="mb-4">
-        <div v-if="exhibition?.data.location">
+        <div
+          v-if="
+            exhibition?.data.location &&
+            exhibition.data.location.link_type === 'Web' &&
+            exhibition.data.location.url
+          "
+        >
           <NuxtLink
             :to="exhibition.data.location.url"
             target="_blank"

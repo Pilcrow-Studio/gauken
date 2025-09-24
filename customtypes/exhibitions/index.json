@@ -1,7 +1,7 @@
 {
   "format": "custom",
   "id": "exhibitions",
-  "label": "Exhibitions",
+  "label": "Exhibition",
   "repeatable": true,
   "status": true,
   "json": {
@@ -10,14 +10,6 @@
         "type": "Image",
         "config": {
           "label": "Poster",
-          "constraint": {},
-          "thumbnails": []
-        }
-      },
-      "banner_image": {
-        "type": "Image",
-        "config": {
-          "label": "Banner Image",
           "constraint": {},
           "thumbnails": []
         }
@@ -44,6 +36,29 @@
           "multi": "paragraph,preformatted,heading1,heading2,heading3,heading4,heading5,heading6,strong,em,hyperlink,image,embed,list-item,o-list-item,rtl"
         }
       },
+      "exhibition_artworks": {
+        "type": "Group",
+        "config": {
+          "label": "Exhibition Artworks",
+          "repeat": true,
+          "fields": {
+            "artworks": {
+              "type": "Link",
+              "config": {
+                "label": "Artworks",
+                "select": "document",
+                "repeat": false,
+                "customtypes": [
+                  {
+                    "id": "art_piece",
+                    "fields": ["artwork"]
+                  }
+                ]
+              }
+            }
+          }
+        }
+      },
       "start_date": {
         "type": "Timestamp",
         "config": {
@@ -62,17 +77,6 @@
         "type": "Link",
         "config": {
           "label": "Location",
-          "placeholder": "",
-          "select": null,
-          "allowTargetBlank": true,
-          "allowText": true,
-          "repeat": false
-        }
-      },
-      "location_link": {
-        "type": "Link",
-        "config": {
-          "label": "Location Link",
           "placeholder": "",
           "select": null,
           "allowTargetBlank": true,

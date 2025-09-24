@@ -96,9 +96,29 @@ export default defineNuxtConfig({
           path: "/:uid",
         },
         {
-          type: "page",
+          type: "front_page",
           uid: "home",
           path: "/",
+        },
+        {
+          type: "work",
+          uid: "work",
+          path: "/work",
+        },
+        {
+          type: "about",
+          uid: "about",
+          path: "/about",
+        },
+        {
+          type: "contact",
+          uid: "contact",
+          path: "/contact",
+        },
+        {
+          type: "exhibitions_overview",
+          uid: "exhibitions",
+          path: "/exhibitions",
         },
         {
           type: "exhibitions",
@@ -109,6 +129,7 @@ export default defineNuxtConfig({
           path: "/work/:uid",
         },
       ],
+      brokenRoute: "/404",
     },
   },
   compatibilityDate: "2025-07-16",

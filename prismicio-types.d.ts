@@ -76,6 +76,17 @@ type AboutDocumentDataSlicesSlice = RichTextSlice;
  */
 interface AboutDocumentData {
   /**
+   * Title field in *About*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: about.title
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  title: prismic.KeyTextField;
+
+  /**
    * Slice Zone field in *About*
    *
    * - **Field Type**: Slice Zone
@@ -128,7 +139,7 @@ interface AboutDocumentData {
  * @typeParam Lang - Language API ID of the document.
  */
 export type AboutDocument<Lang extends string = string> =
-  prismic.PrismicDocumentWithoutUID<Simplify<AboutDocumentData>, "about", Lang>;
+  prismic.PrismicDocumentWithUID<Simplify<AboutDocumentData>, "about", Lang>;
 
 /**
  * Content for Art Piece documents
@@ -379,12 +390,105 @@ export type CollectionDocument<Lang extends string = string> =
     Lang
   >;
 
+type ContactDocumentDataSlicesSlice = RichTextSlice;
+
 /**
- * Content for Exhibitions documents
+ * Content for Contact documents
+ */
+interface ContactDocumentData {
+  /**
+   * Title field in *Contact*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: contact.title
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  title: prismic.KeyTextField;
+
+  /**
+   * Slice Zone field in *Contact*
+   *
+   * - **Field Type**: Slice Zone
+   * - **Placeholder**: *None*
+   * - **API ID Path**: contact.slices[]
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/slices
+   */
+  slices: prismic.SliceZone<ContactDocumentDataSlicesSlice> /**
+   * Meta Title field in *Contact*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: A title of the page used for social media and search engines
+   * - **API ID Path**: contact.meta_title
+   * - **Tab**: SEO & Metadata
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */;
+  meta_title: prismic.KeyTextField;
+
+  /**
+   * Meta Description field in *Contact*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: A brief summary of the page
+   * - **API ID Path**: contact.meta_description
+   * - **Tab**: SEO & Metadata
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  meta_description: prismic.KeyTextField;
+
+  /**
+   * Meta Image field in *Contact*
+   *
+   * - **Field Type**: Image
+   * - **Placeholder**: *None*
+   * - **API ID Path**: contact.meta_image
+   * - **Tab**: SEO & Metadata
+   * - **Documentation**: https://prismic.io/docs/fields/image
+   */
+  meta_image: prismic.ImageField<never>;
+}
+
+/**
+ * Contact document from Prismic
+ *
+ * - **API ID**: `contact`
+ * - **Repeatable**: `false`
+ * - **Documentation**: https://prismic.io/docs/content-modeling
+ *
+ * @typeParam Lang - Language API ID of the document.
+ */
+export type ContactDocument<Lang extends string = string> =
+  prismic.PrismicDocumentWithUID<
+    Simplify<ContactDocumentData>,
+    "contact",
+    Lang
+  >;
+
+/**
+ * Item in *Exhibition → Exhibition Artworks*
+ */
+export interface ExhibitionsDocumentDataExhibitionArtworksItem {
+  /**
+   * Artworks field in *Exhibition → Exhibition Artworks*
+   *
+   * - **Field Type**: Content Relationship
+   * - **Placeholder**: *None*
+   * - **API ID Path**: exhibitions.exhibition_artworks[].artworks
+   * - **Documentation**: https://prismic.io/docs/fields/content-relationship
+   */
+  artworks: ContentRelationshipFieldWithData<
+    [{ id: "art_piece"; fields: ["artwork"] }]
+  >;
+}
+
+/**
+ * Content for Exhibition documents
  */
 interface ExhibitionsDocumentData {
   /**
-   * Poster field in *Exhibitions*
+   * Poster field in *Exhibition*
    *
    * - **Field Type**: Image
    * - **Placeholder**: *None*
@@ -395,18 +499,7 @@ interface ExhibitionsDocumentData {
   poster: prismic.ImageField<never>;
 
   /**
-   * Banner Image field in *Exhibitions*
-   *
-   * - **Field Type**: Image
-   * - **Placeholder**: *None*
-   * - **API ID Path**: exhibitions.banner_image
-   * - **Tab**: Main
-   * - **Documentation**: https://prismic.io/docs/fields/image
-   */
-  banner_image: prismic.ImageField<never>;
-
-  /**
-   * Title field in *Exhibitions*
+   * Title field in *Exhibition*
    *
    * - **Field Type**: Text
    * - **Placeholder**: *None*
@@ -417,7 +510,7 @@ interface ExhibitionsDocumentData {
   title: prismic.KeyTextField;
 
   /**
-   * Description field in *Exhibitions*
+   * Description field in *Exhibition*
    *
    * - **Field Type**: Rich Text
    * - **Placeholder**: *None*
@@ -428,7 +521,20 @@ interface ExhibitionsDocumentData {
   description: prismic.RichTextField;
 
   /**
-   * Start Date field in *Exhibitions*
+   * Exhibition Artworks field in *Exhibition*
+   *
+   * - **Field Type**: Group
+   * - **Placeholder**: *None*
+   * - **API ID Path**: exhibitions.exhibition_artworks[]
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/repeatable-group
+   */
+  exhibition_artworks: prismic.GroupField<
+    Simplify<ExhibitionsDocumentDataExhibitionArtworksItem>
+  >;
+
+  /**
+   * Start Date field in *Exhibition*
    *
    * - **Field Type**: Timestamp
    * - **Placeholder**: *None*
@@ -439,7 +545,7 @@ interface ExhibitionsDocumentData {
   start_date: prismic.TimestampField;
 
   /**
-   * End Date field in *Exhibitions*
+   * End Date field in *Exhibition*
    *
    * - **Field Type**: Date
    * - **Placeholder**: *None*
@@ -450,7 +556,7 @@ interface ExhibitionsDocumentData {
   end_date: prismic.DateField;
 
   /**
-   * Location field in *Exhibitions*
+   * Location field in *Exhibition*
    *
    * - **Field Type**: Link
    * - **Placeholder**: *None*
@@ -464,25 +570,8 @@ interface ExhibitionsDocumentData {
     unknown,
     prismic.FieldState,
     never
-  >;
-
-  /**
-   * Location Link field in *Exhibitions*
-   *
-   * - **Field Type**: Link
-   * - **Placeholder**: *None*
-   * - **API ID Path**: exhibitions.location_link
-   * - **Tab**: Main
-   * - **Documentation**: https://prismic.io/docs/fields/link
-   */
-  location_link: prismic.LinkField<
-    string,
-    string,
-    unknown,
-    prismic.FieldState,
-    never
   > /**
-   * Meta Title field in *Exhibitions*
+   * Meta Title field in *Exhibition*
    *
    * - **Field Type**: Text
    * - **Placeholder**: *None*
@@ -493,7 +582,7 @@ interface ExhibitionsDocumentData {
   meta_title: prismic.KeyTextField;
 
   /**
-   * Meta Description field in *Exhibitions*
+   * Meta Description field in *Exhibition*
    *
    * - **Field Type**: Text
    * - **Placeholder**: *None*
@@ -504,7 +593,7 @@ interface ExhibitionsDocumentData {
   meta_description: prismic.KeyTextField;
 
   /**
-   * Meta Image field in *Exhibitions*
+   * Meta Image field in *Exhibition*
    *
    * - **Field Type**: Image
    * - **Placeholder**: *None*
@@ -516,7 +605,7 @@ interface ExhibitionsDocumentData {
 }
 
 /**
- * Exhibitions document from Prismic
+ * Exhibition document from Prismic
  *
  * - **API ID**: `exhibitions`
  * - **Repeatable**: `true`
@@ -528,6 +617,82 @@ export type ExhibitionsDocument<Lang extends string = string> =
   prismic.PrismicDocumentWithUID<
     Simplify<ExhibitionsDocumentData>,
     "exhibitions",
+    Lang
+  >;
+
+type ExhibitionsOverviewDocumentDataSlicesSlice = never;
+
+/**
+ * Content for Exhibitions Overview documents
+ */
+interface ExhibitionsOverviewDocumentData {
+  /**
+   * Title field in *Exhibitions Overview*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: exhibitions_overview.title
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  title: prismic.KeyTextField;
+
+  /**
+   * Slice Zone field in *Exhibitions Overview*
+   *
+   * - **Field Type**: Slice Zone
+   * - **Placeholder**: *None*
+   * - **API ID Path**: exhibitions_overview.slices[]
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/slices
+   */
+  slices: prismic.SliceZone<ExhibitionsOverviewDocumentDataSlicesSlice> /**
+   * Meta Title field in *Exhibitions Overview*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: A title of the page used for social media and search engines
+   * - **API ID Path**: exhibitions_overview.meta_title
+   * - **Tab**: SEO & Metadata
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */;
+  meta_title: prismic.KeyTextField;
+
+  /**
+   * Meta Description field in *Exhibitions Overview*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: A brief summary of the page
+   * - **API ID Path**: exhibitions_overview.meta_description
+   * - **Tab**: SEO & Metadata
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  meta_description: prismic.KeyTextField;
+
+  /**
+   * Meta Image field in *Exhibitions Overview*
+   *
+   * - **Field Type**: Image
+   * - **Placeholder**: *None*
+   * - **API ID Path**: exhibitions_overview.meta_image
+   * - **Tab**: SEO & Metadata
+   * - **Documentation**: https://prismic.io/docs/fields/image
+   */
+  meta_image: prismic.ImageField<never>;
+}
+
+/**
+ * Exhibitions Overview document from Prismic
+ *
+ * - **API ID**: `exhibitions_overview`
+ * - **Repeatable**: `false`
+ * - **Documentation**: https://prismic.io/docs/content-modeling
+ *
+ * @typeParam Lang - Language API ID of the document.
+ */
+export type ExhibitionsOverviewDocument<Lang extends string = string> =
+  prismic.PrismicDocumentWithUID<
+    Simplify<ExhibitionsOverviewDocumentData>,
+    "exhibitions_overview",
     Lang
   >;
 
@@ -672,17 +837,6 @@ export interface GlobalNavigationDocumentDataLinksItem {
  */
 interface GlobalNavigationDocumentData {
   /**
-   * Logo field in *Global Navigation*
-   *
-   * - **Field Type**: Image
-   * - **Placeholder**: *None*
-   * - **API ID Path**: global_navigation.logo
-   * - **Tab**: Main
-   * - **Documentation**: https://prismic.io/docs/fields/image
-   */
-  logo: prismic.ImageField<never>;
-
-  /**
    * Links field in *Global Navigation*
    *
    * - **Field Type**: Group
@@ -782,15 +936,90 @@ interface PageDocumentData {
 export type PageDocument<Lang extends string = string> =
   prismic.PrismicDocumentWithUID<Simplify<PageDocumentData>, "page", Lang>;
 
+type WorkDocumentDataSlicesSlice = never;
+
+/**
+ * Content for Work documents
+ */
+interface WorkDocumentData {
+  /**
+   * Title field in *Work*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: work.title
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  title: prismic.KeyTextField;
+
+  /**
+   * Slice Zone field in *Work*
+   *
+   * - **Field Type**: Slice Zone
+   * - **Placeholder**: *None*
+   * - **API ID Path**: work.slices[]
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/slices
+   */
+  slices: prismic.SliceZone<WorkDocumentDataSlicesSlice> /**
+   * Meta Title field in *Work*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: A title of the page used for social media and search engines
+   * - **API ID Path**: work.meta_title
+   * - **Tab**: SEO & Metadata
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */;
+  meta_title: prismic.KeyTextField;
+
+  /**
+   * Meta Description field in *Work*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: A brief summary of the page
+   * - **API ID Path**: work.meta_description
+   * - **Tab**: SEO & Metadata
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  meta_description: prismic.KeyTextField;
+
+  /**
+   * Meta Image field in *Work*
+   *
+   * - **Field Type**: Image
+   * - **Placeholder**: *None*
+   * - **API ID Path**: work.meta_image
+   * - **Tab**: SEO & Metadata
+   * - **Documentation**: https://prismic.io/docs/fields/image
+   */
+  meta_image: prismic.ImageField<never>;
+}
+
+/**
+ * Work document from Prismic
+ *
+ * - **API ID**: `work`
+ * - **Repeatable**: `false`
+ * - **Documentation**: https://prismic.io/docs/content-modeling
+ *
+ * @typeParam Lang - Language API ID of the document.
+ */
+export type WorkDocument<Lang extends string = string> =
+  prismic.PrismicDocumentWithUID<Simplify<WorkDocumentData>, "work", Lang>;
+
 export type AllDocumentTypes =
   | AboutDocument
   | ArtPieceDocument
   | CollectionDocument
+  | ContactDocument
   | ExhibitionsDocument
+  | ExhibitionsOverviewDocument
   | FooterDocument
   | FrontPageDocument
   | GlobalNavigationDocument
-  | PageDocument;
+  | PageDocument
+  | WorkDocument;
 
 /**
  * Item in *Footer → Default → Primary → External Links*
@@ -868,6 +1097,95 @@ type FooterSliceVariation = FooterSliceDefault;
 export type FooterSlice = prismic.SharedSlice<"footer", FooterSliceVariation>;
 
 /**
+ * Item in *Gallery → Default → Primary → Art Piece*
+ */
+export interface GallerySliceDefaultPrimaryArtPieceItem {
+  /**
+   * Art Piece field in *Gallery → Default → Primary → Art Piece*
+   *
+   * - **Field Type**: Content Relationship
+   * - **Placeholder**: *None*
+   * - **API ID Path**: gallery.default.primary.art_piece[].art_piece
+   * - **Documentation**: https://prismic.io/docs/fields/content-relationship
+   */
+  art_piece: ContentRelationshipFieldWithData<
+    [
+      {
+        id: "art_piece";
+        fields: [
+          "artwork",
+          "title",
+          "description",
+          "size",
+          "price",
+          {
+            id: "collection";
+            customtypes: [
+              {
+                id: "collection";
+                fields: [
+                  "title",
+                  "summary",
+                  "exhibition",
+                  { id: "artworks"; fields: ["artwork"] },
+                ];
+              },
+            ];
+          },
+        ];
+      },
+    ]
+  >;
+}
+
+/**
+ * Primary content in *Gallery → Default → Primary*
+ */
+export interface GallerySliceDefaultPrimary {
+  /**
+   * Art Piece field in *Gallery → Default → Primary*
+   *
+   * - **Field Type**: Group
+   * - **Placeholder**: *None*
+   * - **API ID Path**: gallery.default.primary.art_piece[]
+   * - **Documentation**: https://prismic.io/docs/fields/repeatable-group
+   */
+  art_piece: prismic.GroupField<
+    Simplify<GallerySliceDefaultPrimaryArtPieceItem>
+  >;
+}
+
+/**
+ * Default variation for Gallery Slice
+ *
+ * - **API ID**: `default`
+ * - **Description**: Default
+ * - **Documentation**: https://prismic.io/docs/slices
+ */
+export type GallerySliceDefault = prismic.SharedSliceVariation<
+  "default",
+  Simplify<GallerySliceDefaultPrimary>,
+  never
+>;
+
+/**
+ * Slice variation for *Gallery*
+ */
+type GallerySliceVariation = GallerySliceDefault;
+
+/**
+ * Gallery Shared Slice
+ *
+ * - **API ID**: `gallery`
+ * - **Description**: Gallery
+ * - **Documentation**: https://prismic.io/docs/slices
+ */
+export type GallerySlice = prismic.SharedSlice<
+  "gallery",
+  GallerySliceVariation
+>;
+
+/**
  * Primary content in *RichText → Default → Primary*
  */
 export interface RichTextSliceDefaultPrimary {
@@ -941,8 +1259,15 @@ declare module "@prismicio/client" {
       CollectionDocument,
       CollectionDocumentData,
       CollectionDocumentDataArtworksItem,
+      ContactDocument,
+      ContactDocumentData,
+      ContactDocumentDataSlicesSlice,
       ExhibitionsDocument,
       ExhibitionsDocumentData,
+      ExhibitionsDocumentDataExhibitionArtworksItem,
+      ExhibitionsOverviewDocument,
+      ExhibitionsOverviewDocumentData,
+      ExhibitionsOverviewDocumentDataSlicesSlice,
       FooterDocument,
       FooterDocumentData,
       FooterDocumentDataSlicesSlice,
@@ -955,12 +1280,20 @@ declare module "@prismicio/client" {
       PageDocument,
       PageDocumentData,
       PageDocumentDataSlicesSlice,
+      WorkDocument,
+      WorkDocumentData,
+      WorkDocumentDataSlicesSlice,
       AllDocumentTypes,
       FooterSlice,
       FooterSliceDefaultPrimaryExternalLinksItem,
       FooterSliceDefaultPrimary,
       FooterSliceVariation,
       FooterSliceDefault,
+      GallerySlice,
+      GallerySliceDefaultPrimaryArtPieceItem,
+      GallerySliceDefaultPrimary,
+      GallerySliceVariation,
+      GallerySliceDefault,
       RichTextSlice,
       RichTextSliceDefaultPrimary,
       RichTextSliceVariation,

@@ -3,7 +3,7 @@ import { components } from "~/slices";
 
 const prismic = usePrismic();
 
-const { data: page } = await useAsyncData("page", () =>
+const { data: about } = await useAsyncData("about", () =>
   prismic.client.getSingle("about")
 );
 </script>
@@ -11,7 +11,7 @@ const { data: page } = await useAsyncData("page", () =>
 <template>
   <div class="grid grid-cols-12 mt-24 text-center">
     <div class="col-start-4 col-span-6">
-      <SliceZone :slices="page?.data.slices ?? []" :components="components" />
+      <SliceZone :slices="about?.data.slices ?? []" :components="components" />
     </div>
   </div>
 </template>
