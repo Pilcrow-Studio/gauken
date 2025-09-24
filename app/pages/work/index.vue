@@ -5,7 +5,7 @@ const { data: work } = await useAsyncData("work", () =>
   prismic.client.getSingle("work")
 );
 
-const { data: art_pieces } = await useAsyncData("art_pieces", () =>
+const { data: art_pieces } = await useAsyncData("all_art_pieces", () =>
   prismic.client.getAllByType("art_piece", {
     orderings: {
       field: "document.first_publication_date",
@@ -60,19 +60,21 @@ useHead({
 <template>
   <div class="grid grid-cols-12 mt-24 text-center">
     <div
-      class="p-4 grid lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 gap-4 col-start-1 col-span-12"
+      class="p-4 grid lg:grid-cols-2 md:grid-cols-2 sm:grid-cols-1 gap-4 col-start-1 col-span-12"
     >
       <div v-for="art_piece in art_pieces" :key="art_piece.id">
-        <NuxtImg
-          :src="art_piece.data.artwork.url || ''"
-          :alt="art_piece.data.title || ''"
-          format="avif"
-          width="1000"
-          quality="70"
-          fit="contain"
-          placeholder
-          placeholder-class="w-full h-full bg-gray-200 object-cover"
-        />
+        <NuxtLink :to="`/work/${art_piece.uid}`">
+          <NuxtImg
+            :src="art_piece.data.artwork.url || ''"
+            :alt="art_piece.data.title || ''"
+            format="avif"
+            width="1000"
+            quality="70"
+            fit="contain"
+            placeholder
+            placeholder-class="w-full h-full bg-gray-200 object-cover"
+          />
+        </NuxtLink>
       </div>
     </div>
   </div>

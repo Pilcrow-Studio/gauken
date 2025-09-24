@@ -1,0 +1,28 @@
+{
+  "id": "big_centered_text",
+  "type": "SharedSlice",
+  "name": "BigCenteredText",
+  "description": "BigCenteredText",
+  "variations": [
+    {
+      "id": "default",
+      "name": "Default",
+      "docURL": "...",
+      "version": "initial",
+      "description": "Default",
+      "imageUrl": "",
+      "primary": {
+        "text": {
+          "type": "StructuredText",
+          "config": {
+            "label": "Text",
+            "placeholder": "",
+            "allowTargetBlank": true,
+            "multi": "paragraph,preformatted,heading1,heading2,heading3,heading4,heading5,heading6,strong,em,image,embed,list-item,o-list-item,rtl,hyperlink"
+          }
+        }
+      },
+      "items": {}
+    }
+  ]
+}

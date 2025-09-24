@@ -42,6 +42,21 @@ h6 {
   @apply text-base;
 }
 
+.bigRichTextCentered {
+  @apply text-center;
+  @apply tracking-tight;
+  @apply mb-24;
+}
+.bigRichTextCentered p {
+  @apply text-3xl;
+  @apply mb-4;
+}
+
+.bigRichTextCentered a {
+  @apply text-lg;
+  @apply mt-4 mb-4;
+}
+
 section,
 header,
 footer {

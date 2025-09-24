@@ -150,14 +150,19 @@ useHead({
           @mousedown="handleMouseDown"
         >
           <div
-            v-for="exhibition_artworks in exhibition.data.exhibition_artworks"
-            :key="exhibition_artworks.artworks.data.id"
+            v-for="(exhibition_artworks, index) in exhibition.data
+              .exhibition_artworks"
+            :key="`${exhibition.id}-artwork-${index}`"
             class="flex-shrink-0 h-56"
           >
             <NuxtImg
-              v-if="exhibition_artworks.artworks.data.artwork"
-              :src="exhibition_artworks.artworks.data.artwork.url || ''"
-              :alt="exhibition_artworks.artworks.data.title || ''"
+              v-if="exhibition_artworks.artworks"
+              :src="
+                (exhibition_artworks.artworks as any).artwork?.url ||
+                (exhibition_artworks.artworks as any).data?.artwork?.url ||
+                ''
+              "
+              :alt="'Exhibition artwork'"
               format="avif"
               quality="70"
               height="224"

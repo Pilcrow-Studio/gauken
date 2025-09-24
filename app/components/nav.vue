@@ -2,7 +2,11 @@
 const prismic = usePrismic();
 const { data: global_navigation } = await useLazyAsyncData(
   "global_navigation",
-  () => prismic.client.getSingle("global_navigation")
+  () => prismic.client.getSingle("global_navigation"),
+  {
+    server: true,
+    default: () => ({ data: { links: [] } }),
+  }
 );
 </script>
 

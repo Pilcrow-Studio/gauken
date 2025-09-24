@@ -69,7 +69,7 @@ type ContentRelationshipFieldWithData<
   >;
 }[Exclude<TCustomType[number], string>["id"]];
 
-type AboutDocumentDataSlicesSlice = RichTextSlice;
+type AboutDocumentDataSlicesSlice = BigCenteredTextSlice;
 
 /**
  * Content for About documents
@@ -390,7 +390,7 @@ export type CollectionDocument<Lang extends string = string> =
     Lang
   >;
 
-type ContactDocumentDataSlicesSlice = RichTextSlice;
+type ContactDocumentDataSlicesSlice = BigCenteredTextSlice;
 
 /**
  * Content for Contact documents
@@ -730,7 +730,7 @@ export type FooterDocument<Lang extends string = string> =
     Lang
   >;
 
-type FrontPageDocumentDataSlicesSlice = never;
+type FrontPageDocumentDataSlicesSlice = BigCenteredTextSlice;
 
 /**
  * Content for Front Page documents
@@ -1022,6 +1022,51 @@ export type AllDocumentTypes =
   | WorkDocument;
 
 /**
+ * Primary content in *BigCenteredText → Default → Primary*
+ */
+export interface BigCenteredTextSliceDefaultPrimary {
+  /**
+   * Text field in *BigCenteredText → Default → Primary*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: big_centered_text.default.primary.text
+   * - **Documentation**: https://prismic.io/docs/fields/rich-text
+   */
+  text: prismic.RichTextField;
+}
+
+/**
+ * Default variation for BigCenteredText Slice
+ *
+ * - **API ID**: `default`
+ * - **Description**: Default
+ * - **Documentation**: https://prismic.io/docs/slices
+ */
+export type BigCenteredTextSliceDefault = prismic.SharedSliceVariation<
+  "default",
+  Simplify<BigCenteredTextSliceDefaultPrimary>,
+  never
+>;
+
+/**
+ * Slice variation for *BigCenteredText*
+ */
+type BigCenteredTextSliceVariation = BigCenteredTextSliceDefault;
+
+/**
+ * BigCenteredText Shared Slice
+ *
+ * - **API ID**: `big_centered_text`
+ * - **Description**: BigCenteredText
+ * - **Documentation**: https://prismic.io/docs/slices
+ */
+export type BigCenteredTextSlice = prismic.SharedSlice<
+  "big_centered_text",
+  BigCenteredTextSliceVariation
+>;
+
+/**
  * Item in *Footer → Default → Primary → External Links*
  */
 export interface FooterSliceDefaultPrimaryExternalLinksItem {
@@ -1284,6 +1329,10 @@ declare module "@prismicio/client" {
       WorkDocumentData,
       WorkDocumentDataSlicesSlice,
       AllDocumentTypes,
+      BigCenteredTextSlice,
+      BigCenteredTextSliceDefaultPrimary,
+      BigCenteredTextSliceVariation,
+      BigCenteredTextSliceDefault,
       FooterSlice,
       FooterSliceDefaultPrimaryExternalLinksItem,
       FooterSliceDefaultPrimary,

@@ -1,17 +1,19 @@
 <script setup lang="ts">
-// import { components } from "~/slices";
+import { components } from "~/slices";
 
 // const { formatCurrency } = useCurrency();
 
 const isGlobalHovered = inject("isGlobalHovered", ref(false));
 
 const prismic = usePrismic();
-const { data: front_page } = await useAsyncData("index", () =>
+// Use lazy loading for non-critical data to prevent blocking
+const { data: front_page } = await useLazyAsyncData("index", () =>
   prismic.client.getSingle("front_page")
 );
 
-const { data: art_pieces } = await useAsyncData("art_pieces", () =>
+const { data: art_pieces } = await useLazyAsyncData("art_pieces", () =>
   prismic.client.getAllByType("art_piece", {
+    limit: 3,
     orderings: {
       field: "document.first_publication_date",
       direction: "desc",
@@ -103,106 +105,48 @@ useHead({
           </div>
         </div>
         <div
-          class="bg-black col-start-4 col-span-6 flex flex-col justify-center items-center p-4 transition-all duration-300 cursor-pointer"
-          @mouseenter="isGlobalHovered = true"
-          @mouseleave="isGlobalHovered = false"
-        >
-          <NuxtImg
-            v-if="art_pieces?.[0]?.data.artwork.url"
-            :src="art_pieces?.[0]?.data.artwork.url"
-            format="avif"
-            quality="70"
-            height="1000"
-            loading="eager"
-            fit="fit"
-          />
-          <p class="text-sm mt-2">{{ art_pieces?.[0]?.data.title }}</p>
-        </div>
-        <div
+          v-for="(art_piece, index) in art_pieces"
+          :key="art_piece.id"
           class="col-start-4 col-span-6 flex flex-col justify-center items-center p-4 transition-all duration-300 cursor-pointer"
-          @mouseenter="isGlobalHovered = true"
+          @mouseenter="isGlobalHovered = false"
           @mouseleave="isGlobalHovered = false"
         >
-          <NuxtImg
-            v-if="art_pieces?.[1]?.data.artwork.url"
-            :src="art_pieces?.[1]?.data.artwork.url"
-            format="avif"
-            quality="70"
-            height="1000"
-            loading="eager"
-            fit="fit"
-          />
-          <p class="text-sm mt-2">{{ art_pieces?.[1]?.data.title }}</p>
+          <NuxtLink :to="`/work/${art_piece.uid}`">
+            <NuxtImg
+              :src="art_piece.data.artwork.url || ''"
+              format="avif"
+              quality="75"
+              height="1000"
+              width="800"
+              :loading="index === 0 ? 'eager' : 'lazy'"
+              :fetchpriority="index === 0 ? 'high' : 'auto'"
+              fit="fill"
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 800px"
+              :alt="
+                art_piece.data.artwork.alt ||
+                `Artwork by ${art_piece.data.title || 'David Wilson'}`
+              "
+            />
+          </NuxtLink>
         </div>
+
         <div
-          class="col-start-4 col-span-6 py-24 flex flex-col justify-center items-center p-4 transition-all duration-300 cursor-pointer"
+          v-if="front_page?.data.slices && front_page.data.slices.length > 0"
+          class="col-start-4 col-span-6 flex flex-col justify-center items-center p-4 transition-all duration-300"
         >
-          <p class="text-3xl mt-2 text-center mb-4">
-            This is some text we can use to describe the art piece maybe we can
-            make it break across multiple lines
-          </p>
-          <NuxtLink to="/about"> About the artist → </NuxtLink>
+          <ClientOnly>
+            <SliceZone
+              :slices="front_page?.data.slices ?? []"
+              :components="components"
+            />
+            <template #fallback>
+              <div
+                class="h-32 animate-pulse bg-gray-100 dark:bg-gray-800 rounded"
+              />
+            </template>
+          </ClientOnly>
         </div>
       </div>
     </div>
-    <!---
-    <div class="min-h-screen">
-      <section>
-        <div class="w-full flex flex-row gap-4">
-          <div class="grid grid-cols-3 w-full gap-4">
-            <div
-              v-for="art_piece in art_pieces ?? []"
-              :key="art_piece.id"
-              class="mb-8 max-w-[500px]"
-            >
-              <NuxtLink :to="`/work/${art_piece.uid}`">
-                <div
-                  v-if="art_piece?.data.artwork?.url"
-                  id="art-piece-image"
-                  class="art-image mb-4 shadow-md"
-                >
-                  <NuxtImg
-                    format="avif"
-                    :src="art_piece.data.artwork.url"
-                    height="500"
-                    sizes="mobile:380px tablet:512px desktop:50vw"
-                    class="w-full h-full object-cover rounded-sm"
-                  />
-                </div>
-                <p v-if="art_piece?.data.title" class="text-md">
-                  {{ art_piece!.data.title }}
-                </p>
-                <p v-if="art_piece?.data.price" class="text-sm mt-2">
-                  {{ formatCurrency(art_piece.data.price) }}
-                </p>
-                <p v-if="art_piece?.data.size" class="text-sm mt-2">
-                  {{ art_piece!.data.size }}
-                </p>
-              </NuxtLink>
-            </div>
-          </div>
-        </div>
-      </section>
-      <section>
-        <div class="container">
-          <motion.div
-            :initial="{
-              y: 40,
-              opacity: 0,
-            }"
-            :animate="{
-              y: 0,
-              opacity: 1,
-              transition: { duration: 0.5 },
-            }"
-          >
-            <h1 class="text-4xl font-bold">Home</h1>
-          </motion.div>
-        </div>
-      </section>
-      <SliceZone :slices="front_page?.data.slices ?? []" :components="components" />
-  
-    </div>
-    -->
   </div>
 </template>

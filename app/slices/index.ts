@@ -4,6 +4,9 @@ import { defineAsyncComponent } from "vue";
 import { defineSliceZoneComponents } from "@prismicio/vue";
 
 export const components = defineSliceZoneComponents({
+  big_centered_text: defineAsyncComponent(
+    () => import("./BigCenteredText/index.vue"),
+  ),
   footer: defineAsyncComponent(() => import("./Footer/index.vue")),
   gallery: defineAsyncComponent(() => import("./Gallery/index.vue")),
   rich_text: defineAsyncComponent(() => import("./RichText/index.vue")),

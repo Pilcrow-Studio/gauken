@@ -12,7 +12,9 @@ defineProps(
 </script>
 
 <template>
-  <footer class="footer relative h-screen py-96">
-    <p class="text-[100px]">Footer</p>
+  <footer class="footer relative h-screen py-96 border-t border-b border-black">
+    <div class="grid grid-cols-12">
+      <p class="text-[100px] col-start-4 col-end-10 text-center">Footer</p>
+    </div>
   </footer>
 </template>

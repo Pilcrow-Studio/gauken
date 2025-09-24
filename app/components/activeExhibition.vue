@@ -2,14 +2,20 @@
 const prismic = usePrismic();
 const { formatDateRange } = useDateFormat();
 
-const { data: exhibition } = await useAsyncData("exhibition", () =>
-  prismic.client.getAllByType("exhibitions", {
-    orderings: {
-      field: "document.first_publication_date",
-      direction: "desc",
-    },
-    limit: 1,
-  })
+const { data: exhibition } = await useLazyAsyncData(
+  "exhibition",
+  () =>
+    prismic.client.getAllByType("exhibitions", {
+      orderings: {
+        field: "document.first_publication_date",
+        direction: "desc",
+      },
+      limit: 1,
+    }),
+  {
+    server: true,
+    default: () => [],
+  }
 );
 
 const route = useRoute();
@@ -55,6 +61,9 @@ const isExhibitionActive = computed(() => {
         format="avif"
         quality="70"
         height="200"
+        width="300"
+        loading="lazy"
+        sizes="300px"
         class="mb-2 w-full h-auto"
       />
       <div class="flex flex-col items-center text-center">

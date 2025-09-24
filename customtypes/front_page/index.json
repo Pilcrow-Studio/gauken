@@ -33,7 +33,11 @@
         "type": "Slices",
         "fieldset": "Slice Zone",
         "config": {
-          "choices": {}
+          "choices": {
+            "big_centered_text": {
+              "type": "SharedSlice"
+            }
+          }
         }
       }
     },

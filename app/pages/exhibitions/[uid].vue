@@ -64,8 +64,8 @@ useHead({
 </script>
 
 <template>
-  <div class="grid grid-cols-12 mt-12">
-    <div class="col-start-4 col-span-6">
+  <div class="grid grid-cols-12 mt-12 px-4 gap-4 relative">
+    <div class="col-start-1 col-span-6 sticky top-24 h-fit">
       <div class="w-full flex justify-center align-center bg-black p-8 mb-6">
         <NuxtImg
           :src="exhibition?.data.poster?.url || ''"
@@ -76,7 +76,8 @@ useHead({
           fit="contain"
         />
       </div>
-
+    </div>
+    <div class="col-start-7 col-span-4 h-fit">
       <h1 class="mb-4">{{ exhibition?.data.title }}</h1>
       <div class="mb-4">
         <div

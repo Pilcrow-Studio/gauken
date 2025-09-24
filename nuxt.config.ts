@@ -8,6 +8,8 @@ export default defineNuxtConfig({
   experimental: {
     viewTransition: false,
     crossOriginPrefetch: true,
+    asyncEntry: true,
+    componentIslands: true,
   },
 
   app: {
@@ -22,7 +24,13 @@ export default defineNuxtConfig({
         { name: "description", content: "" },
         { name: "format-detection", content: "telephone=no" },
       ],
-      link: [{ rel: "icon", type: "image/x-icon", href: "/favicon.png" }],
+      link: [
+        { rel: "icon", type: "image/x-icon", href: "/favicon.png" },
+        { rel: "preconnect", href: "https://images.prismic.io" },
+        { rel: "dns-prefetch", href: "https://images.prismic.io" },
+        { rel: "preconnect", href: "https://gauken.cdn.prismic.io" },
+        { rel: "dns-prefetch", href: "https://gauken.cdn.prismic.io" },
+      ],
     },
   },
 
