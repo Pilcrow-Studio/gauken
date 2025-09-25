@@ -9,8 +9,8 @@ const { data: about } = await useAsyncData("about", () =>
 </script>
 
 <template>
-  <div class="grid grid-cols-12 mt-24 text-center">
-    <div class="col-start-4 col-span-6">
+  <div class="grid grid-cols-1 lg:grid-cols-12 text-center">
+    <div class="col-start-1 lg:col-start-4 lg:col-span-6">
       <SliceZone :slices="about?.data.slices ?? []" :components="components" />
     </div>
   </div>

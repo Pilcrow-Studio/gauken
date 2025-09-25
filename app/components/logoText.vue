@@ -69,6 +69,10 @@ const random_art_piece = computed(() => {
               class="inline-block"
               height="40"
               quality="70"
+              :alt="
+                random_art_piece.data.artwork.alt ||
+                `Artwork by ${random_art_piece.data.title || 'David Wilson'}`
+              "
               placeholder
             />
           </span>

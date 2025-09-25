@@ -50,27 +50,8 @@ if (ssrContext && ssrContext.res) {
   }
 }
 
-// Preload the first artwork image for faster LCP
-const firstArtworkUrl = computed(() => {
-  if (art_pieces.value && art_pieces.value.length > 0) {
-    return art_pieces.value[0]?.data?.artwork?.url;
-  }
-  return null;
-});
-
 useHead({
   title: "Home",
-  link: firstArtworkUrl.value
-    ? [
-        // Preload the first image for faster loading
-        {
-          rel: "preload",
-          as: "image" as const,
-          href: firstArtworkUrl.value,
-          fetchpriority: "high" as const,
-        },
-      ]
-    : [],
   meta: [
     {
       name: "description",
@@ -115,27 +96,31 @@ useHead({
 <template>
   <div>
     <div>
-      <div class="grid lg:grid-cols-12 grid-cols-1 pb-24">
+      <div class="grid lg:grid-cols-12 grid-cols-1 gap-8">
         <div
-          class="col-start-1 col-span-12 lg:col-span-2 pl-4 pt-16 transition-opacity duration-300"
+          class="col-start-1 col-span-12 lg:col-span-2 transition-opacity duration-300"
           :class="{ 'opacity-30': isGlobalHovered }"
         >
-          <div class="text-lg tracking-tight max-w-prose">
-            <PrismicRichText :field="front_page?.data.introductory_text" />
+          <div class="text-lg tracking-tight max-w-prose mb-4">
+            <PrismicRichText
+              :field="front_page?.data.introductory_text"
+              wrapper="div"
+              class="richtext"
+            />
           </div>
         </div>
         <div
           v-for="(art_piece, index) in art_pieces"
           :key="art_piece.id"
-          class="lg:col-start-4 col-start-1 lg:col-span-6 col-span-12 flex flex-col justify-center items-center p-4 transition-all duration-300 cursor-pointer"
+          class="lg:col-start-4 col-start-1 lg:col-span-6 col-span-12 flex flex-col justify-center items-center transition-all duration-300 cursor-pointer"
           @mouseenter="isGlobalHovered = false"
           @mouseleave="isGlobalHovered = false"
         >
           <NuxtLink :to="`/work/${art_piece.uid}`">
             <NuxtImg
               :src="art_piece.data.artwork.url || ''"
-              format="avif"
-              :quality="index === 0 ? 80 : 70"
+              format="webp, avif"
+              :quality="index === 0 ? 60 : 80"
               height="1000"
               placeholder
               placeholder-class="h-[1000px] bg-red-600 object-cover"
@@ -154,19 +139,12 @@ useHead({
 
         <div
           v-if="front_page?.data.slices && front_page.data.slices.length > 0"
-          class="col-start-4 col-span-6 flex flex-col justify-center items-center p-4 transition-all duration-300"
+          class="col-start-1 col-span-12 lg:col-start-4 lg:col-span-6 flex flex-col justify-center items-center transition-all duration-300"
         >
-          <ClientOnly>
-            <SliceZone
-              :slices="front_page?.data.slices ?? []"
-              :components="components"
-            />
-            <template #fallback>
-              <div
-                class="h-32 animate-pulse bg-gray-100 dark:bg-gray-800 rounded"
-              />
-            </template>
-          </ClientOnly>
+          <SliceZone
+            :slices="front_page?.data.slices ?? []"
+            :components="components"
+          />
         </div>
       </div>
     </div>

@@ -64,48 +64,76 @@ useHead({
 </script>
 
 <template>
-  <div class="grid grid-cols-12 mt-12 px-4 gap-4 relative">
-    <div class="col-start-1 col-span-6 sticky top-24 h-fit">
-      <div class="w-full flex justify-center align-center bg-black p-8 mb-6">
-        <NuxtImg
-          :src="exhibition?.data.poster?.url || ''"
-          format="avif"
-          quality="70"
-          height="300"
-          loading="eager"
-          fit="contain"
-        />
+  <div class="grid grid-cols-1 lg:grid-cols-12 gap-4">
+    <div class="col-start-1 lg:col-span-3 h-full relative">
+      <NuxtImg
+        :src="exhibition?.data.poster?.url || ''"
+        format="avif"
+        quality="70"
+        loading="eager"
+        fit="contain"
+        width="120"
+        class="mb-4"
+      />
+      <div class="lg:sticky top-5">
+        <h1 class="mb-4">{{ exhibition?.data.title }}</h1>
+        <div class="mb-4">
+          <div
+            v-if="
+              exhibition?.data.location &&
+              exhibition.data.location.link_type === 'Web' &&
+              exhibition.data.location.url
+            "
+          >
+            <NuxtLink
+              :to="exhibition.data.location.url"
+              target="_blank"
+              class="font-mono text-xs"
+            >
+              {{ exhibition.data.location.text }}
+            </NuxtLink>
+          </div>
+          <div v-if="exhibition?.data.start_date && exhibition?.data.end_date">
+            <p class="font-mono text-xs">
+              Date: {{ formatDateTime(exhibition.data.start_date) }}
+            </p>
+            <p class="font-mono text-xs">
+              to {{ formatDateTime(exhibition.data.end_date) }}
+            </p>
+          </div>
+        </div>
+
+        <div v-if="exhibition?.data.description" class="max-w-lg">
+          <PrismicRichText
+            :field="exhibition.data.description"
+            wrapper="div"
+            class="richtext"
+          />
+        </div>
       </div>
     </div>
-    <div class="col-start-7 col-span-4 h-fit">
-      <h1 class="mb-4">{{ exhibition?.data.title }}</h1>
-      <div class="mb-4">
+    <div class="col-start-1 lg:col-span-9 h-fit">
+      <div
+        v-if="exhibition?.data.exhibition_artworks"
+        class="grid grid-cols-2 lg:grid-cols-3 gap-2"
+      >
         <div
-          v-if="
-            exhibition?.data.location &&
-            exhibition.data.location.link_type === 'Web' &&
-            exhibition.data.location.url
-          "
+          v-for="(artwork, index) in exhibition?.data.exhibition_artworks"
+          :key="`${exhibition?.id}-artwork-${index}`"
         >
-          <NuxtLink
-            :to="exhibition.data.location.url"
-            target="_blank"
-            class="font-mono text-xs"
-          >
-            {{ exhibition.data.location.text }}
-          </NuxtLink>
+          <NuxtImg
+            :src="
+              (artwork.artworks as any)?.artwork?.url ||
+              (artwork.artworks as any)?.data?.artwork?.url ||
+              ''
+            "
+            width="460"
+            format="avif"
+            quality="70"
+            fit="contain"
+            class="w-full"
+          />
         </div>
-        <div v-if="exhibition?.data.start_date && exhibition?.data.end_date">
-          <p class="font-mono text-xs">
-            Date: {{ formatDateTime(exhibition.data.start_date) }}
-          </p>
-          <p class="font-mono text-xs">
-            to {{ formatDateTime(exhibition.data.end_date) }}
-          </p>
-        </div>
-      </div>
-      <div v-if="exhibition?.data.description">
-        <PrismicRichText :field="exhibition.data.description" />
       </div>
     </div>
   </div>

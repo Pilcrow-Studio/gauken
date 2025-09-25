@@ -53,7 +53,10 @@ useSeoMeta({
         >
           <h1>{{ art_piece?.data.title }}</h1>
           <div v-if="art_piece?.data.description">
-            <PrismicRichText :field="art_piece.data.description" />
+            <PrismicRichText
+              :field="art_piece.data.description"
+              wrapper="div"
+            />
           </div>
           <p v-if="art_piece?.data.size" class="text-sm mt-2">
             {{ art_piece!.data.size }}

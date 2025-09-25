@@ -46,11 +46,18 @@ h6 {
   @apply text-center tracking-tight py-16;
 }
 .bigRichTextCentered p {
-  @apply text-3xl mb-8;
+  @apply text-xl lg:text-3xl mb-8;
 }
 
 .bigRichTextCentered a {
   @apply text-lg mt-4 mb-4;
+}
+
+.richtext p {
+  @apply mb-8 text-pretty;
+}
+.richtext {
+  @apply text-pretty;
 }
 
 section,

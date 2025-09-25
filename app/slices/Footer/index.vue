@@ -1,11 +1,7 @@
 <script setup lang="ts">
 import type { Content } from "@prismicio/client";
 
-const prismic = usePrismic();
-const { data: global_navigation } = await useLazyAsyncData(
-  "global_navigation",
-  () => prismic.client.getSingle("global_navigation")
-);
+const { data: global_navigation } = await useGlobalNavigation();
 
 defineProps(
   getSliceComponentProps<Content.FooterSlice>([

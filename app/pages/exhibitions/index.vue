@@ -49,12 +49,12 @@ onUnmounted(() => {
   document.removeEventListener("mouseup", handleMouseUp);
 });
 
-const { data: exhibitions_overview } = await useAsyncData(
+const { data: exhibitions_overview } = await useLazyAsyncData(
   "exhibitions_overview",
   () => prismic.client.getSingle("exhibitions_overview")
 );
 
-const { data: exhibitions } = await useAsyncData("exhibitions", () =>
+const { data: exhibitions } = await useLazyAsyncData("exhibitions", () =>
   prismic.client.getAllByType("exhibitions", {
     orderings: {
       field: "document.first_publication_date",
@@ -107,12 +107,15 @@ useHead({
 </script>
 
 <template>
-  <div class="mt-24 text-center px-4">
+  <div class="text-center">
     <div class="flex flex-col gap-4">
       <div v-for="exhibition in exhibitions" :key="exhibition.id" class="pb-24">
-        <NuxtLink :to="`/exhibitions/${exhibition.uid}`">
+        <NuxtLink
+          :to="`/exhibitions/${exhibition.uid}`"
+          class="exhibition-link"
+        >
           <div
-            class="w-full grid grid-cols-8 md:grid-cols-12 gap-4 items-start exhibition-link hover:no-underline"
+            class="flex flex-row gap-4 items-start exhibition-link hover:no-underline"
           >
             <NuxtImg
               :src="exhibition.data.poster.url || ''"
@@ -140,6 +143,7 @@ useHead({
                   )
                 }}
               </p>
+              <p class="text-xs">More info →</p>
             </div>
           </div>
         </NuxtLink>
