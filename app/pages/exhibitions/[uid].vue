@@ -75,9 +75,9 @@ useHead({
         width="120"
         class="mb-4"
       />
-      <div class="lg:sticky top-5">
-        <h1 class="mb-4">{{ exhibition?.data.title }}</h1>
-        <div class="mb-4">
+      <div>
+        <h1 class="text-2xl mb-4 pt-4">{{ exhibition?.data.title }}</h1>
+        <div class="mb-4 bg-gray-100 dark:bg-zinc-900 p-4">
           <div
             v-if="
               exhibition?.data.location &&
@@ -85,20 +85,14 @@ useHead({
               exhibition.data.location.url
             "
           >
-            <NuxtLink
-              :to="exhibition.data.location.url"
-              target="_blank"
-              class="font-mono text-xs"
-            >
+            <NuxtLink :to="exhibition.data.location.url" target="_blank">
               {{ exhibition.data.location.text }}
             </NuxtLink>
           </div>
           <div v-if="exhibition?.data.start_date && exhibition?.data.end_date">
-            <p class="font-mono text-xs">
-              Date: {{ formatDateTime(exhibition.data.start_date) }}
-            </p>
-            <p class="font-mono text-xs">
-              to {{ formatDateTime(exhibition.data.end_date) }}
+            <p class="text-xs">
+              {{ formatDateTime(exhibition.data.start_date) }} -
+              {{ formatDateTime(exhibition.data.end_date) }}
             </p>
           </div>
         </div>

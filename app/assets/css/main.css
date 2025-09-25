@@ -24,16 +24,16 @@ label {
   margin-bottom: 0;
 }
 h1 {
-  @apply text-6xl;
+  @apply text-6xl tracking-tight;
 }
 h2 {
-  @apply text-4xl;
+  @apply text-4xl tracking-tight;
 }
 h3 {
-  @apply text-2xl;
+  @apply text-2xl tracking-tight;
 }
 h4 {
-  @apply text-xl;
+  @apply text-xl tracking-tight;
 }
 h5 {
   @apply text-lg;

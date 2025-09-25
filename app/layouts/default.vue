@@ -32,7 +32,7 @@ provide("isGlobalHovered", isGlobalHovered);
             class="p-4 transition-opacity duration-300"
             :class="{ 'opacity-30': isGlobalHovered }"
           />
-          <NuxtPage class="mt-24 px-4 pb-24" />
+          <NuxtPage class="mt-16 px-4 pb-24" />
         </div>
       </main>
     </div>
