@@ -3,7 +3,7 @@ const prismic = usePrismic();
 const route = useRoute();
 const { formatDateTime } = useDateFormat();
 
-const { data: exhibition } = await useAsyncData(
+const { data: exhibition } = await useLazyAsyncData(
   route.params.uid as string,
   () => prismic.client.getByUID("exhibitions", route.params.uid as string)
 );

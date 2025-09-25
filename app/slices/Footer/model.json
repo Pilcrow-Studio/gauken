@@ -11,36 +11,7 @@
       "version": "initial",
       "description": "Default",
       "imageUrl": "",
-      "primary": {
-        "background_image": {
-          "type": "Image",
-          "config": {
-            "label": "Background Image",
-            "constraint": {},
-            "thumbnails": []
-          }
-        },
-        "external_links": {
-          "type": "Group",
-          "config": {
-            "label": "External Links",
-            "repeat": true,
-            "fields": {
-              "external_link": {
-                "type": "Link",
-                "config": {
-                  "label": "External Link",
-                  "placeholder": "",
-                  "select": null,
-                  "allowTargetBlank": true,
-                  "allowText": true,
-                  "repeat": false
-                }
-              }
-            }
-          }
-        }
-      },
+      "primary": {},
       "items": {}
     }
   ]

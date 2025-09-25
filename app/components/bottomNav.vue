@@ -10,7 +10,7 @@ const currentYear = new Date().getFullYear();
       class="max-w-[1920px] lg:px-4 px-1 w-full mx-auto flex justify-between"
     >
       <div>
-        <p>Gauken aka David Wilson {{ currentYear }}</p>
+        <p>David Wilson © {{ currentYear }}</p>
       </div>
       <div class="flex flex-row gap-2">
         <NuxtLink to="https://www.instagram.com/gaukenart/" target="_blank">

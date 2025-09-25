@@ -109,11 +109,7 @@ useHead({
 <template>
   <div class="mt-24 text-center px-4">
     <div class="flex flex-col gap-4">
-      <div
-        v-for="exhibition in exhibitions"
-        :key="exhibition.id"
-        class="border-b border-gray-200 pb-4"
-      >
+      <div v-for="exhibition in exhibitions" :key="exhibition.id" class="pb-24">
         <NuxtLink :to="`/exhibitions/${exhibition.uid}`">
           <div
             class="w-full grid grid-cols-8 md:grid-cols-12 gap-4 items-start exhibition-link hover:no-underline"

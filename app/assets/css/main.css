@@ -43,18 +43,14 @@ h6 {
 }
 
 .bigRichTextCentered {
-  @apply text-center;
-  @apply tracking-tight;
-  @apply mb-24;
+  @apply text-center tracking-tight py-16;
 }
 .bigRichTextCentered p {
-  @apply text-3xl;
-  @apply mb-4;
+  @apply text-3xl mb-8;
 }
 
 .bigRichTextCentered a {
-  @apply text-lg;
-  @apply mt-4 mb-4;
+  @apply text-lg mt-4 mb-4;
 }
 
 section,

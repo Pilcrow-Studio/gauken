@@ -1067,54 +1067,6 @@ export type BigCenteredTextSlice = prismic.SharedSlice<
 >;
 
 /**
- * Item in *Footer → Default → Primary → External Links*
- */
-export interface FooterSliceDefaultPrimaryExternalLinksItem {
-  /**
-   * External Link field in *Footer → Default → Primary → External Links*
-   *
-   * - **Field Type**: Link
-   * - **Placeholder**: *None*
-   * - **API ID Path**: footer.default.primary.external_links[].external_link
-   * - **Documentation**: https://prismic.io/docs/fields/link
-   */
-  external_link: prismic.LinkField<
-    string,
-    string,
-    unknown,
-    prismic.FieldState,
-    never
-  >;
-}
-
-/**
- * Primary content in *Footer → Default → Primary*
- */
-export interface FooterSliceDefaultPrimary {
-  /**
-   * Background Image field in *Footer → Default → Primary*
-   *
-   * - **Field Type**: Image
-   * - **Placeholder**: *None*
-   * - **API ID Path**: footer.default.primary.background_image
-   * - **Documentation**: https://prismic.io/docs/fields/image
-   */
-  background_image: prismic.ImageField<never>;
-
-  /**
-   * External Links field in *Footer → Default → Primary*
-   *
-   * - **Field Type**: Group
-   * - **Placeholder**: *None*
-   * - **API ID Path**: footer.default.primary.external_links[]
-   * - **Documentation**: https://prismic.io/docs/fields/repeatable-group
-   */
-  external_links: prismic.GroupField<
-    Simplify<FooterSliceDefaultPrimaryExternalLinksItem>
-  >;
-}
-
-/**
  * Default variation for Footer Slice
  *
  * - **API ID**: `default`
@@ -1123,7 +1075,7 @@ export interface FooterSliceDefaultPrimary {
  */
 export type FooterSliceDefault = prismic.SharedSliceVariation<
   "default",
-  Simplify<FooterSliceDefaultPrimary>,
+  Record<string, never>,
   never
 >;
 
@@ -1334,8 +1286,6 @@ declare module "@prismicio/client" {
       BigCenteredTextSliceVariation,
       BigCenteredTextSliceDefault,
       FooterSlice,
-      FooterSliceDefaultPrimaryExternalLinksItem,
-      FooterSliceDefaultPrimary,
       FooterSliceVariation,
       FooterSliceDefault,
       GallerySlice,

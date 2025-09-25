@@ -26,7 +26,7 @@
           "label": "Introductory Text",
           "placeholder": "",
           "allowTargetBlank": true,
-          "multi": "paragraph,hyperlink,image,list-item,o-list-item,strong,em"
+          "multi": "paragraph,strong,em,image,list-item,o-list-item,hyperlink"
         }
       },
       "slices": {

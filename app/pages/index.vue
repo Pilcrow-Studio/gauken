@@ -11,6 +11,7 @@ const { data: front_page } = await useLazyAsyncData("index", () =>
   prismic.client.getSingle("front_page")
 );
 
+// Load art pieces immediately for faster first image loading
 const { data: art_pieces } = await useLazyAsyncData("art_pieces", () =>
   prismic.client.getAllByType("art_piece", {
     limit: 3,
@@ -49,8 +50,27 @@ if (ssrContext && ssrContext.res) {
   }
 }
 
+// Preload the first artwork image for faster LCP
+const firstArtworkUrl = computed(() => {
+  if (art_pieces.value && art_pieces.value.length > 0) {
+    return art_pieces.value[0]?.data?.artwork?.url;
+  }
+  return null;
+});
+
 useHead({
   title: "Home",
+  link: firstArtworkUrl.value
+    ? [
+        // Preload the first image for faster loading
+        {
+          rel: "preload",
+          as: "image" as const,
+          href: firstArtworkUrl.value,
+          fetchpriority: "high" as const,
+        },
+      ]
+    : [],
   meta: [
     {
       name: "description",
@@ -115,13 +135,15 @@ useHead({
             <NuxtImg
               :src="art_piece.data.artwork.url || ''"
               format="avif"
-              quality="75"
+              :quality="index === 0 ? 80 : 70"
               height="1000"
-              width="800"
+              placeholder
+              placeholder-class="h-[1000px] bg-red-600 object-cover"
               :loading="index === 0 ? 'eager' : 'lazy'"
               :fetchpriority="index === 0 ? 'high' : 'auto'"
-              fit="fill"
-              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 800px"
+              fit="contain"
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 25vw, 800px"
+              :preload="index === 0"
               :alt="
                 art_piece.data.artwork.alt ||
                 `Artwork by ${art_piece.data.title || 'David Wilson'}`

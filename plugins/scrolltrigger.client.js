@@ -4,7 +4,7 @@ export default defineNuxtPlugin(() => {
   const { initGlobalScrollTrigger } = useScrollTrigger();
 
   // Initialize global ScrollTrigger management with a slight delay to not block initial render
-  if (process.client) {
+  if (import.meta.client) {
     setTimeout(() => {
       initGlobalScrollTrigger();
     }, 100);
