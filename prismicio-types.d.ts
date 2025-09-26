@@ -221,7 +221,18 @@ interface ArtPieceDocumentData {
    * - **Tab**: Main
    * - **Documentation**: https://prismic.io/docs/fields/number
    */
-  price: prismic.NumberField /**
+  price: prismic.NumberField;
+
+  /**
+   * Medium field in *Art Piece*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: art_piece.medium_custom
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  medium_custom: prismic.KeyTextField /**
    * Meta Title field in *Art Piece*
    *
    * - **Field Type**: Text
@@ -1079,6 +1090,21 @@ export type BigCenteredTextSlice = prismic.SharedSlice<
 >;
 
 /**
+ * Primary content in *Footer → Default → Primary*
+ */
+export interface FooterSliceDefaultPrimary {
+  /**
+   * Signature field in *Footer → Default → Primary*
+   *
+   * - **Field Type**: Image
+   * - **Placeholder**: *None*
+   * - **API ID Path**: footer.default.primary.signature
+   * - **Documentation**: https://prismic.io/docs/fields/image
+   */
+  signature: prismic.ImageField<never>;
+}
+
+/**
  * Default variation for Footer Slice
  *
  * - **API ID**: `default`
@@ -1087,7 +1113,7 @@ export type BigCenteredTextSlice = prismic.SharedSlice<
  */
 export type FooterSliceDefault = prismic.SharedSliceVariation<
   "default",
-  Record<string, never>,
+  Simplify<FooterSliceDefaultPrimary>,
   never
 >;
 
@@ -1298,6 +1324,7 @@ declare module "@prismicio/client" {
       BigCenteredTextSliceVariation,
       BigCenteredTextSliceDefault,
       FooterSlice,
+      FooterSliceDefaultPrimary,
       FooterSliceVariation,
       FooterSliceDefault,
       GallerySlice,

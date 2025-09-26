@@ -67,6 +67,13 @@
           "label": "Price",
           "placeholder": ""
         }
+      },
+      "medium_custom": {
+        "type": "Text",
+        "config": {
+          "label": "Medium",
+          "placeholder": ""
+        }
       }
     },
     "SEO & Metadata": {
