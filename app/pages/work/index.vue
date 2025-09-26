@@ -60,7 +60,7 @@ useHead({
 <template>
   <div class="grid grid-cols-12 text-center">
     <div
-      class="grid lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 gap-4 col-start-1 col-span-12"
+      class="grid lg:grid-cols-2 md:grid-cols-2 sm:grid-cols-1 gap-4 col-start-1 col-span-12"
     >
       <div v-for="art_piece in art_pieces" :key="art_piece.id">
         <NuxtLink :to="`/work/${art_piece.uid}`">
