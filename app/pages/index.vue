@@ -14,11 +14,18 @@ const { data: front_page } = await useLazyAsyncData("index", () =>
 // Load art pieces immediately for faster first image loading
 const { data: art_pieces } = await useLazyAsyncData("art_pieces", () =>
   prismic.client.getAllByType("art_piece", {
+    filters: [prismic.filter.at("my.art_piece.medium", "Painting")],
     limit: 3,
-    orderings: {
-      field: "document.first_publication_date",
-      direction: "desc",
-    },
+    orderings: [
+      {
+        field: "my.art_piece.medium",
+        direction: "desc",
+      },
+      {
+        field: "document.first_publication_date",
+        direction: "desc",
+      },
+    ],
   })
 );
 

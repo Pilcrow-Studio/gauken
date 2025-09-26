@@ -20,6 +20,15 @@
           "thumbnails": []
         }
       },
+      "medium": {
+        "type": "Select",
+        "config": {
+          "label": "Medium",
+          "placeholder": "",
+          "options": ["Painting", "Drawing"],
+          "default_value": "Painting"
+        }
+      },
       "collection": {
         "type": "Link",
         "config": {

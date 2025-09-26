@@ -157,6 +157,18 @@ interface ArtPieceDocumentData {
   artwork: prismic.ImageField<never>;
 
   /**
+   * Medium field in *Art Piece*
+   *
+   * - **Field Type**: Select
+   * - **Placeholder**: *None*
+   * - **Default Value**: Painting
+   * - **API ID Path**: art_piece.medium
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/select
+   */
+  medium: prismic.SelectField<"Painting" | "Drawing", "filled">;
+
+  /**
    * Collection field in *Art Piece*
    *
    * - **Field Type**: Content Relationship

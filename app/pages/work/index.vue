@@ -27,10 +27,16 @@ const { data: work } = await useAsyncData("work", () =>
 
 const { data: art_pieces } = await useAsyncData("all_art_pieces", () =>
   prismic.client.getAllByType("art_piece", {
-    orderings: {
-      field: "document.first_publication_date",
-      direction: "desc",
-    },
+    orderings: [
+      {
+        field: "my.art_piece.medium",
+        direction: "desc",
+      },
+      {
+        field: "document.first_publication_date",
+        direction: "desc",
+      },
+    ],
   })
 );
 
