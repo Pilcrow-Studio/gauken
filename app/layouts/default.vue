@@ -8,7 +8,7 @@ provide("isGlobalHovered", isGlobalHovered);
   <div>
     <div class="max-w-[1920px] mx-auto">
       <div
-        class="pointer-events-none fixed left-0 top-0 right-0 z-50 pt-4 transition-opacity duration-300"
+        class="pointer-events-none fixed left-0 top-0 right-0 z-50 md:pt-4 transition-opacity duration-300"
         :class="{ 'opacity-30': isGlobalHovered }"
       >
         <div

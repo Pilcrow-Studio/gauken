@@ -1,6 +1,26 @@
 <script setup lang="ts">
 const prismic = usePrismic();
 
+// Reactive state for column layout (true = large view, false = small view)
+const isLargeView = ref(true);
+
+// Load saved preference from localStorage on client-side
+onMounted(() => {
+  if (import.meta.client) {
+    const savedView = localStorage.getItem("work-grid-view");
+    if (savedView !== null) {
+      isLargeView.value = savedView === "true";
+    }
+  }
+});
+
+// Watch for changes and save to localStorage
+watch(isLargeView, (newValue) => {
+  if (import.meta.client) {
+    localStorage.setItem("work-grid-view", newValue.toString());
+  }
+});
+
 const { data: work } = await useAsyncData("work", () =>
   prismic.client.getSingle("work")
 );
@@ -13,6 +33,15 @@ const { data: art_pieces } = await useAsyncData("all_art_pieces", () =>
     },
   })
 );
+
+// Computed property for grid classes
+const gridClasses = computed(() => {
+  if (isLargeView.value) {
+    return "grid md:grid-cols-2 grid-cols-1 gap-4 col-start-1 col-span-12";
+  } else {
+    return "grid xl:grid-cols-5 lg:grid-cols-4 md:grid-cols-3 grid-cols-2 gap-4 col-start-1 col-span-12";
+  }
+});
 
 useHead({
   title: "Work",
@@ -58,10 +87,38 @@ useHead({
 </script>
 
 <template>
-  <div class="grid grid-cols-12 text-center">
+  <div class="grid grid-cols-12 text-center px-4">
+    <!-- Layout control buttons -->
     <div
-      class="grid lg:grid-cols-2 md:grid-cols-2 sm:grid-cols-1 gap-4 col-start-1 col-span-12"
+      class="col-start-10 col-span-3 md:col-start-2 md:col-span-3 row-start-1 mb-6 flex justify-start gap-2"
     >
+      <button
+        :class="[
+          'text-sm font-medium transition-colors duration-200',
+          isLargeView
+            ? 'text-black dark:text-white underline'
+            : 'text-gray-500 hover:text-gray-700',
+        ]"
+        @click="isLargeView = true"
+      >
+        Large
+      </button>
+      <p>/</p>
+      <button
+        :class="[
+          'text-sm font-medium transition-colors duration-200',
+          !isLargeView
+            ? 'text-black dark:text-white underline'
+            : 'text-gray-500 hover:text-gray-700',
+        ]"
+        @click="isLargeView = false"
+      >
+        Small
+      </button>
+    </div>
+
+    <!-- Image grid -->
+    <div :class="gridClasses">
       <div v-for="art_piece in art_pieces" :key="art_piece.id">
         <NuxtLink :to="`/work/${art_piece.uid}`">
           <NuxtImg
@@ -74,6 +131,17 @@ useHead({
             placeholder
             placeholder-class="w-full h-full bg-gray-200 object-cover"
           />
+          <div class="flex flex-col gap-2 mt-2 text-left">
+            <p v-if="art_piece.data.title" class="text-sm">
+              {{ art_piece.data.title }}
+            </p>
+            <p v-if="art_piece.data.size" class="text-sm">
+              {{ art_piece.data.size }}
+            </p>
+            <p v-if="art_piece.data.price" class="text-sm">
+              {{ art_piece.data.price }}
+            </p>
+          </div>
         </NuxtLink>
       </div>
     </div>

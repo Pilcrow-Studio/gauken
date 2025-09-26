@@ -4,13 +4,13 @@ const currentYear = new Date().getFullYear();
 
 <template>
   <div
-    class="lg:fixed lg:bottom-0 lg:left-0 lg:right-0 bottom-1 left-1 right-1 z-50 transition-opacity duration-300 text-gray-400 dark:text-gray-600"
+    class="pointer-events-none lg:fixed lg:bottom-0 lg:left-0 lg:right-0 bottom-1 left-1 right-1 z-50 transition-opacity duration-300 text-gray-400 dark:text-gray-600"
   >
     <div class="max-w-[1920px] lg:p-4 px-1 w-full mx-auto flex justify-between">
-      <div>
+      <div class="pointer-events-auto">
         <p>David Wilson © {{ currentYear }}</p>
       </div>
-      <div class="flex flex-row gap-2">
+      <div class="flex flex-row gap-2 pointer-events-auto">
         <NuxtLink to="https://www.instagram.com/gaukenart/" target="_blank">
           <p>Instagram</p>
         </NuxtLink>

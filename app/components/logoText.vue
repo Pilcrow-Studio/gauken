@@ -68,6 +68,7 @@ const random_art_piece = computed(() => {
               :src="random_art_piece.data.artwork.url ?? ''"
               class="inline-block"
               height="40"
+              sizes="sm:40px md:40px lg:40px"
               quality="70"
               :alt="
                 random_art_piece.data.artwork.alt ||

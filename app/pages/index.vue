@@ -101,7 +101,7 @@ useHead({
           class="col-start-1 col-span-12 lg:col-span-2 transition-opacity duration-300"
           :class="{ 'opacity-30': isGlobalHovered }"
         >
-          <div class="text-lg tracking-tight max-w-prose mb-4">
+          <div class="text-lg tracking-tight max-w-prose pt-16 mb-4">
             <PrismicRichText
               :field="front_page?.data.introductory_text"
               wrapper="div"
@@ -119,15 +119,16 @@ useHead({
           <NuxtLink :to="`/work/${art_piece.uid}`">
             <NuxtImg
               :src="art_piece.data.artwork.url || ''"
-              format="webp, avif"
-              :quality="index === 0 ? 60 : 80"
+              format="webp,avif"
+              :quality="index === 0 ? 70 : 80"
               height="1000"
+              width="1000"
+              sizes="sm:100vw md:800px lg:1200px"
               placeholder
-              placeholder-class="h-[1000px] bg-red-600 object-cover"
+              placeholder-class="h-[1000px] w-[1000px] bg-red-600 object-cover"
               :loading="index === 0 ? 'eager' : 'lazy'"
               :fetchpriority="index === 0 ? 'high' : 'auto'"
               fit="contain"
-              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 25vw, 800px"
               :preload="index === 0"
               :alt="
                 art_piece.data.artwork.alt ||
