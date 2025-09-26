@@ -96,51 +96,55 @@ useHead({
 <template>
   <div>
     <div>
-      <div class="grid lg:grid-cols-12 grid-cols-1 gap-8">
+      <div class="grid lg:grid-cols-12 grid-cols-1">
         <div
           class="col-start-1 col-span-12 lg:col-span-2 transition-opacity duration-300"
           :class="{ 'opacity-30': isGlobalHovered }"
         >
-          <div class="text-lg tracking-tight max-w-prose pt-16 mb-4">
+          <div class="text-lg tracking-tight max-w-prose">
             <PrismicRichText
               :field="front_page?.data.introductory_text"
               wrapper="div"
-              class="richtext"
+              class="mb-4"
             />
           </div>
         </div>
         <div
-          v-for="(art_piece, index) in art_pieces"
-          :key="art_piece.id"
-          class="lg:col-start-4 col-start-1 lg:col-span-6 col-span-12 flex flex-col justify-center items-center transition-all duration-300 cursor-pointer"
-          @mouseenter="isGlobalHovered = false"
-          @mouseleave="isGlobalHovered = false"
+          class="gap-8 lg:col-start-4 col-start-1 lg:col-span-6 col-span-12 flex flex-col justify-center items-center transition-all duration-300"
         >
-          <NuxtLink :to="`/work/${art_piece.uid}`">
-            <NuxtImg
-              :src="art_piece.data.artwork.url || ''"
-              format="webp,avif"
-              :quality="index === 0 ? 70 : 80"
-              height="1000"
-              width="1000"
-              sizes="sm:100vw md:800px lg:1200px"
-              placeholder
-              placeholder-class="h-[1000px] w-[1000px] bg-red-600 object-cover"
-              :loading="index === 0 ? 'eager' : 'lazy'"
-              :fetchpriority="index === 0 ? 'high' : 'auto'"
-              fit="contain"
-              :preload="index === 0"
-              :alt="
-                art_piece.data.artwork.alt ||
-                `Artwork by ${art_piece.data.title || 'David Wilson'}`
-              "
-            />
-          </NuxtLink>
+          <div
+            v-for="(art_piece, index) in art_pieces"
+            :key="art_piece.id"
+            class="cursor-pointer"
+            @mouseenter="isGlobalHovered = false"
+            @mouseleave="isGlobalHovered = false"
+          >
+            <NuxtLink :to="`/work/${art_piece.uid}`">
+              <NuxtImg
+                :src="art_piece.data.artwork.url || ''"
+                format="webp,avif"
+                :quality="index === 0 ? 70 : 80"
+                height="1000"
+                width="1000"
+                sizes="sm:100vw md:800px lg:1200px"
+                placeholder
+                placeholder-class="h-[1000px] w-[1000px] bg-red-600 object-cover"
+                :loading="index === 0 ? 'eager' : 'lazy'"
+                :fetchpriority="index === 0 ? 'high' : 'auto'"
+                fit="contain"
+                :preload="index === 0"
+                :alt="
+                  art_piece.data.artwork.alt ||
+                  `Artwork by ${art_piece.data.title || 'David Wilson'}`
+                "
+              />
+            </NuxtLink>
+          </div>
         </div>
 
         <div
           v-if="front_page?.data.slices && front_page.data.slices.length > 0"
-          class="col-start-1 col-span-12 lg:col-start-4 lg:col-span-6 flex flex-col justify-center items-center transition-all duration-300"
+          class="col-start-1 col-span-12 lg:col-start-4 lg:col-span-6 flex flex-col justify-center items-center transition-all duration-300 mt-16"
         >
           <SliceZone
             :slices="front_page?.data.slices ?? []"

@@ -2,7 +2,7 @@
 const prismic = usePrismic();
 
 // Reactive state for column layout (true = large view, false = small view)
-const isLargeView = ref(true);
+const isLargeView = ref(false);
 
 // Load saved preference from localStorage on client-side
 onMounted(() => {
@@ -37,9 +37,9 @@ const { data: art_pieces } = await useAsyncData("all_art_pieces", () =>
 // Computed property for grid classes
 const gridClasses = computed(() => {
   if (isLargeView.value) {
-    return "grid md:grid-cols-2 grid-cols-1 gap-4 col-start-1 col-span-12";
+    return "grid grid-cols-1 col-start-1 col-span-12 md:grid-cols-2 gap-x-4 md:gap-x-4 gap-y-8";
   } else {
-    return "grid xl:grid-cols-5 lg:grid-cols-4 md:grid-cols-3 grid-cols-2 gap-4 col-start-1 col-span-12";
+    return "grid xl:grid-cols-5 lg:grid-cols-4 md:grid-cols-3 grid-cols-2 gap-x-4 col-start-1 col-span-12 md:gap-x-4 gap-y-8 ";
   }
 });
 
@@ -90,20 +90,8 @@ useHead({
   <div class="grid grid-cols-12 text-center px-4">
     <!-- Layout control buttons -->
     <div
-      class="col-start-10 col-span-3 md:col-start-2 md:col-span-3 row-start-1 mb-6 flex justify-start gap-2"
+      class="col-start-10 md:col-start-2 md:col-span-3 row-start-1 mb-6 flex justify-start gap-2"
     >
-      <button
-        :class="[
-          'text-sm font-medium transition-colors duration-200',
-          isLargeView
-            ? 'text-black dark:text-white underline'
-            : 'text-gray-500 hover:text-gray-700',
-        ]"
-        @click="isLargeView = true"
-      >
-        Large
-      </button>
-      <p>/</p>
       <button
         :class="[
           'text-sm font-medium transition-colors duration-200',
@@ -115,6 +103,18 @@ useHead({
       >
         Small
       </button>
+      <p>/</p>
+      <button
+        :class="[
+          'text-sm font-medium transition-colors duration-200',
+          isLargeView
+            ? 'text-black dark:text-white underline'
+            : 'text-gray-500 hover:text-gray-700',
+        ]"
+        @click="isLargeView = true"
+      >
+        Large
+      </button>
     </div>
 
     <!-- Image grid -->
@@ -124,8 +124,10 @@ useHead({
           <NuxtImg
             :src="art_piece.data.artwork.url || ''"
             :alt="art_piece.data.title || ''"
-            format="webp, avif"
+            height="1000"
             width="1000"
+            sizes="sm:100vw md:800px lg:1200px"
+            format="webp, avif"
             quality="70"
             fit="contain"
             placeholder

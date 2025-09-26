@@ -121,15 +121,15 @@ useHead({
               :src="exhibition.data.poster.url || ''"
               format="avif"
               quality="70"
-              height="100"
+              height="150"
               fit="contain"
               class="col-start-1 col-span-2 md:col-span-1 md:col-start-1 lg:col-span-1"
             />
             <div
               class="text-left col-start-3 col-span-5 md:col-start-2 md:col-span-5 lg:col-start-2 lg:col-span-5"
             >
-              <h2>{{ exhibition.data.title }}</h2>
-              <p class="text-xs">
+              <h2 class="mb-1">{{ exhibition.data.title }}</h2>
+              <p class="">
                 {{
                   exhibition.data.location?.text ||
                   (exhibition.data.location as any)?.url
@@ -143,7 +143,7 @@ useHead({
                   )
                 }}
               </p>
-              <p class="text-xs">More info →</p>
+              <p class="text-xs mt-2 underline">More info →</p>
             </div>
           </div>
         </NuxtLink>
@@ -155,7 +155,7 @@ useHead({
             v-for="(exhibition_artworks, index) in exhibition.data
               .exhibition_artworks"
             :key="`${exhibition.id}-artwork-${index}`"
-            class="flex-shrink-0 h-56"
+            class="flex-shrink-0 h-fit"
           >
             <NuxtImg
               v-if="exhibition_artworks.artworks"
@@ -169,7 +169,7 @@ useHead({
               quality="70"
               height="224"
               fit="contain"
-              class="h-full"
+              class="h-[224px] lg:h-[350px]"
             />
           </div>
         </div>

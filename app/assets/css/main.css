@@ -43,7 +43,7 @@ h6 {
 }
 
 .bigRichTextCentered {
-  @apply text-center tracking-tight py-16;
+  @apply text-center tracking-tight mb-16;
 }
 .bigRichTextCentered p {
   @apply text-xl lg:text-3xl mb-8;

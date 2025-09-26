@@ -1,7 +1,7 @@
 <script setup lang="ts">
 const prismic = usePrismic();
 const route = useRoute();
-const { formatDateTime } = useDateFormat();
+const { formatExhibitionDateRange } = useDateFormat();
 
 const { data: exhibition } = await useLazyAsyncData(
   route.params.uid as string,
@@ -72,11 +72,11 @@ useHead({
         quality="70"
         loading="eager"
         fit="contain"
-        width="120"
-        class="mb-4"
+        height="150"
+        class=""
       />
       <div>
-        <h1 class="text-2xl mb-4 pt-4">{{ exhibition?.data.title }}</h1>
+        <h1 class="text-4xl mb-4 pt-4">{{ exhibition?.data.title }}</h1>
         <div class="mb-4 bg-gray-100 dark:bg-zinc-900 p-4">
           <div
             v-if="
@@ -91,8 +91,12 @@ useHead({
           </div>
           <div v-if="exhibition?.data.start_date && exhibition?.data.end_date">
             <p class="text-xs">
-              {{ formatDateTime(exhibition.data.start_date) }} -
-              {{ formatDateTime(exhibition.data.end_date) }}
+              {{
+                formatExhibitionDateRange(
+                  exhibition.data.start_date,
+                  exhibition.data.end_date
+                )
+              }}
             </p>
           </div>
         </div>
@@ -109,7 +113,7 @@ useHead({
     <div class="col-start-1 lg:col-span-9 h-fit">
       <div
         v-if="exhibition?.data.exhibition_artworks"
-        class="grid grid-cols-2 lg:grid-cols-3 gap-2"
+        class="grid grid-cols-2 lg:grid-cols-3 gap-4"
       >
         <div
           v-for="(artwork, index) in exhibition?.data.exhibition_artworks"

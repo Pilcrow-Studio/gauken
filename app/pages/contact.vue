@@ -57,13 +57,15 @@ useHead({
         :slices="contact?.data.slices ?? []"
         :components="components"
       />
-      <NuxtLink to="mailto:david@gauken.art" class="text-5xl"
+      <NuxtLink
+        to="mailto:david@gauken.art"
+        class="text-3xl md:text-4xl lg:text-5xl"
         >david@gauken.art</NuxtLink
       >
       <NuxtLink
         to="https://www.instagram.com/gaukenart/"
         target="_blank"
-        class="text-5xl"
+        class="text-3xl md:text-4xl lg:text-5xl"
         >Instagram</NuxtLink
       >
     </div>
