@@ -11,7 +11,7 @@ const { data: front_page } = await useLazyAsyncData("index", () =>
   prismic.client.getSingle("front_page")
 );
 
-// Load art pieces immediately for faster first image loading
+// Load art pieces immediately for faster first image loading (limited for display)
 const { data: art_pieces } = await useLazyAsyncData("art_pieces", () =>
   prismic.client.getAllByType("art_piece", {
     filters: [prismic.filter.at("my.art_piece.medium", "Painting")],
@@ -28,6 +28,47 @@ const { data: art_pieces } = await useLazyAsyncData("art_pieces", () =>
     ],
   })
 );
+
+// Load all art pieces for lightbox navigation
+const { data: all_art_pieces } = await useLazyAsyncData("all_art_pieces", () =>
+  prismic.client.getAllByType("art_piece", {
+    orderings: [
+      {
+        field: "my.art_piece.medium",
+        direction: "desc",
+      },
+      {
+        field: "document.first_publication_date",
+        direction: "desc",
+      },
+    ],
+  })
+);
+
+// Lightbox state
+const isLightboxOpen = ref(false);
+const currentArtworkIndex = ref(0);
+
+// Lightbox functions
+const openLightbox = (artworkUid: string) => {
+  if (!all_art_pieces.value) return;
+
+  const index = all_art_pieces.value.findIndex(
+    (piece) => piece.uid === artworkUid
+  );
+  if (index !== -1) {
+    currentArtworkIndex.value = index;
+    isLightboxOpen.value = true;
+  }
+};
+
+const closeLightbox = () => {
+  isLightboxOpen.value = false;
+};
+
+const navigateToArtwork = (index: number) => {
+  currentArtworkIndex.value = index;
+};
 
 // Set cache tags for on-demand revalidation
 const { ssrContext } = useNuxtApp();
@@ -119,20 +160,17 @@ useHead({
         <div
           class="gap-8 lg:col-start-4 col-start-1 lg:col-span-6 col-span-12 flex flex-col justify-center items-center transition-all duration-300"
         >
-          <div
-            v-for="(art_piece, index) in art_pieces"
-            :key="art_piece.id"
-            class="cursor-pointer"
-            @mouseenter="isGlobalHovered = false"
-            @mouseleave="isGlobalHovered = false"
-          >
-            <NuxtLink :to="`/work/${art_piece.uid}`">
+          <div v-for="(art_piece, index) in art_pieces" :key="art_piece.id">
+            <button
+              class="w-full cursor-pointer group"
+              @click="openLightbox(art_piece.uid)"
+            >
               <NuxtImg
                 :src="art_piece.data.artwork.url || ''"
                 format="webp,avif"
-                :quality="index === 0 ? 70 : 80"
-                height="1000"
-                width="1000"
+                :quality="index === 0 ? 60 : 80"
+                height="800"
+                width="800"
                 sizes="sm:100vw md:800px lg:1200px"
                 placeholder
                 placeholder-class="h-[1000px] w-[1000px] bg-red-600 object-cover"
@@ -144,8 +182,9 @@ useHead({
                   art_piece.data.artwork.alt ||
                   `Artwork by ${art_piece.data.title || 'David Wilson'}`
                 "
+                class="transition-opacity duration-200 group-hover:opacity-80"
               />
-            </NuxtLink>
+            </button>
           </div>
         </div>
 
@@ -160,5 +199,15 @@ useHead({
         </div>
       </div>
     </div>
+
+    <!-- Artwork Lightbox -->
+    <ArtworkLightbox
+      :art-pieces="all_art_pieces || null"
+      :current-index="currentArtworkIndex"
+      :is-open="isLightboxOpen"
+      :update-url="false"
+      @close="closeLightbox"
+      @navigate="navigateToArtwork"
+    />
   </div>
 </template>
