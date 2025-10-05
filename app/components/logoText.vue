@@ -60,7 +60,7 @@ const random_art_piece = computed(() => {
       <NuxtLink
         to="/work"
         class="col-start-1 col-span-12 lg:col-start-3 lg:col-span-4"
-        >see all
+        >explore all
         <ClientOnly>
           <span v-if="random_art_piece" class="p-1"
             ><NuxtImg
@@ -68,7 +68,7 @@ const random_art_piece = computed(() => {
               :src="random_art_piece.data.artwork.url ?? ''"
               class="inline-block"
               height="40"
-              sizes="sm:40px md:40px lg:40px"
+              sizes="sm:40px"
               quality="70"
               :alt="
                 random_art_piece.data.artwork.alt ||

@@ -165,11 +165,11 @@ onUnmounted(() => {
 
       <!-- Main content -->
       <div
-        class="flex flex-col lg:flex-row max-w-7xl w-full h-full max-h-screen p-4 gap-4"
+        class="flex flex-col lg:flex-row max-w-7xl w-full h-full max-h-screen p-4 gap-6"
         @click.stop
       >
         <!-- Image container -->
-        <div class="flex-1 flex items-center justify-center">
+        <div class="flex-1 flex items-center justify-center p-6 bg-zinc-800">
           <NuxtImg
             :src="currentArtwork.data.artwork.url || ''"
             :alt="currentArtwork.data.title || ''"
@@ -182,8 +182,10 @@ onUnmounted(() => {
         </div>
 
         <!-- Artwork info -->
-        <div class="lg:w-80 flex flex-col justify-center text-white p-6">
-          <h1 class="text-2xl lg:text-3xl font-light mb-4">
+        <div
+          class="lg:w-80 flex flex-col justify-center text-white p-6 pt-0 pb-16"
+        >
+          <h1 class="text-2xl lg:text-3xl font-light mb-0">
             {{ currentArtwork.data.title }}
           </h1>
 

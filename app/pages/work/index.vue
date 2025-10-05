@@ -138,8 +138,9 @@ useHead({
   <div class="grid grid-cols-12 text-center px-4">
     <!-- Layout control buttons -->
     <div
-      class="col-start-10 md:col-start-2 md:col-span-3 row-start-1 mb-6 flex justify-start gap-2"
+      class="col-start-8 md:col-start-2 md:col-span-3 row-start-1 mb-6 flex justify-start gap-2"
     >
+      <p class="mt-0.5 text-sm">View:</p>
       <button
         :class="[
           'text-sm font-medium transition-colors duration-200',
@@ -183,13 +184,13 @@ useHead({
             fit="contain"
             placeholder
             placeholder-class="w-full h-full bg-gray-200 object-cover"
-            class="transition-opacity duration-200 group-hover:opacity-80"
+            class=""
           />
           <div class="flex flex-col gap-2 mt-4 text-left">
             <p v-if="art_piece.data.title" class="text-lg">
               {{ art_piece.data.title }}
             </p>
-            <div class="flex gap-2 text-sm text-gray-500">
+            <div class="flex flex-wrap gap-2 text-sm text-gray-500">
               <p v-if="art_piece.data.medium_custom">
                 {{ art_piece.data.medium_custom }}
               </p>

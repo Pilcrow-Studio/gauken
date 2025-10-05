@@ -171,7 +171,7 @@ useHead({
                 :quality="index === 0 ? 60 : 80"
                 height="800"
                 width="800"
-                sizes="sm:100vw md:800px lg:1200px"
+                sizes="sm:400px lg:800px"
                 placeholder
                 placeholder-class="h-[1000px] w-[1000px] bg-red-600 object-cover"
                 :loading="index === 0 ? 'eager' : 'lazy'"
@@ -182,7 +182,7 @@ useHead({
                   art_piece.data.artwork.alt ||
                   `Artwork by ${art_piece.data.title || 'David Wilson'}`
                 "
-                class="transition-opacity duration-200 group-hover:opacity-80"
+                class=""
               />
             </button>
           </div>
