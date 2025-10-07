@@ -2,7 +2,7 @@
 const prismic = usePrismic();
 const { formatDateRange } = useDateFormat();
 
-const { data: exhibition } = await useLazyAsyncData(
+const { data: exhibition } = await useAsyncData(
   "exhibition",
   () =>
     prismic.client.getAllByType("exhibitions", {
@@ -53,7 +53,7 @@ const isExhibitionActive = computed(() => {
         </div>
       </div>
     </div>
-    <div class="bg-gray-100 dark:bg-zinc-900 p-2">
+    <div class="bg-white dark:bg-zinc-900 p-2">
       <NuxtImg
         v-if="exhibition?.[0]?.data?.poster?.url"
         :src="exhibition?.[0]?.data?.poster?.url"

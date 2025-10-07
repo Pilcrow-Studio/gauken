@@ -4,25 +4,11 @@ import { useRoute } from "vue-router";
 const route = useRoute();
 
 const isHome = computed(() => route.path === "/");
-
-const prismic = usePrismic();
-const { data: art_pieces } = await useLazyAsyncData("art_pieces_count", () =>
-  prismic.client.getAllByType("art_piece")
-);
-const art_piece_count = art_pieces.value?.length ?? 0;
-
-provide("art_piece_count", art_piece_count);
-
-const random_art_piece = computed(() => {
-  return art_pieces.value?.[
-    Math.floor(Math.random() * art_pieces.value.length)
-  ];
-});
 </script>
 
 <template>
   <div class="flex flex-col z-[9999] max-w-fit">
-    <NuxtLink to="/" class="mb-10 w-[50vw] max-w-[600px]" aria-label="Gauken">
+    <NuxtLink to="/" class="mb-10 w-[50vw] max-w-[900px]" aria-label="Gauken">
       <svg
         width="100%"
         viewBox="0 0 510 91"
@@ -56,31 +42,14 @@ const random_art_piece = computed(() => {
       </svg>
       <h1 class="hidden">Gauken</h1>
     </NuxtLink>
-    <div v-if="isHome" class="grid lg:grid-cols-12 grid-cols-4">
+    <div
+      class="explore grid lg:grid-cols-12 grid-cols-4 h-[40px] transition-opacity duration-300"
+      :class="{ 'opacity-0 pointer-events-none': !isHome }"
+    >
       <NuxtLink
         to="/work"
         class="col-start-1 col-span-12 lg:col-start-3 lg:col-span-4"
-        >explore all
-        <ClientOnly>
-          <span v-if="random_art_piece" class="p-1"
-            ><NuxtImg
-              format="avif"
-              :src="random_art_piece.data.artwork.url ?? ''"
-              class="inline-block"
-              height="40"
-              sizes="sm:40px"
-              quality="70"
-              :alt="
-                random_art_piece.data.artwork.alt ||
-                `Artwork by ${random_art_piece.data.title || 'David Wilson'}`
-              "
-              placeholder
-            />
-          </span>
-        </ClientOnly>
-        work
-        <sup class="text-xs"> [{{ art_piece_count }}]</sup>
-        →</NuxtLink
+        >explore all work →</NuxtLink
       >
     </div>
   </div>

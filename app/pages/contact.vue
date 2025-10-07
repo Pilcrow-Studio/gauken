@@ -52,22 +52,13 @@ useHead({
 
 <template>
   <div class="grid grid-cols-1 lg:grid-cols-12 text-center">
-    <div class="flex flex-col gap-8 col-start-1 lg:col-start-4 lg:col-span-6">
+    <div
+      class="flex flex-col gap-8 col-start-1 lg:col-start-3 lg:col-span-8 xl:col-start-4 xl:col-span-6"
+    >
       <SliceZone
         :slices="contact?.data.slices ?? []"
         :components="components"
       />
-      <NuxtLink
-        to="mailto:david@gauken.art"
-        class="text-3xl md:text-4xl lg:text-5xl"
-        >david@gauken.art</NuxtLink
-      >
-      <NuxtLink
-        to="https://www.instagram.com/gaukenart/"
-        target="_blank"
-        class="text-3xl md:text-4xl lg:text-5xl"
-        >Instagram</NuxtLink
-      >
     </div>
   </div>
 </template>

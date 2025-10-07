@@ -12,13 +12,13 @@ provide("isGlobalHovered", isGlobalHovered);
         :class="{ 'opacity-30': isGlobalHovered }"
       >
         <div
-          class="max-w-[1920px] w-full mx-auto grid lg:grid-cols-12 grid-cols-4 gap-4 px-4"
+          class="max-w-[1920px] w-full mx-auto grid lg:grid-cols-8 grid-cols-10 gap-4 px-4"
         >
           <Nav
-            class="md:col-start-9 md:col-span-2 col-start-4 col-span-1 pointer-events-auto"
+            class="lg:col-start-6 md:col-start-8 md:col-span-2 col-start-9 col-span-1 pointer-events-auto"
           />
           <ActiveExhibition
-            class="xl:block hidden col-start-12 col-end-13 pointer-events-auto"
+            class="xl:block hidden col-start-8 col-span-1 pointer-events-auto"
           />
         </div>
       </div>
@@ -32,7 +32,9 @@ provide("isGlobalHovered", isGlobalHovered);
             class="p-4 transition-opacity duration-300"
             :class="{ 'opacity-30': isGlobalHovered }"
           />
-          <NuxtPage class="mt-24 px-4 pb-24" />
+          <div class="relative mt-24 px-4 pb-24">
+            <NuxtPage class="" />
+          </div>
         </div>
       </main>
     </div>

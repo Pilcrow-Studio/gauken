@@ -1,7 +1,7 @@
 export const useGlobalNavigation = () => {
   const prismic = usePrismic();
 
-  return useLazyAsyncData(
+  return useAsyncData(
     "global_navigation",
     () => prismic.client.getSingle("global_navigation"),
     {

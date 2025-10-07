@@ -4,7 +4,7 @@
 
 @font-face {
   font-family: "Stix Two Text";
-  src: url("~/assets/fonts/STIXTwoText.ttf") format("truetype");
+  src: url("/fonts/STIXTwoText.ttf") format("truetype");
   font-weight: 400 700;
   font-style: normal;
   font-display: swap;
@@ -12,7 +12,7 @@
 
 @font-face {
   font-family: "Stix Two Text";
-  src: url("~/assets/fonts/STIXTwoText-Italic.ttf") format("truetype");
+  src: url("/fonts/STIXTwoText-Italic.ttf") format("truetype");
   font-weight: 400 700;
   font-style: italic;
   font-display: swap;

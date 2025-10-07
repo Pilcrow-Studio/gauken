@@ -27,7 +27,7 @@ h1 {
   @apply text-6xl tracking-tight;
 }
 h2 {
-  @apply text-4xl tracking-tight;
+  @apply text-4xl tracking-tight mb-8;
 }
 h3 {
   @apply text-2xl tracking-tight;
@@ -45,14 +45,12 @@ h6 {
 .bigRichTextCentered {
   @apply text-center tracking-tight mb-16;
 }
+.bigRichTextCentered a {
+  @apply text-center tracking-tight mb-16;
+}
 .bigRichTextCentered p {
   @apply text-xl lg:text-3xl mb-8;
 }
-
-.bigRichTextCentered a {
-  @apply text-lg mt-4 mb-4;
-}
-
 .richtext p {
   @apply mb-8 text-pretty;
 }
@@ -90,4 +88,13 @@ a:hover {
 
 .scrollbar-hide::-webkit-scrollbar {
   display: none; /* Chrome, Safari and Opera */
+}
+
+.page-enter-active,
+.page-leave-active {
+  transition: all 0.3s;
+}
+.page-enter-from,
+.page-leave-to {
+  opacity: 0;
 }

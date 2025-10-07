@@ -32,6 +32,10 @@ export default defineNuxtConfig({
         { rel: "dns-prefetch", href: "https://gauken.cdn.prismic.io" },
       ],
     },
+    pageTransition: {
+      name: "page",
+      mode: "out-in",
+    },
   },
 
   modules: [
