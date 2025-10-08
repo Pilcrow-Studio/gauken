@@ -29,6 +29,29 @@
           "multi": "paragraph,strong,em,image,list-item,o-list-item,hyperlink"
         }
       },
+      "front_page_artworks": {
+        "type": "Group",
+        "config": {
+          "label": "Front Page Artworks",
+          "repeat": true,
+          "fields": {
+            "artwork": {
+              "type": "Link",
+              "config": {
+                "label": "Artwork",
+                "select": "document",
+                "repeat": false,
+                "customtypes": [
+                  {
+                    "id": "art_piece",
+                    "fields": ["artwork", "title"]
+                  }
+                ]
+              }
+            }
+          }
+        }
+      },
       "slices": {
         "type": "Slices",
         "fieldset": "Slice Zone",

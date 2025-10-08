@@ -58,7 +58,7 @@ const exhibitionStatusText = computed(() => {
     class="exhibition-link hover:no-underline"
   >
     <div
-      class="bg-black dark:bg-white text-white dark:text-black py-1 overflow-hidden relative"
+      class="bg-black dark:bg-[#F5F5F4] text-white dark:text-black py-1 overflow-hidden relative"
     >
       <div class="marquee-container">
         <div class="marquee-content">

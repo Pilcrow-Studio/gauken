@@ -1,78 +1,31 @@
 <script setup lang="ts">
 import { components } from "~/slices";
-
-// const { formatCurrency } = useCurrency();
+import * as prismic from "@prismicio/client";
 
 const isGlobalHovered = inject("isGlobalHovered", ref(false));
 
-const prismic = usePrismic();
+const prismicClient = usePrismic();
 
-// Load front page data lazily (non-critical for initial render)
-const { data: front_page } = useLazyAsyncData(
+// Load front page data with artwork relationships
+const { data: front_page } = await useAsyncData(
   "front_page_index",
-  () => prismic.client.getSingle("front_page"),
+  () => prismicClient.client.getSingle("front_page"),
   {
     server: true,
     default: () => null,
   }
 );
 
-// Load only the first art piece immediately for hero image
-const { data: first_art_piece } = await useAsyncData(
-  "first_art_piece_home",
-  () =>
-    prismic.client.getAllByType("art_piece", {
-      filters: [prismic.filter.at("my.art_piece.medium", "Painting")],
-      limit: 1,
-      orderings: [
-        {
-          field: "my.art_piece.medium",
-          direction: "desc",
-        },
-        {
-          field: "document.first_publication_date",
-          direction: "desc",
-        },
-      ],
-    }),
-  {
-    server: true,
-    default: () => [],
-  }
-);
-
-// Load all 3 art pieces lazily, then we'll split them
-const { data: all_art_pieces } = useLazyAsyncData(
-  "all_art_pieces_home",
-  () =>
-    prismic.client.getAllByType("art_piece", {
-      filters: [prismic.filter.at("my.art_piece.medium", "Painting")],
-      limit: 3,
-      orderings: [
-        {
-          field: "my.art_piece.medium",
-          direction: "desc",
-        },
-        {
-          field: "document.first_publication_date",
-          direction: "desc",
-        },
-      ],
-    }),
-  {
-    server: true,
-    default: () => [],
-  }
-);
-
-// Combine first piece (immediate) with remaining pieces (lazy)
+// Get artworks from the front_page_artworks group
 const art_pieces = computed(() => {
-  // If we have all pieces loaded lazily, use those
-  if (all_art_pieces.value && all_art_pieces.value.length > 0) {
-    return all_art_pieces.value;
+  if (!front_page.value?.data?.front_page_artworks) {
+    return [];
   }
-  // Otherwise, show just the first piece while others load
-  return first_art_piece.value || [];
+
+  // Filter and map the group items to extract the linked art pieces
+  return front_page.value.data.front_page_artworks
+    .map((item) => item.artwork)
+    .filter((artwork) => prismic.isFilled.contentRelationship(artwork));
 });
 
 // Navigation function for artwork clicks
@@ -156,7 +109,6 @@ useHead({
         <div
           class="gap-8 lg:col-start-4 col-start-1 lg:col-span-6 col-span-12 flex flex-col justify-center items-center transition-all duration-300"
         >
-          <!-- Reserve space for images even when loading -->
           <template v-if="art_pieces && art_pieces.length > 0">
             <div
               v-for="(art_piece, index) in art_pieces"
@@ -172,7 +124,8 @@ useHead({
                   style="aspect-ratio: 1"
                 >
                   <NuxtImg
-                    :src="art_piece.data.artwork.url || ''"
+                    v-if="art_piece.data?.artwork?.url"
+                    :src="art_piece.data.artwork.url"
                     format="webp,avif"
                     :quality="index === 0 ? 60 : 80"
                     height="800"
@@ -186,22 +139,13 @@ useHead({
                     :preload="index === 0"
                     :alt="
                       art_piece.data.artwork.alt ||
-                      `Artwork by ${art_piece.data.title || 'David Wilson'}`
+                      `Artwork ${art_piece.data?.title ? `- ${art_piece.data.title}` : 'by David Wilson'}`
                     "
                     class="w-full h-full object-contain block"
                     style="aspect-ratio: 1"
                   />
                 </div>
               </button>
-            </div>
-          </template>
-          <!-- Fallback skeleton when data is loading -->
-          <template v-else>
-            <div v-for="n in 3" :key="`skeleton-${n}`" class="w-full">
-              <div
-                class="w-full max-w-[800px] mx-auto h-[400px] sm:h-[400px] lg:h-[800px] bg-gray-100 animate-pulse"
-                style="aspect-ratio: 1"
-              />
             </div>
           </template>
         </div>

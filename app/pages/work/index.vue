@@ -43,20 +43,34 @@ const { data: work } = await useAsyncData("work", () =>
   prismic.client.getSingle("work")
 );
 
-const { data: art_pieces } = await useAsyncData("all_art_pieces", () =>
-  prismic.client.getAllByType("art_piece", {
-    orderings: [
-      {
-        field: "my.art_piece.medium",
-        direction: "desc",
-      },
-      {
-        field: "document.first_publication_date",
-        direction: "desc",
-      },
-    ],
-  })
+const { data: art_pieces_raw } = await useAsyncData("all_art_pieces", () =>
+  prismic.client.getAllByType("art_piece")
 );
+
+// Sort art pieces: title first, then by medium, then by publication date
+const art_pieces = computed(() => {
+  if (!art_pieces_raw.value) return null;
+
+  return [...art_pieces_raw.value].sort((a, b) => {
+    // First priority: artworks with title come first
+    const aHasTitle = !!a.data.title;
+    const bHasTitle = !!b.data.title;
+
+    if (aHasTitle && !bHasTitle) return -1;
+    if (!aHasTitle && bHasTitle) return 1;
+
+    // Second priority: medium (descending)
+    const aMedium = a.data.medium || "";
+    const bMedium = b.data.medium || "";
+    if (aMedium > bMedium) return -1;
+    if (aMedium < bMedium) return 1;
+
+    // Third priority: publication date (descending)
+    const aDate = new Date(a.first_publication_date).getTime();
+    const bDate = new Date(b.first_publication_date).getTime();
+    return bDate - aDate;
+  });
+});
 
 // Computed property for grid classes
 const gridClasses = computed(() => {

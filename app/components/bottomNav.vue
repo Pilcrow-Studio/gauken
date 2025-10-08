@@ -14,7 +14,7 @@ const currentYear = new Date().getFullYear();
         <NuxtLink to="https://www.instagram.com/gaukenart/" target="_blank">
           <p>Instagram</p>
         </NuxtLink>
-        <NuxtLink to="https://www.instagram.com/gaukenart/" target="_blank">
+        <NuxtLink to="mailto:davidnwilson7420@hotmail.com" target="_blank">
           <p>Email</p>
         </NuxtLink>
       </div>
