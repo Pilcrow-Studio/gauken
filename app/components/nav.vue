@@ -37,7 +37,7 @@ router.afterEach(() => {
   <nav v-if="global_navigation?.data?.links" ref="menuRef" class="relative">
     <!-- Mobile Menu Button (visible on small screens) -->
     <button
-      class="lg:hidden flex items-center px-4 pt-4 pb-4 bg-white dark:bg-black text-sm leading-none"
+      class="lg:hidden flex justify-end items-center px-4 pt-4 pb-4 bg-white dark:bg-black leading-none uppercase text-xs"
       :class="{ 'pb-2': isMenuOpen }"
       @click="toggleMenu"
     >
@@ -61,7 +61,7 @@ router.afterEach(() => {
     <!-- Mobile Dropdown Menu -->
     <div
       v-if="isMenuOpen"
-      class="lg:hidden absolute top-full left-0 right-0 bg-white dark:bg-black border-t border-gray-200 dark:border-gray-700 px-4 pb-4 z-50"
+      class="lg:hidden absolute top-full left-0 right-0 bg-white dark:bg-black border-gray-200 dark:border-gray-700 pb-2 z-50"
     >
       <template
         v-for="(item, index) in global_navigation.data.links"
@@ -69,7 +69,7 @@ router.afterEach(() => {
       >
         <PrismicLink
           :field="item.link"
-          class="block leading-none text-sm py-2 hover:opacity-70 transition-opacity"
+          class="block leading-none text-sm py-2 px-4 hover:opacity-70 transition-opacity text-right"
           @click="isMenuOpen = false"
         />
       </template>

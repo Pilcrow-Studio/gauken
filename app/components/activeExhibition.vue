@@ -23,6 +23,32 @@ const route = useRoute();
 const isExhibitionActive = computed(() => {
   return route.path.startsWith("/exhibitions/");
 });
+
+const isExhibitionHappeningNow = computed(() => {
+  if (
+    !exhibition.value?.[0]?.data?.start_date ||
+    !exhibition.value?.[0]?.data?.end_date
+  ) {
+    return false;
+  }
+
+  const now = new Date();
+  const startDate = new Date(exhibition.value[0].data.start_date);
+  const endDate = new Date(exhibition.value[0].data.end_date);
+
+  // Set time to midnight for date-only comparison
+  now.setHours(0, 0, 0, 0);
+  startDate.setHours(0, 0, 0, 0);
+  endDate.setHours(0, 0, 0, 0);
+
+  return now >= startDate && now <= endDate;
+});
+
+const exhibitionStatusText = computed(() => {
+  return isExhibitionHappeningNow.value
+    ? "happening now"
+    : "upcoming exhibition";
+});
 </script>
 
 <template>
@@ -36,19 +62,31 @@ const isExhibitionActive = computed(() => {
     >
       <div class="marquee-container">
         <div class="marquee-content">
-          <span class="marquee-text text-[10px]">upcoming exhibition</span>
+          <span class="marquee-text text-[10px]">{{
+            exhibitionStatusText
+          }}</span>
           <span class="marquee-text text-[10px]">come say hello</span>
-          <span class="marquee-text text-[10px]">upcoming exhibition</span>
+          <span class="marquee-text text-[10px]">{{
+            exhibitionStatusText
+          }}</span>
           <span class="marquee-text text-[10px]">come say hello</span>
-          <span class="marquee-text text-[10px]">upcoming exhibition</span>
+          <span class="marquee-text text-[10px]">{{
+            exhibitionStatusText
+          }}</span>
           <span class="marquee-text text-[10px]">come say hello</span>
         </div>
         <div class="marquee-content" aria-hidden="true">
-          <span class="marquee-text text-[10px]">upcoming exhibition</span>
+          <span class="marquee-text text-[10px]">{{
+            exhibitionStatusText
+          }}</span>
           <span class="marquee-text text-[10px]">come say hello</span>
-          <span class="marquee-text text-[10px]">upcoming exhibition</span>
+          <span class="marquee-text text-[10px]">{{
+            exhibitionStatusText
+          }}</span>
           <span class="marquee-text text-[10px]">come say hello</span>
-          <span class="marquee-text text-[10px]">upcoming exhibition</span>
+          <span class="marquee-text text-[10px]">{{
+            exhibitionStatusText
+          }}</span>
           <span class="marquee-text text-[10px]">come say hello</span>
         </div>
       </div>

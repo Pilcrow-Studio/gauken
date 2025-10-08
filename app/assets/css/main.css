@@ -24,22 +24,22 @@ label {
   margin-bottom: 0;
 }
 h1 {
-  @apply text-6xl tracking-tight;
+  @apply md:text-6xl text-4xl tracking-tight;
 }
 h2 {
-  @apply text-4xl tracking-tight mb-8;
+  @apply md:text-3xl text-2xl tracking-tight mb-8;
 }
 h3 {
-  @apply text-2xl tracking-tight;
+  @apply md:text-2xl text-xl tracking-tight;
 }
 h4 {
-  @apply text-xl tracking-tight;
+  @apply md:text-xl text-lg tracking-tight;
 }
 h5 {
-  @apply text-lg;
+  @apply md:text-lg text-base;
 }
 h6 {
-  @apply text-base;
+  @apply md:text-base text-sm;
 }
 
 .bigRichTextCentered {

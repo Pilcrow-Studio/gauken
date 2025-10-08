@@ -135,7 +135,7 @@ useHead({
 </script>
 
 <template>
-  <div class="grid grid-cols-12 text-center px-4">
+  <div class="grid grid-cols-12 text-center">
     <!-- Layout control buttons -->
     <div
       class="col-start-8 md:col-start-2 md:col-span-3 row-start-1 mb-6 flex justify-start gap-2"

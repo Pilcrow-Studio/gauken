@@ -77,7 +77,7 @@ useHead({
       />
       <div>
         <h1 class="text-4xl mb-4 pt-4">{{ exhibition?.data.title }}</h1>
-        <div class="mb-4 bg-gray-100 dark:bg-zinc-900 p-4">
+        <div class="mb-4 bg-gray-200 dark:bg-zinc-900 p-4">
           <div
             v-if="
               exhibition?.data.location &&
