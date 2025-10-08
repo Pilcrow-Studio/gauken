@@ -165,61 +165,64 @@ onUnmounted(() => {
         </button>
 
         <!-- Main content -->
-        <div
-          class="flex flex-col lg:flex-row max-w-7xl w-full h-full max-h-screen p-4 gap-2"
-          @click.stop
-        >
-          <!-- Image container -->
+        <Transition name="artwork-fade" mode="out-in">
           <div
-            class="flex-1 flex items-center justify-center p-4 max-h-[65vh] lg:max-h-full"
+            :key="currentIndex"
+            class="flex flex-col lg:flex-row max-w-7xl w-full h-full max-h-screen p-4 gap-2"
+            @click.stop
           >
-            <NuxtImg
-              :src="currentArtwork.data.artwork.url || ''"
-              :alt="currentArtwork.data.title || ''"
-              loading="eager"
-              format="avif"
-              quality="80"
-              fit="contain"
-              class="max-h-full max-w-full object-contain"
-            />
-          </div>
-
-          <!-- Artwork info -->
-          <div
-            class="lg:w-80 flex flex-col justify-center text-white p-6 pt-0 pb-16"
-          >
-            <!-- Counter -->
-            <div class="mb-6 text-xs text-gray-500">
-              {{ currentIndex + 1 }} / {{ artPieces?.length || 0 }}
-            </div>
-            <h1 class="text-2xl lg:text-3xl font-light mb-0">
-              {{ currentArtwork.data.title }}
-            </h1>
-
-            <div v-if="currentArtwork.data.description" class="mb-4">
-              <PrismicRichText
-                :field="currentArtwork.data.description"
-                wrapper="div"
-                class="text-gray-300"
+            <!-- Image container -->
+            <div
+              class="flex-1 flex items-center justify-center p-4 max-h-[65vh] lg:max-h-full"
+            >
+              <NuxtImg
+                :src="currentArtwork.data.artwork.url || ''"
+                :alt="currentArtwork.data.title || ''"
+                loading="eager"
+                format="avif"
+                quality="80"
+                fit="contain"
+                class="max-h-full max-w-full object-contain"
               />
             </div>
 
-            <div class="space-y-2 text-sm text-gray-400">
-              <p v-if="currentArtwork.data.medium_custom">
-                {{ currentArtwork.data.medium_custom }}
-              </p>
-              <p v-if="currentArtwork.data.size">
-                {{ currentArtwork.data.size }}
-              </p>
-              <p
-                v-if="currentArtwork.data.price"
-                class="text-white font-medium"
-              >
-                {{ formatCurrency(currentArtwork.data.price) }}
-              </p>
+            <!-- Artwork info -->
+            <div
+              class="lg:w-80 flex flex-col justify-center text-white p-6 pt-0 pb-16"
+            >
+              <!-- Counter -->
+              <div class="mb-6 text-xs text-gray-500">
+                {{ currentIndex + 1 }} / {{ artPieces?.length || 0 }}
+              </div>
+              <h1 class="text-2xl lg:text-3xl font-light mb-0">
+                {{ currentArtwork.data.title }}
+              </h1>
+
+              <div v-if="currentArtwork.data.description" class="mb-4">
+                <PrismicRichText
+                  :field="currentArtwork.data.description"
+                  wrapper="div"
+                  class="text-gray-300"
+                />
+              </div>
+
+              <div class="space-y-2 text-sm text-gray-400">
+                <p v-if="currentArtwork.data.medium_custom">
+                  {{ currentArtwork.data.medium_custom }}
+                </p>
+                <p v-if="currentArtwork.data.size">
+                  {{ currentArtwork.data.size }}
+                </p>
+                <p
+                  v-if="currentArtwork.data.price"
+                  class="text-white font-medium"
+                >
+                  {{ formatCurrency(currentArtwork.data.price) }}
+                </p>
+              </div>
             </div>
           </div>
-        </div>
+        </Transition>
       </div>
     </Transition>
   </Teleport>
@@ -233,6 +236,16 @@ onUnmounted(() => {
 
 .lightbox-fade-enter-from,
 .lightbox-fade-leave-to {
+  opacity: 0;
+}
+
+.artwork-fade-enter-active,
+.artwork-fade-leave-active {
+  transition: all 0.15s;
+}
+
+.artwork-fade-enter-from,
+.artwork-fade-leave-to {
   opacity: 0;
 }
 </style>
