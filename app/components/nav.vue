@@ -39,7 +39,7 @@ router.afterEach(() => {
     <button
       class="lg:hidden flex justify-end items-center px-4 pt-4 pb-4 bg-white dark:bg-black leading-none uppercase text-xs"
       :class="{ 'pb-2': isMenuOpen }"
-      @click="toggleMenu"
+      @click.stop="toggleMenu"
     >
       Menu
       <svg
