@@ -3,6 +3,7 @@ const { data: global_navigation } = await useGlobalNavigation();
 
 // Mobile menu state
 const isMenuOpen = ref(false);
+let listenerActive = false;
 
 // Toggle menu with event handling
 const toggleMenu = (event: Event) => {
@@ -13,22 +14,36 @@ const toggleMenu = (event: Event) => {
     // Wait for this click/touch to finish, then add the global listener
     // Only use click event - mobile browsers convert touch to click
     setTimeout(() => {
-      window.addEventListener("click", closeMenu);
+      if (!listenerActive) {
+        window.addEventListener("click", closeMenu);
+        listenerActive = true;
+      }
     }, 10);
   } else {
-    window.removeEventListener("click", closeMenu);
+    if (listenerActive) {
+      window.removeEventListener("click", closeMenu);
+      listenerActive = false;
+    }
   }
 };
 
 // Close menu function
 const closeMenu = () => {
+  if (!isMenuOpen.value) return; // Already closed, do nothing
+
   isMenuOpen.value = false;
-  window.removeEventListener("click", closeMenu);
+  if (listenerActive) {
+    window.removeEventListener("click", closeMenu);
+    listenerActive = false;
+  }
 };
 
 // Cleanup on unmount
 onUnmounted(() => {
-  window.removeEventListener("click", closeMenu);
+  if (listenerActive) {
+    window.removeEventListener("click", closeMenu);
+    listenerActive = false;
+  }
 });
 
 // Close menu on route change
