@@ -2,6 +2,7 @@
 const prismic = usePrismic();
 const route = useRoute();
 const router = useRouter();
+const { formatCurrency } = useCurrency();
 
 // Reactive state for column layout (true = large view, false = small view)
 const isLargeView = ref(false);
@@ -216,7 +217,7 @@ useHead({
               </p>
             </div>
             <p v-if="art_piece.data.price" class="text-sm">
-              {{ art_piece.data.price }}
+              {{ formatCurrency(art_piece.data.price) }}
             </p>
           </div>
         </button>
