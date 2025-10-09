@@ -3,58 +3,57 @@ const { data: global_navigation } = await useGlobalNavigation();
 
 // Mobile menu state
 const isMenuOpen = ref(false);
-let listenerActive = false;
+const containerRef = ref<HTMLElement | null>(null);
 
-// Toggle menu with event handling
-const toggleMenu = (event: Event) => {
-  event.stopPropagation();
+// Toggle menu
+const toggleMenu = () => {
   isMenuOpen.value = !isMenuOpen.value;
+};
 
-  if (isMenuOpen.value) {
-    // Wait for this click/touch to finish, then add the global listener
-    // Only use click event - mobile browsers convert touch to click
-    setTimeout(() => {
-      if (!listenerActive) {
-        window.addEventListener("click", closeMenu);
-        listenerActive = true;
-      }
-    }, 10);
+// Close menu when clicking outside
+const handleClickOutside = (event: MouseEvent | TouchEvent) => {
+  if (!containerRef.value) return;
+
+  const target = event.target as Node;
+  if (!containerRef.value.contains(target)) {
+    isMenuOpen.value = false;
+  }
+};
+
+// Watch for menu open/close to manage listeners
+watch(isMenuOpen, (newValue) => {
+  if (newValue) {
+    // Menu opened - add listeners on next tick
+    nextTick(() => {
+      document.addEventListener("click", handleClickOutside, true);
+      document.addEventListener("touchend", handleClickOutside, true);
+    });
   } else {
-    if (listenerActive) {
-      window.removeEventListener("click", closeMenu);
-      listenerActive = false;
-    }
+    // Menu closed - remove listeners
+    document.removeEventListener("click", handleClickOutside, true);
+    document.removeEventListener("touchend", handleClickOutside, true);
   }
-};
-
-// Close menu function
-const closeMenu = () => {
-  if (!isMenuOpen.value) return; // Already closed, do nothing
-
-  isMenuOpen.value = false;
-  if (listenerActive) {
-    window.removeEventListener("click", closeMenu);
-    listenerActive = false;
-  }
-};
+});
 
 // Cleanup on unmount
 onUnmounted(() => {
-  if (listenerActive) {
-    window.removeEventListener("click", closeMenu);
-    listenerActive = false;
-  }
+  document.removeEventListener("click", handleClickOutside, true);
+  document.removeEventListener("touchend", handleClickOutside, true);
 });
 
 // Close menu on route change
 const router = useRouter();
 router.afterEach(() => {
-  closeMenu();
+  isMenuOpen.value = false;
 });
 </script>
 
 <template>
-  <nav v-if="global_navigation?.data?.links" class="relative z-[999999999]">
+  <nav
+    v-if="global_navigation?.data?.links"
+    ref="containerRef"
+    class="relative z-[999999999]"
+  >
     <!-- Mobile Menu Button (visible on small screens) -->
     <button
       class="lg:hidden flex justify-end items-center px-4 pt-4 pb-4 bg-white dark:bg-black leading-none uppercase text-xs"
