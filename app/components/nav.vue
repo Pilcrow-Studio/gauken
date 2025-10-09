@@ -10,15 +10,13 @@ const toggleMenu = (event: Event) => {
   isMenuOpen.value = !isMenuOpen.value;
 
   if (isMenuOpen.value) {
-    // Wait for this click/touch to finish, then add the global listeners
-    // Use a slightly longer timeout for mobile to ensure event finishes
+    // Wait for this click/touch to finish, then add the global listener
+    // Only use click event - mobile browsers convert touch to click
     setTimeout(() => {
       window.addEventListener("click", closeMenu);
-      window.addEventListener("touchstart", closeMenu);
     }, 10);
   } else {
     window.removeEventListener("click", closeMenu);
-    window.removeEventListener("touchstart", closeMenu);
   }
 };
 
@@ -26,13 +24,11 @@ const toggleMenu = (event: Event) => {
 const closeMenu = () => {
   isMenuOpen.value = false;
   window.removeEventListener("click", closeMenu);
-  window.removeEventListener("touchstart", closeMenu);
 };
 
 // Cleanup on unmount
 onUnmounted(() => {
   window.removeEventListener("click", closeMenu);
-  window.removeEventListener("touchstart", closeMenu);
 });
 
 // Close menu on route change
@@ -79,7 +75,6 @@ router.afterEach(() => {
         <PrismicLink
           :field="item.link"
           class="block leading-none text-sm py-2 px-4 hover:opacity-70 transition-opacity text-right"
-          @click="closeMenu"
         />
       </template>
     </div>
