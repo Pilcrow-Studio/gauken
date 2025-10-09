@@ -5,17 +5,20 @@ const { data: global_navigation } = await useGlobalNavigation();
 const isMenuOpen = ref(false);
 
 // Toggle menu with event handling
-const toggleMenu = (event: MouseEvent) => {
+const toggleMenu = (event: Event) => {
   event.stopPropagation();
   isMenuOpen.value = !isMenuOpen.value;
 
   if (isMenuOpen.value) {
-    // Wait for this click to finish, then add the global listener
+    // Wait for this click/touch to finish, then add the global listeners
+    // Use a slightly longer timeout for mobile to ensure event finishes
     setTimeout(() => {
       window.addEventListener("click", closeMenu);
-    }, 0);
+      window.addEventListener("touchstart", closeMenu);
+    }, 10);
   } else {
     window.removeEventListener("click", closeMenu);
+    window.removeEventListener("touchstart", closeMenu);
   }
 };
 
@@ -23,11 +26,13 @@ const toggleMenu = (event: MouseEvent) => {
 const closeMenu = () => {
   isMenuOpen.value = false;
   window.removeEventListener("click", closeMenu);
+  window.removeEventListener("touchstart", closeMenu);
 };
 
 // Cleanup on unmount
 onUnmounted(() => {
   window.removeEventListener("click", closeMenu);
+  window.removeEventListener("touchstart", closeMenu);
 });
 
 // Close menu on route change
@@ -38,7 +43,7 @@ router.afterEach(() => {
 </script>
 
 <template>
-  <nav v-if="global_navigation?.data?.links" class="relative">
+  <nav v-if="global_navigation?.data?.links" class="relative z-[999999999]">
     <!-- Mobile Menu Button (visible on small screens) -->
     <button
       class="lg:hidden flex justify-end items-center px-4 pt-4 pb-4 bg-white dark:bg-black leading-none uppercase text-xs"
