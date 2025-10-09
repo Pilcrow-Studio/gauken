@@ -3,53 +3,44 @@ const { data: global_navigation } = await useGlobalNavigation();
 
 // Mobile menu state
 const isMenuOpen = ref(false);
-const menuRef = ref<HTMLElement | null>(null);
-const buttonRef = ref<HTMLElement | null>(null);
 
-// Toggle menu
-const toggleMenu = (event: Event) => {
+// Toggle menu with event handling
+const toggleMenu = (event: MouseEvent) => {
   event.stopPropagation();
   isMenuOpen.value = !isMenuOpen.value;
-};
 
-// Close menu when clicking outside
-const handleClickOutside = (event: Event) => {
-  const target = event.target as Node;
-  
-  // Don't close if clicking the button or inside the menu
-  if (
-    menuRef.value &&
-    !menuRef.value.contains(target) &&
-    buttonRef.value &&
-    !buttonRef.value.contains(target)
-  ) {
-    isMenuOpen.value = false;
+  if (isMenuOpen.value) {
+    // Wait for this click to finish, then add the global listener
+    setTimeout(() => {
+      window.addEventListener("click", closeMenu);
+    }, 0);
+  } else {
+    window.removeEventListener("click", closeMenu);
   }
 };
 
-onMounted(() => {
-  // Use timeout to ensure Vue has finished rendering
-  nextTick(() => {
-    document.addEventListener("click", handleClickOutside);
-  });
-});
+// Close menu function
+const closeMenu = () => {
+  isMenuOpen.value = false;
+  window.removeEventListener("click", closeMenu);
+};
 
+// Cleanup on unmount
 onUnmounted(() => {
-  document.removeEventListener("click", handleClickOutside);
+  window.removeEventListener("click", closeMenu);
 });
 
 // Close menu on route change
 const router = useRouter();
 router.afterEach(() => {
-  isMenuOpen.value = false;
+  closeMenu();
 });
 </script>
 
 <template>
-  <nav v-if="global_navigation?.data?.links" ref="menuRef" class="relative">
+  <nav v-if="global_navigation?.data?.links" class="relative">
     <!-- Mobile Menu Button (visible on small screens) -->
     <button
-      ref="buttonRef"
       class="lg:hidden flex justify-end items-center px-4 pt-4 pb-4 bg-white dark:bg-black leading-none uppercase text-xs"
       :class="{ 'pb-2': isMenuOpen }"
       @click="toggleMenu"
@@ -83,7 +74,7 @@ router.afterEach(() => {
         <PrismicLink
           :field="item.link"
           class="block leading-none text-sm py-2 px-4 hover:opacity-70 transition-opacity text-right"
-          @click="isMenuOpen = false"
+          @click="closeMenu"
         />
       </template>
     </div>
