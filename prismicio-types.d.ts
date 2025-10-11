@@ -142,6 +142,148 @@ export type AboutDocument<Lang extends string = string> =
   prismic.PrismicDocumentWithUID<Simplify<AboutDocumentData>, "about", Lang>;
 
 /**
+ * Content for Art Piece documents
+ */
+interface ArtPieceDocumentData {
+  /**
+   * Artwork field in *Art Piece*
+   *
+   * - **Field Type**: Image
+   * - **Placeholder**: *None*
+   * - **API ID Path**: art_piece.artwork
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/image
+   */
+  artwork: prismic.ImageField<never>;
+
+  /**
+   * Medium field in *Art Piece*
+   *
+   * - **Field Type**: Select
+   * - **Placeholder**: *None*
+   * - **Default Value**: Painting
+   * - **API ID Path**: art_piece.medium
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/select
+   */
+  medium: prismic.SelectField<"Painting" | "Drawing", "filled">;
+
+  /**
+   * Title field in *Art Piece*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: art_piece.title
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  title: prismic.KeyTextField;
+
+  /**
+   * Description field in *Art Piece*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: art_piece.description
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/rich-text
+   */
+  description: prismic.RichTextField;
+
+  /**
+   * Size field in *Art Piece*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: art_piece.size
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  size: prismic.KeyTextField;
+
+  /**
+   * Price field in *Art Piece*
+   *
+   * - **Field Type**: Number
+   * - **Placeholder**: *None*
+   * - **API ID Path**: art_piece.price
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/number
+   */
+  price: prismic.NumberField;
+
+  /**
+   * Specific Medium field in *Art Piece*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: art_piece.medium_custom
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  medium_custom: prismic.KeyTextField;
+
+  /**
+   * Sold field in *Art Piece*
+   *
+   * - **Field Type**: Boolean
+   * - **Placeholder**: *None*
+   * - **Default Value**: false
+   * - **API ID Path**: art_piece.sold
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/boolean
+   */
+  sold: prismic.BooleanField /**
+   * Meta Title field in *Art Piece*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: art_piece.meta_title
+   * - **Tab**: SEO & Metadata
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */;
+  meta_title: prismic.KeyTextField;
+
+  /**
+   * Meta Description field in *Art Piece*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: art_piece.meta_description
+   * - **Tab**: SEO & Metadata
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  meta_description: prismic.KeyTextField;
+
+  /**
+   * Meta Image field in *Art Piece*
+   *
+   * - **Field Type**: Image
+   * - **Placeholder**: *None*
+   * - **API ID Path**: art_piece.meta_image
+   * - **Tab**: SEO & Metadata
+   * - **Documentation**: https://prismic.io/docs/fields/image
+   */
+  meta_image: prismic.ImageField<never>;
+}
+
+/**
+ * Art Piece document from Prismic
+ *
+ * - **API ID**: `art_piece`
+ * - **Repeatable**: `true`
+ * - **Documentation**: https://prismic.io/docs/content-modeling
+ *
+ * @typeParam Lang - Language API ID of the document.
+ */
+export type ArtPieceDocument<Lang extends string = string> =
+  prismic.PrismicDocumentWithUID<
+    Simplify<ArtPieceDocumentData>,
+    "art_piece",
+    Lang
+  >;
+
+/**
  * Item in *Collection → Artworks*
  */
 export interface CollectionDocumentDataArtworksItem {
@@ -272,125 +414,60 @@ export type CollectionDocument<Lang extends string = string> =
     Lang
   >;
 
+type ContactDocumentDataSlicesSlice = BigCenteredTextSlice;
+
 /**
- * Content for Art Piece documents
+ * Content for Contact documents
  */
-interface ArtPieceDocumentData {
+interface ContactDocumentData {
   /**
-   * Artwork field in *Art Piece*
-   *
-   * - **Field Type**: Image
-   * - **Placeholder**: *None*
-   * - **API ID Path**: art_piece.artwork
-   * - **Tab**: Main
-   * - **Documentation**: https://prismic.io/docs/fields/image
-   */
-  artwork: prismic.ImageField<never>;
-
-  /**
-   * Medium field in *Art Piece*
-   *
-   * - **Field Type**: Select
-   * - **Placeholder**: *None*
-   * - **Default Value**: Painting
-   * - **API ID Path**: art_piece.medium
-   * - **Tab**: Main
-   * - **Documentation**: https://prismic.io/docs/fields/select
-   */
-  medium: prismic.SelectField<"Painting" | "Drawing", "filled">;
-
-  /**
-   * Collection field in *Art Piece*
-   *
-   * - **Field Type**: Content Relationship
-   * - **Placeholder**: *None*
-   * - **API ID Path**: art_piece.collection
-   * - **Tab**: Main
-   * - **Documentation**: https://prismic.io/docs/fields/content-relationship
-   */
-  collection: prismic.ContentRelationshipField<"collection">;
-
-  /**
-   * Title field in *Art Piece*
+   * Title field in *Contact*
    *
    * - **Field Type**: Text
    * - **Placeholder**: *None*
-   * - **API ID Path**: art_piece.title
+   * - **API ID Path**: contact.title
    * - **Tab**: Main
    * - **Documentation**: https://prismic.io/docs/fields/text
    */
   title: prismic.KeyTextField;
 
   /**
-   * Description field in *Art Piece*
+   * Slice Zone field in *Contact*
    *
-   * - **Field Type**: Rich Text
+   * - **Field Type**: Slice Zone
    * - **Placeholder**: *None*
-   * - **API ID Path**: art_piece.description
+   * - **API ID Path**: contact.slices[]
    * - **Tab**: Main
-   * - **Documentation**: https://prismic.io/docs/fields/rich-text
+   * - **Documentation**: https://prismic.io/docs/slices
    */
-  description: prismic.RichTextField;
-
-  /**
-   * Size field in *Art Piece*
+  slices: prismic.SliceZone<ContactDocumentDataSlicesSlice> /**
+   * Meta Title field in *Contact*
    *
    * - **Field Type**: Text
-   * - **Placeholder**: *None*
-   * - **API ID Path**: art_piece.size
-   * - **Tab**: Main
-   * - **Documentation**: https://prismic.io/docs/fields/text
-   */
-  size: prismic.KeyTextField;
-
-  /**
-   * Price field in *Art Piece*
-   *
-   * - **Field Type**: Number
-   * - **Placeholder**: *None*
-   * - **API ID Path**: art_piece.price
-   * - **Tab**: Main
-   * - **Documentation**: https://prismic.io/docs/fields/number
-   */
-  price: prismic.NumberField;
-
-  /**
-   * Medium field in *Art Piece*
-   *
-   * - **Field Type**: Text
-   * - **Placeholder**: *None*
-   * - **API ID Path**: art_piece.medium_custom
-   * - **Tab**: Main
-   * - **Documentation**: https://prismic.io/docs/fields/text
-   */
-  medium_custom: prismic.KeyTextField /**
-   * Meta Title field in *Art Piece*
-   *
-   * - **Field Type**: Text
-   * - **Placeholder**: *None*
-   * - **API ID Path**: art_piece.meta_title
+   * - **Placeholder**: A title of the page used for social media and search engines
+   * - **API ID Path**: contact.meta_title
    * - **Tab**: SEO & Metadata
    * - **Documentation**: https://prismic.io/docs/fields/text
    */;
   meta_title: prismic.KeyTextField;
 
   /**
-   * Meta Description field in *Art Piece*
+   * Meta Description field in *Contact*
    *
    * - **Field Type**: Text
-   * - **Placeholder**: *None*
-   * - **API ID Path**: art_piece.meta_description
+   * - **Placeholder**: A brief summary of the page
+   * - **API ID Path**: contact.meta_description
    * - **Tab**: SEO & Metadata
    * - **Documentation**: https://prismic.io/docs/fields/text
    */
   meta_description: prismic.KeyTextField;
 
   /**
-   * Meta Image field in *Art Piece*
+   * Meta Image field in *Contact*
    *
    * - **Field Type**: Image
    * - **Placeholder**: *None*
-   * - **API ID Path**: art_piece.meta_image
+   * - **API ID Path**: contact.meta_image
    * - **Tab**: SEO & Metadata
    * - **Documentation**: https://prismic.io/docs/fields/image
    */
@@ -398,18 +475,18 @@ interface ArtPieceDocumentData {
 }
 
 /**
- * Art Piece document from Prismic
+ * Contact document from Prismic
  *
- * - **API ID**: `art_piece`
- * - **Repeatable**: `true`
+ * - **API ID**: `contact`
+ * - **Repeatable**: `false`
  * - **Documentation**: https://prismic.io/docs/content-modeling
  *
  * @typeParam Lang - Language API ID of the document.
  */
-export type ArtPieceDocument<Lang extends string = string> =
+export type ContactDocument<Lang extends string = string> =
   prismic.PrismicDocumentWithUID<
-    Simplify<ArtPieceDocumentData>,
-    "art_piece",
+    Simplify<ContactDocumentData>,
+    "contact",
     Lang
   >;
 
@@ -567,82 +644,6 @@ export type ExhibitionsDocument<Lang extends string = string> =
     Lang
   >;
 
-type ContactDocumentDataSlicesSlice = BigCenteredTextSlice;
-
-/**
- * Content for Contact documents
- */
-interface ContactDocumentData {
-  /**
-   * Title field in *Contact*
-   *
-   * - **Field Type**: Text
-   * - **Placeholder**: *None*
-   * - **API ID Path**: contact.title
-   * - **Tab**: Main
-   * - **Documentation**: https://prismic.io/docs/fields/text
-   */
-  title: prismic.KeyTextField;
-
-  /**
-   * Slice Zone field in *Contact*
-   *
-   * - **Field Type**: Slice Zone
-   * - **Placeholder**: *None*
-   * - **API ID Path**: contact.slices[]
-   * - **Tab**: Main
-   * - **Documentation**: https://prismic.io/docs/slices
-   */
-  slices: prismic.SliceZone<ContactDocumentDataSlicesSlice> /**
-   * Meta Title field in *Contact*
-   *
-   * - **Field Type**: Text
-   * - **Placeholder**: A title of the page used for social media and search engines
-   * - **API ID Path**: contact.meta_title
-   * - **Tab**: SEO & Metadata
-   * - **Documentation**: https://prismic.io/docs/fields/text
-   */;
-  meta_title: prismic.KeyTextField;
-
-  /**
-   * Meta Description field in *Contact*
-   *
-   * - **Field Type**: Text
-   * - **Placeholder**: A brief summary of the page
-   * - **API ID Path**: contact.meta_description
-   * - **Tab**: SEO & Metadata
-   * - **Documentation**: https://prismic.io/docs/fields/text
-   */
-  meta_description: prismic.KeyTextField;
-
-  /**
-   * Meta Image field in *Contact*
-   *
-   * - **Field Type**: Image
-   * - **Placeholder**: *None*
-   * - **API ID Path**: contact.meta_image
-   * - **Tab**: SEO & Metadata
-   * - **Documentation**: https://prismic.io/docs/fields/image
-   */
-  meta_image: prismic.ImageField<never>;
-}
-
-/**
- * Contact document from Prismic
- *
- * - **API ID**: `contact`
- * - **Repeatable**: `false`
- * - **Documentation**: https://prismic.io/docs/content-modeling
- *
- * @typeParam Lang - Language API ID of the document.
- */
-export type ContactDocument<Lang extends string = string> =
-  prismic.PrismicDocumentWithUID<
-    Simplify<ContactDocumentData>,
-    "contact",
-    Lang
-  >;
-
 type ExhibitionsOverviewDocumentDataSlicesSlice = never;
 
 /**
@@ -750,6 +751,123 @@ export type FooterDocument<Lang extends string = string> =
   prismic.PrismicDocumentWithoutUID<
     Simplify<FooterDocumentData>,
     "footer",
+    Lang
+  >;
+
+/**
+ * Item in *Front Page → Front Page Artworks*
+ */
+export interface FrontPageDocumentDataFrontPageArtworksItem {
+  /**
+   * Artwork field in *Front Page → Front Page Artworks*
+   *
+   * - **Field Type**: Content Relationship
+   * - **Placeholder**: *None*
+   * - **API ID Path**: front_page.front_page_artworks[].artwork
+   * - **Documentation**: https://prismic.io/docs/fields/content-relationship
+   */
+  artwork: ContentRelationshipFieldWithData<
+    [{ id: "art_piece"; fields: ["artwork", "title"] }]
+  >;
+}
+
+type FrontPageDocumentDataSlicesSlice = BigCenteredTextSlice;
+
+/**
+ * Content for Front Page documents
+ */
+interface FrontPageDocumentData {
+  /**
+   * Title field in *Front Page*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: front_page.title
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  title: prismic.KeyTextField;
+
+  /**
+   * Introductory Text field in *Front Page*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: front_page.introductory_text
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/rich-text
+   */
+  introductory_text: prismic.RichTextField;
+
+  /**
+   * Front Page Artworks field in *Front Page*
+   *
+   * - **Field Type**: Group
+   * - **Placeholder**: *None*
+   * - **API ID Path**: front_page.front_page_artworks[]
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/repeatable-group
+   */
+  front_page_artworks: prismic.GroupField<
+    Simplify<FrontPageDocumentDataFrontPageArtworksItem>
+  >;
+
+  /**
+   * Slice Zone field in *Front Page*
+   *
+   * - **Field Type**: Slice Zone
+   * - **Placeholder**: *None*
+   * - **API ID Path**: front_page.slices[]
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/slices
+   */
+  slices: prismic.SliceZone<FrontPageDocumentDataSlicesSlice> /**
+   * Meta Title field in *Front Page*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: A title of the page used for social media and search engines
+   * - **API ID Path**: front_page.meta_title
+   * - **Tab**: SEO & Metadata
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */;
+  meta_title: prismic.KeyTextField;
+
+  /**
+   * Meta Description field in *Front Page*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: A brief summary of the page
+   * - **API ID Path**: front_page.meta_description
+   * - **Tab**: SEO & Metadata
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  meta_description: prismic.KeyTextField;
+
+  /**
+   * Meta Image field in *Front Page*
+   *
+   * - **Field Type**: Image
+   * - **Placeholder**: *None*
+   * - **API ID Path**: front_page.meta_image
+   * - **Tab**: SEO & Metadata
+   * - **Documentation**: https://prismic.io/docs/fields/image
+   */
+  meta_image: prismic.ImageField<never>;
+}
+
+/**
+ * Front Page document from Prismic
+ *
+ * - **API ID**: `front_page`
+ * - **Repeatable**: `false`
+ * - **Documentation**: https://prismic.io/docs/content-modeling
+ *
+ * @typeParam Lang - Language API ID of the document.
+ */
+export type FrontPageDocument<Lang extends string = string> =
+  prismic.PrismicDocumentWithUID<
+    Simplify<FrontPageDocumentData>,
+    "front_page",
     Lang
   >;
 
@@ -872,123 +990,6 @@ interface PageDocumentData {
 export type PageDocument<Lang extends string = string> =
   prismic.PrismicDocumentWithUID<Simplify<PageDocumentData>, "page", Lang>;
 
-/**
- * Item in *Front Page → Front Page Artworks*
- */
-export interface FrontPageDocumentDataFrontPageArtworksItem {
-  /**
-   * Artwork field in *Front Page → Front Page Artworks*
-   *
-   * - **Field Type**: Content Relationship
-   * - **Placeholder**: *None*
-   * - **API ID Path**: front_page.front_page_artworks[].artwork
-   * - **Documentation**: https://prismic.io/docs/fields/content-relationship
-   */
-  artwork: ContentRelationshipFieldWithData<
-    [{ id: "art_piece"; fields: ["artwork", "title"] }]
-  >;
-}
-
-type FrontPageDocumentDataSlicesSlice = BigCenteredTextSlice;
-
-/**
- * Content for Front Page documents
- */
-interface FrontPageDocumentData {
-  /**
-   * Title field in *Front Page*
-   *
-   * - **Field Type**: Text
-   * - **Placeholder**: *None*
-   * - **API ID Path**: front_page.title
-   * - **Tab**: Main
-   * - **Documentation**: https://prismic.io/docs/fields/text
-   */
-  title: prismic.KeyTextField;
-
-  /**
-   * Introductory Text field in *Front Page*
-   *
-   * - **Field Type**: Rich Text
-   * - **Placeholder**: *None*
-   * - **API ID Path**: front_page.introductory_text
-   * - **Tab**: Main
-   * - **Documentation**: https://prismic.io/docs/fields/rich-text
-   */
-  introductory_text: prismic.RichTextField;
-
-  /**
-   * Front Page Artworks field in *Front Page*
-   *
-   * - **Field Type**: Group
-   * - **Placeholder**: *None*
-   * - **API ID Path**: front_page.front_page_artworks[]
-   * - **Tab**: Main
-   * - **Documentation**: https://prismic.io/docs/fields/repeatable-group
-   */
-  front_page_artworks: prismic.GroupField<
-    Simplify<FrontPageDocumentDataFrontPageArtworksItem>
-  >;
-
-  /**
-   * Slice Zone field in *Front Page*
-   *
-   * - **Field Type**: Slice Zone
-   * - **Placeholder**: *None*
-   * - **API ID Path**: front_page.slices[]
-   * - **Tab**: Main
-   * - **Documentation**: https://prismic.io/docs/slices
-   */
-  slices: prismic.SliceZone<FrontPageDocumentDataSlicesSlice> /**
-   * Meta Title field in *Front Page*
-   *
-   * - **Field Type**: Text
-   * - **Placeholder**: A title of the page used for social media and search engines
-   * - **API ID Path**: front_page.meta_title
-   * - **Tab**: SEO & Metadata
-   * - **Documentation**: https://prismic.io/docs/fields/text
-   */;
-  meta_title: prismic.KeyTextField;
-
-  /**
-   * Meta Description field in *Front Page*
-   *
-   * - **Field Type**: Text
-   * - **Placeholder**: A brief summary of the page
-   * - **API ID Path**: front_page.meta_description
-   * - **Tab**: SEO & Metadata
-   * - **Documentation**: https://prismic.io/docs/fields/text
-   */
-  meta_description: prismic.KeyTextField;
-
-  /**
-   * Meta Image field in *Front Page*
-   *
-   * - **Field Type**: Image
-   * - **Placeholder**: *None*
-   * - **API ID Path**: front_page.meta_image
-   * - **Tab**: SEO & Metadata
-   * - **Documentation**: https://prismic.io/docs/fields/image
-   */
-  meta_image: prismic.ImageField<never>;
-}
-
-/**
- * Front Page document from Prismic
- *
- * - **API ID**: `front_page`
- * - **Repeatable**: `false`
- * - **Documentation**: https://prismic.io/docs/content-modeling
- *
- * @typeParam Lang - Language API ID of the document.
- */
-export type FrontPageDocument<Lang extends string = string> =
-  prismic.PrismicDocumentWithUID<
-    Simplify<FrontPageDocumentData>,
-    "front_page",
-    Lang
-  >;
-
 type WorkDocumentDataSlicesSlice = never;
 
 /**
@@ -1063,58 +1064,16 @@ export type WorkDocument<Lang extends string = string> =
 
 export type AllDocumentTypes =
   | AboutDocument
-  | CollectionDocument
   | ArtPieceDocument
-  | ExhibitionsDocument
+  | CollectionDocument
   | ContactDocument
+  | ExhibitionsDocument
   | ExhibitionsOverviewDocument
   | FooterDocument
+  | FrontPageDocument
   | GlobalNavigationDocument
   | PageDocument
-  | FrontPageDocument
   | WorkDocument;
-
-/**
- * Primary content in *Footer → Default → Primary*
- */
-export interface FooterSliceDefaultPrimary {
-  /**
-   * Signature field in *Footer → Default → Primary*
-   *
-   * - **Field Type**: Image
-   * - **Placeholder**: *None*
-   * - **API ID Path**: footer.default.primary.signature
-   * - **Documentation**: https://prismic.io/docs/fields/image
-   */
-  signature: prismic.ImageField<never>;
-}
-
-/**
- * Default variation for Footer Slice
- *
- * - **API ID**: `default`
- * - **Description**: Default
- * - **Documentation**: https://prismic.io/docs/slices
- */
-export type FooterSliceDefault = prismic.SharedSliceVariation<
-  "default",
-  Simplify<FooterSliceDefaultPrimary>,
-  never
->;
-
-/**
- * Slice variation for *Footer*
- */
-type FooterSliceVariation = FooterSliceDefault;
-
-/**
- * Footer Shared Slice
- *
- * - **API ID**: `footer`
- * - **Description**: Footer
- * - **Documentation**: https://prismic.io/docs/slices
- */
-export type FooterSlice = prismic.SharedSlice<"footer", FooterSliceVariation>;
 
 /**
  * Primary content in *BigCenteredText → Default → Primary*
@@ -1160,6 +1119,48 @@ export type BigCenteredTextSlice = prismic.SharedSlice<
   "big_centered_text",
   BigCenteredTextSliceVariation
 >;
+
+/**
+ * Primary content in *Footer → Default → Primary*
+ */
+export interface FooterSliceDefaultPrimary {
+  /**
+   * Signature field in *Footer → Default → Primary*
+   *
+   * - **Field Type**: Image
+   * - **Placeholder**: *None*
+   * - **API ID Path**: footer.default.primary.signature
+   * - **Documentation**: https://prismic.io/docs/fields/image
+   */
+  signature: prismic.ImageField<never>;
+}
+
+/**
+ * Default variation for Footer Slice
+ *
+ * - **API ID**: `default`
+ * - **Description**: Default
+ * - **Documentation**: https://prismic.io/docs/slices
+ */
+export type FooterSliceDefault = prismic.SharedSliceVariation<
+  "default",
+  Simplify<FooterSliceDefaultPrimary>,
+  never
+>;
+
+/**
+ * Slice variation for *Footer*
+ */
+type FooterSliceVariation = FooterSliceDefault;
+
+/**
+ * Footer Shared Slice
+ *
+ * - **API ID**: `footer`
+ * - **Description**: Footer
+ * - **Documentation**: https://prismic.io/docs/slices
+ */
+export type FooterSlice = prismic.SharedSlice<"footer", FooterSliceVariation>;
 
 /**
  * Item in *Gallery → Default → Primary → Art Piece*
@@ -1319,45 +1320,45 @@ declare module "@prismicio/client" {
       AboutDocument,
       AboutDocumentData,
       AboutDocumentDataSlicesSlice,
+      ArtPieceDocument,
+      ArtPieceDocumentData,
       CollectionDocument,
       CollectionDocumentData,
       CollectionDocumentDataArtworksItem,
-      ArtPieceDocument,
-      ArtPieceDocumentData,
-      ExhibitionsDocument,
-      ExhibitionsDocumentData,
-      ExhibitionsDocumentDataExhibitionArtworksItem,
       ContactDocument,
       ContactDocumentData,
       ContactDocumentDataSlicesSlice,
+      ExhibitionsDocument,
+      ExhibitionsDocumentData,
+      ExhibitionsDocumentDataExhibitionArtworksItem,
       ExhibitionsOverviewDocument,
       ExhibitionsOverviewDocumentData,
       ExhibitionsOverviewDocumentDataSlicesSlice,
       FooterDocument,
       FooterDocumentData,
       FooterDocumentDataSlicesSlice,
+      FrontPageDocument,
+      FrontPageDocumentData,
+      FrontPageDocumentDataFrontPageArtworksItem,
+      FrontPageDocumentDataSlicesSlice,
       GlobalNavigationDocument,
       GlobalNavigationDocumentData,
       GlobalNavigationDocumentDataLinksItem,
       PageDocument,
       PageDocumentData,
       PageDocumentDataSlicesSlice,
-      FrontPageDocument,
-      FrontPageDocumentData,
-      FrontPageDocumentDataFrontPageArtworksItem,
-      FrontPageDocumentDataSlicesSlice,
       WorkDocument,
       WorkDocumentData,
       WorkDocumentDataSlicesSlice,
       AllDocumentTypes,
-      FooterSlice,
-      FooterSliceDefaultPrimary,
-      FooterSliceVariation,
-      FooterSliceDefault,
       BigCenteredTextSlice,
       BigCenteredTextSliceDefaultPrimary,
       BigCenteredTextSliceVariation,
       BigCenteredTextSliceDefault,
+      FooterSlice,
+      FooterSliceDefaultPrimary,
+      FooterSliceVariation,
+      FooterSliceDefault,
       GallerySlice,
       GallerySliceDefaultPrimaryArtPieceItem,
       GallerySliceDefaultPrimary,

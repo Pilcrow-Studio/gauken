@@ -29,15 +29,6 @@
           "default_value": "Painting"
         }
       },
-      "collection": {
-        "type": "Link",
-        "config": {
-          "label": "Collection",
-          "select": "document",
-          "repeat": false,
-          "customtypes": ["collection"]
-        }
-      },
       "title": {
         "type": "Text",
         "config": {
@@ -71,8 +62,17 @@
       "medium_custom": {
         "type": "Text",
         "config": {
-          "label": "Medium",
+          "label": "Specific Medium",
           "placeholder": ""
+        }
+      },
+      "sold": {
+        "type": "Boolean",
+        "config": {
+          "label": "Sold",
+          "placeholder_false": "No",
+          "placeholder_true": "Yes",
+          "default_value": false
         }
       }
     },

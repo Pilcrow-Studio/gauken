@@ -219,6 +219,7 @@ useHead({
             <p v-if="art_piece.data.price" class="text-sm">
               {{ formatCurrency(art_piece.data.price) }}
             </p>
+            <p v-if="art_piece.data.sold === true" class="text-sm">(Sold)</p>
           </div>
         </button>
       </div>
