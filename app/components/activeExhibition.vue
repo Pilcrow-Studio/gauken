@@ -45,9 +45,39 @@ const isExhibitionHappeningNow = computed(() => {
 });
 
 const exhibitionStatusText = computed(() => {
-  return isExhibitionHappeningNow.value
-    ? "happening now"
-    : "upcoming exhibition";
+  if (!exhibition.value?.[0]?.data?.end_date) {
+    return "upcoming exhibition";
+  }
+
+  const now = new Date();
+  const endDate = new Date(exhibition.value[0].data.end_date);
+
+  // Set time to midnight for date-only comparison
+  now.setHours(0, 0, 0, 0);
+  endDate.setHours(0, 0, 0, 0);
+
+  if (isExhibitionHappeningNow.value) {
+    return "happening now";
+  } else if (now > endDate) {
+    return "last exhibition";
+  } else {
+    return "upcoming exhibition";
+  }
+});
+
+const isExhibitionExpired = computed(() => {
+  if (!exhibition.value?.[0]?.data?.end_date) {
+    return false;
+  }
+
+  const now = new Date();
+  const endDate = new Date(exhibition.value[0].data.end_date);
+
+  // Set time to midnight for date-only comparison
+  now.setHours(0, 0, 0, 0);
+  endDate.setHours(0, 0, 0, 0);
+
+  return now > endDate;
 });
 </script>
 
@@ -65,29 +95,41 @@ const exhibitionStatusText = computed(() => {
           <span class="marquee-text text-[10px]">{{
             exhibitionStatusText
           }}</span>
-          <span class="marquee-text text-[10px]">come say hello</span>
+          <span class="marquee-text text-[10px]">{{
+            isExhibitionExpired ? "last exhibition" : "come say hello"
+          }}</span>
           <span class="marquee-text text-[10px]">{{
             exhibitionStatusText
           }}</span>
-          <span class="marquee-text text-[10px]">come say hello</span>
+          <span class="marquee-text text-[10px]">{{
+            isExhibitionExpired ? "last exhibition" : "come say hello"
+          }}</span>
           <span class="marquee-text text-[10px]">{{
             exhibitionStatusText
           }}</span>
-          <span class="marquee-text text-[10px]">come say hello</span>
+          <span class="marquee-text text-[10px]">{{
+            isExhibitionExpired ? "last exhibition" : "come say hello"
+          }}</span>
         </div>
         <div class="marquee-content" aria-hidden="true">
           <span class="marquee-text text-[10px]">{{
             exhibitionStatusText
           }}</span>
-          <span class="marquee-text text-[10px]">come say hello</span>
+          <span class="marquee-text text-[10px]">{{
+            isExhibitionExpired ? "last exhibition" : "come say hello"
+          }}</span>
           <span class="marquee-text text-[10px]">{{
             exhibitionStatusText
           }}</span>
-          <span class="marquee-text text-[10px]">come say hello</span>
+          <span class="marquee-text text-[10px]">{{
+            isExhibitionExpired ? "last exhibition" : "come say hello"
+          }}</span>
           <span class="marquee-text text-[10px]">{{
             exhibitionStatusText
           }}</span>
-          <span class="marquee-text text-[10px]">come say hello</span>
+          <span class="marquee-text text-[10px]">{{
+            isExhibitionExpired ? "last exhibition" : "come say hello"
+          }}</span>
         </div>
       </div>
     </div>
