@@ -23,7 +23,7 @@ onMounted(() => {
     const artworkUid = route.query.artwork as string;
     if (artworkUid && art_pieces.value) {
       const index = art_pieces.value.findIndex(
-        (piece) => piece.uid === artworkUid
+        (piece) => piece.uid === artworkUid,
       );
       if (index !== -1) {
         currentArtworkIndex.value = index;
@@ -41,11 +41,11 @@ watch(isLargeView, (newValue) => {
 });
 
 const { data: work } = await useAsyncData("work", () =>
-  prismic.client.getSingle("work")
+  prismic.client.getSingle("work"),
 );
 
 const { data: art_pieces_raw } = await useAsyncData("all_art_pieces", () =>
-  prismic.client.getAllByType("art_piece")
+  prismic.client.getAllByType("art_piece"),
 );
 
 // Sort art pieces: title first, then by medium, then by publication date
@@ -216,9 +216,7 @@ useHead({
                 {{ art_piece.data.size }}
               </p>
             </div>
-            <p v-if="art_piece.data.price" class="text-sm">
-              {{ formatCurrency(art_piece.data.price) }}
-            </p>
+
             <p v-if="art_piece.data.sold === true" class="text-sm">(Sold)</p>
           </div>
         </button>

@@ -213,12 +213,6 @@ onUnmounted(() => {
                 <p v-if="currentArtwork.data.size">
                   {{ currentArtwork.data.size }}
                 </p>
-                <p
-                  v-if="currentArtwork.data.price"
-                  class="text-white font-medium"
-                >
-                  {{ formatCurrency(currentArtwork.data.price) }}
-                </p>
               </div>
             </div>
           </div>
